@@ -1,4 +1,4 @@
-﻿La génération a démarré 06/10/2015 08:58:36.
+﻿La génération a démarré 08/10/2015 11:30:27.
      1>Projet "E:\Documents\ECP\OSY\Tronc commun\PAV_MOD\Snake\Snake\Snake.vcxproj" sur le nœud 2 (Build cible(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
@@ -10,4 +10,4 @@
 
 La génération a réussi.
 
-Temps écoulé 00:00:03.02
+Temps écoulé 00:00:01.98
