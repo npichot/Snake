@@ -3,6 +3,9 @@
 #include <iostream>
 #include <SFML/Graphics.hpp> //Chargement bibliothèque Graphique
 
+#include "Input.h" //Gestion des commandes
+#include "Serpent.h"//Gestion du serpent
+
 using namespace std;
 using namespace sf; // Pour utiliser la bibliothèque graphique plus rapidement.
 
