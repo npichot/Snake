@@ -1,0 +1,11 @@
+﻿La génération a démarré 10/10/2015 16:45:11.
+     1>Projet "E:\Documents\ECP\OSY\Tronc commun\PAV_MOD\Snake\Snake\Snake.vcxproj" sur le nœud 2 (Build cible(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"E:\Documents\ECP\OSY\Tronc commun\PAV_MOD\Snake\SFML\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D SFML_STATIC /D _MBCS /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
+         Main.cpp
+     1>Main.cpp(1): fatal error C1083: Impossible d'ouvrir le fichier include : 'main.h' : No such file or directory
+     1>Génération du projet "E:\Documents\ECP\OSY\Tronc commun\PAV_MOD\Snake\Snake\Snake.vcxproj" terminée (Build cible(s)) -- ÉCHEC.
+
+ÉCHEC de la build.
+
+Temps écoulé 00:00:01.53
