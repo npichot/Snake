@@ -25,6 +25,21 @@ void Map::updateField()
 {
 }
 
-void Map::draw(RenderWindow * window)
+void Map::drawField(RenderWindow * window)
 {
+	//Chargement du fond
+		//On initialise les paramètres
+	int width = TILE_SIZE* field[0].size();
+	int height = TILE_SIZE* field.size();
+	double marginLeft = (WINDOW_WIDTH - width) / 2;
+	double marginTop = (WINDOW_HEIGHT - height) / 2;
+
+		//On construit le rectangle d'arrière plan
+	RectangleShape background;
+	background.setPosition(marginLeft, marginTop);
+	background.setSize(Vector2f(width, height));
+	background.setFillColor(Color::Green);
+	background.setOutlineColor(Color::Red);
+	background.setOutlineThickness(5);
+	window->draw(background);
 }
