@@ -6,6 +6,7 @@ int main()
 {
 	// Chargement de la fenêtre
 	RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32),"Snake");
+	Map map;
 
 	//Lancement de la boucle principale
 	while (window.isOpen())
@@ -16,7 +17,9 @@ int main()
 
 		//Gestion des actions
 
-		//Création de la map 
+		//dessin de la map 
+		window.clear();
+		map.drawField(&window);
 
 		//Affichage
 		window.display();
