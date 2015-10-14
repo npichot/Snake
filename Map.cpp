@@ -6,11 +6,10 @@
 Map::Map()
 {
 	int row, column;//Paramètre de la map, nombre 
-	int tile_size = 32; //Chaque élement de la map est représenté par un carré de 32*32
 
 	//Calcule des paramètres 
-	column = floor((WINDOW_WIDTH - 3 * tile_size) / tile_size);//On prévoit une marge min de 3 tile (~100 px)
-	row= floor((WINDOW_HEIGHT - 3 * tile_size) / tile_size);
+	column = floor((WINDOW_WIDTH - 3 * TILE_SIZE) / TILE_SIZE);//On prévoit une marge min de 3 tile (~100 px)
+	row= floor((WINDOW_HEIGHT - 3 * TILE_SIZE) / TILE_SIZE);
 	
 	//Remplissage de la map
 	for (int i = 0; i < row; ++i)
