@@ -5,7 +5,7 @@
 using namespace sf;
 using namespace std;
 
-//Chaque élement de la map est représenté par un carré de 32*32
+//Chaque ï¿½lement de la map est reprï¿½sentï¿½ par un carrï¿½ de 32*32
 const int TILE_SIZE = 32;
 
 typedef enum  //differentes tuiles dessin
