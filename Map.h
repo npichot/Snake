@@ -1,6 +1,27 @@
 #pragma once
 using namespace std;
 
+//Chaque �lement de la map est repr�sent� par un carr� de 32*32
+const int TILE_SIZE = 32;
+
+typedef enum  //differentes tuiles dessin
+{
+	//Element Fixes
+	BUSHES,
+	// Serpent
+	BODY_NORTH,
+	BODY_SOUTH,
+	BODY_EAST,
+	BODY_WEST,
+	HEAD_NORTH,
+	HEAD_SOUTH,
+	HEAD_EAST,
+	HEAD_WEST,
+	//Autres
+	FRUIT,
+	EMPTY,
+} Tiles;
+
 class Map
 {
 private:
@@ -24,21 +45,5 @@ public:
 	
 };
 
-const enum Tiles //differentes tuiles dessin
-{
-	//Element Fixes
-	BUSHES,
-	// Serpent
-	BODY_NORTH,
-	BODY_SOUTH,
-	BODY_EAST,
-	BODY_WEST,
-	HEAD_NORTH,
-	HEAD_SOUTH,
-	HEAD_EAST,
-	HEAD_WEST,
-	//Autres
-	FRUIT,
-	EMPTY,
-};
+
 
