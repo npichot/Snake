@@ -3,16 +3,31 @@ using namespace std;
 
 class Map
 {
+private:
+	vector < vector <Tiles> > field; // Le terrain ne peut pas être modifié directement. Notamment sa taille est calculée et fixée une fois au début.
 public:
-	Map();
+	/*
+	Initialisation de la map en fonction de la taille de l'écran
+	*/
+	Map();// 
 	~Map();
+
+	/*
+	Méthode pour modifier indirectement les éléments de la map
+	*/
+	void updateField();
+
+	/*
+	Méthode pour dessiner la map dans la fenêtre
+	*/
+	void draw(RenderWindow * window);
+	
 };
 
 const enum Tiles //differentes tuiles dessin
 {
 	//Element Fixes
 	BUSHES,
-	GRASS,
 	// Serpent
 	BODY_NORTH,
 	BODY_SOUTH,
