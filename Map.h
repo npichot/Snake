@@ -1,4 +1,8 @@
 #pragma once
+#include <vector>
+#include "SFML\Graphics.hpp"
+
+using namespace sf;
 using namespace std;
 
 //Chaque �lement de la map est repr�sent� par un carr� de 32*32
