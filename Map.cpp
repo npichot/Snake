@@ -38,7 +38,7 @@ void Map::updateField(int i, int j, Tiles t)
 	}
 }
 
-Tiles Map::getTile(int i, int j, Tiles t)
+Tiles Map::getTile(int i, int j)
 {
 	if (i >= 0 && i < field.size())
 	{
@@ -74,7 +74,7 @@ void Map::drawField(RenderWindow * window)
 	for (int i = 0; i < field.size();++i)
 		for (int j = 0; j < field[i].size(); ++j)
 		{
-			//On dï¿½bute la construction du rectangle
+			//On débute la construction du rectangle
 			
 			tile.setPosition(marginLeft + i * TILE_SIZE, marginTop + j * TILE_SIZE);
 			tile.setSize(Vector2f(TILE_SIZE,TILE_SIZE));
@@ -102,7 +102,7 @@ void Map::drawField(RenderWindow * window)
 				break;
 			}
 
-			//On ajoute la tile ï¿½ la fenï¿½tre
+			//On ajoute la tile à la fenêtre
 			window->draw(tile);
 		}
 }

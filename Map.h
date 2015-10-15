@@ -46,7 +46,7 @@ public:
 	/*
 	Récupérer la tile à l'emplacement (i, j)
 	*/
-	Tiles getTile(int i, int j, Tiles t);
+	Tiles getTile(int i, int j);
 
 	/*
 	Méthode pour dessiner la map dans la fenêtre
