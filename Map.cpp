@@ -28,14 +28,13 @@ Map::~Map()
 void Map::updateField(int i, int j, Tiles t)
 {
 	if (i >= 0 && i < field.size())
-	{
 		if (j >= 0 && j < field[0].size())
+		{
 			field[i][j] = t;
-	}
-	else
-	{
-		printf("Error 1 : Can't update the tile because the coordinates are outside the field");
-	}
+			return;
+		}
+	//else
+	printf("Error 1 : Can't update the tile because the coordinates are outside the field");
 }
 
 Tiles Map::getTile(int i, int j)
@@ -70,39 +69,40 @@ void Map::drawField(RenderWindow * window)
 	window->draw(background);
 
 	//On affiche les tiles du terrain
-	RectangleShape tile;
+	
 	for (int i = 0; i < field.size();++i)
 		for (int j = 0; j < field[i].size(); ++j)
-		{
-			//On débute la construction du rectangle
-			
-			tile.setPosition(marginLeft + i * TILE_SIZE, marginTop + j * TILE_SIZE);
-			tile.setSize(Vector2f(TILE_SIZE,TILE_SIZE));
-
-			//On initialise le fond en fonction de la nature de la tile
-			switch (getTile(i,j))
+			if(EMPTY != getTile(i,j))
 			{
-			case BUSHES :
-				tile.setFillColor(Color::Blue);
-				break;
-			case HEAD_NORTH:
-			case HEAD_SOUTH:
-			case HEAD_EAST:
-			case HEAD_WEST:
-			case BODY_NORTH:
-			case BODY_SOUTH:
-			case BODY_EAST:
-			case BODY_WEST:
-				tile.setFillColor(Color::Yellow);
-				break;
-			case FRUIT:
-				tile.setFillColor(Color::Magenta);
-				break;
-			default:
-				break;
-			}
+				//On débute la construction du rectangle
+				RectangleShape tile;
+				tile.setPosition(marginLeft + j * TILE_SIZE, marginTop + i * TILE_SIZE);
+				tile.setSize(Vector2f(TILE_SIZE,TILE_SIZE));
 
-			//On ajoute la tile à la fenêtre
-			window->draw(tile);
-		}
+				//On initialise le fond en fonction de la nature de la tile
+				switch (getTile(i,j))
+				{
+				case BUSHES :
+					tile.setFillColor(Color::Blue);
+					break;
+				case HEAD_NORTH:
+				case HEAD_SOUTH:
+				case HEAD_EAST:
+				case HEAD_WEST:
+				case BODY_NORTH:
+				case BODY_SOUTH:
+				case BODY_EAST:
+				case BODY_WEST:
+					tile.setFillColor(Color::Yellow);
+					break;
+				case FRUIT:
+					tile.setFillColor(Color::Magenta);
+					break;
+				default:
+					break;
+				}
+
+				//On ajoute la tile à la fenêtre
+				window->draw(tile);
+			}
 }
