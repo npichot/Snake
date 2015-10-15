@@ -76,6 +76,7 @@ void Map::drawField(RenderWindow * window)
 			{
 				//On débute la construction du rectangle
 				RectangleShape tile;
+				Texture texture;
 				tile.setPosition(marginLeft + j * TILE_SIZE, marginTop + i * TILE_SIZE);
 				tile.setSize(Vector2f(TILE_SIZE,TILE_SIZE));
 
@@ -83,7 +84,10 @@ void Map::drawField(RenderWindow * window)
 				switch (getTile(i,j))
 				{
 				case BUSHES :
-					tile.setFillColor(Color::Blue);
+					if (texture.loadFromFile("Ressources/bushes.png"))
+						tile.setTexture(&texture);
+					else
+						tile.setFillColor(Color::Blue);
 					break;
 				case HEAD_NORTH:
 				case HEAD_SOUTH:
@@ -93,12 +97,21 @@ void Map::drawField(RenderWindow * window)
 				case BODY_SOUTH:
 				case BODY_EAST:
 				case BODY_WEST:
-					tile.setFillColor(Color::Yellow);
+					if (texture.loadFromFile("Ressources/body.png"))
+						tile.setTexture(&texture);
+					else
+						tile.setFillColor(Color::Yellow);
 					break;
 				case FRUIT:
-					tile.setFillColor(Color::Magenta);
+					if (texture.loadFromFile("Ressources/fruit.png"))
+						tile.setTexture(&texture);
+					else
+						tile.setFillColor(Color::Magenta);
 					break;
+				case EMPTY:
 				default:
+					if (texture.loadFromFile("Ressources/grass.png"))
+						tile.setTexture(&texture);
 					break;
 				}
 
