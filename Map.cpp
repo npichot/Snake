@@ -25,8 +25,30 @@ Map::~Map()
 {
 }
 
-void Map::updateField()
+void Map::updateField(int i, int j, Tiles t)
 {
+	if (i >= 0 && i < field.size())
+	{
+		if (j >= 0 && j < field[0].size())
+			field[i][j] = t;
+	}
+	else
+	{
+		printf("Error 1 : Can't update the tile because the coordinates are outside the field");
+	}
+}
+
+Tiles Map::getTile(int i, int j, Tiles t)
+{
+	if (i >= 0 && i < field.size())
+	{
+		if (j >= 0 && j < field[0].size())
+			return field[i][j];
+	}
+	else
+	{
+		printf("Error 2 : Can't get the tile because the coordinates are outside the field");
+	}
 }
 
 void Map::drawField(RenderWindow * window)

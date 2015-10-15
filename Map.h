@@ -39,8 +39,14 @@ public:
 
 	/*
 	Méthode pour modifier indirectement les éléments de la map
+	On modifie l'élément à la position (i,j) par la Tile t
 	*/
-	void updateField();
+	void updateField(int i, int j, Tiles t);
+
+	/*
+	Récupérer la tile à l'emplacement (i, j)
+	*/
+	Tiles getTile(int i, int j, Tiles t);
 
 	/*
 	Méthode pour dessiner la map dans la fenêtre
