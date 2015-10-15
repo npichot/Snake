@@ -72,50 +72,48 @@ void Map::drawField(RenderWindow * window)
 	
 	for (int i = 0; i < field.size();++i)
 		for (int j = 0; j < field[i].size(); ++j)
-			if(EMPTY != getTile(i,j))
+		{
+			//On débute la construction du rectangle
+			RectangleShape tile;
+			Texture texture;
+			tile.setPosition(marginLeft + j * TILE_SIZE, marginTop + i * TILE_SIZE);
+			tile.setSize(Vector2f(TILE_SIZE,TILE_SIZE));
+
+			//On initialise le fond en fonction de la nature de la tile
+			switch (getTile(i,j))
 			{
-				//On débute la construction du rectangle
-				RectangleShape tile;
-				Texture texture;
-				tile.setPosition(marginLeft + j * TILE_SIZE, marginTop + i * TILE_SIZE);
-				tile.setSize(Vector2f(TILE_SIZE,TILE_SIZE));
-
-				//On initialise le fond en fonction de la nature de la tile
-				switch (getTile(i,j))
-				{
-				case BUSHES :
-					if (texture.loadFromFile("Ressources/bushes.png"))
-						tile.setTexture(&texture);
-					else
-						tile.setFillColor(Color::Blue);
-					break;
-				case HEAD_NORTH:
-				case HEAD_SOUTH:
-				case HEAD_EAST:
-				case HEAD_WEST:
-				case BODY_NORTH:
-				case BODY_SOUTH:
-				case BODY_EAST:
-				case BODY_WEST:
-					if (texture.loadFromFile("Ressources/body.png"))
-						tile.setTexture(&texture);
-					else
-						tile.setFillColor(Color::Yellow);
-					break;
-				case FRUIT:
-					if (texture.loadFromFile("Ressources/fruit.png"))
-						tile.setTexture(&texture);
-					else
-						tile.setFillColor(Color::Magenta);
-					break;
-				case EMPTY:
-				default:
-					if (texture.loadFromFile("Ressources/grass.png"))
-						tile.setTexture(&texture);
-					break;
-				}
-
-				//On ajoute la tile à la fenêtre
-				window->draw(tile);
+			case BUSHES :
+				if (texture.loadFromFile("Ressources/bushes.png"))
+					tile.setTexture(&texture);
+				else
+					tile.setFillColor(Color::Blue);
+				break;
+			case HEAD_NORTH:
+			case HEAD_SOUTH:
+			case HEAD_EAST:
+			case HEAD_WEST:
+			case BODY_NORTH:
+			case BODY_SOUTH:
+			case BODY_EAST:
+			case BODY_WEST:
+				if (texture.loadFromFile("Ressources/body.png"))
+					tile.setTexture(&texture);
+				else
+					tile.setFillColor(Color::Yellow);
+				break;
+			case FRUIT:
+				if (texture.loadFromFile("Ressources/fruit.png"))
+					tile.setTexture(&texture);
+				else
+					tile.setFillColor(Color::Magenta);
+				break;
+			default:
+				if (texture.loadFromFile("Ressources/grass.png"))
+					tile.setTexture(&texture);
+				break;
 			}
+
+			//On ajoute la tile à la fenêtre
+			window->draw(tile);
+		}
 }
