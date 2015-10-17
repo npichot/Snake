@@ -33,7 +33,7 @@ int main()
 
 		//dessin de la map 
 		window.clear();
-		map.drawField(&window);
+		map.drawField(window);
 
 		//Affichage
 		window.display();
