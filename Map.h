@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+#include <iostream>
+#include <fstream>
 #include "SFML\Graphics.hpp"
 
 using namespace sf;
@@ -26,6 +28,29 @@ typedef enum  //differentes tuiles dessin
 	EMPTY,
 } Tiles;
 
+//Définition d'une map pour convertir un string en enum
+const map<string, Tiles> getEnumValue = 
+{ 
+	{"BUSHES",BUSHES},
+	{"BODY_NORTH",BODY_NORTH},
+	{"BODY_SOUTH",BODY_SOUTH},
+	{"BODY_EAST",BODY_EAST},
+	{"BODY_WEST",BODY_WEST},
+	{"HEAD_NORTH",HEAD_NORTH},
+	{"HEAD_SOUTH",HEAD_SOUTH},
+	{"HEAD_EAST",HEAD_EAST},
+	{"HEAD_WEST",HEAD_WEST},
+	{"FRUIT",FRUIT},
+	{"EMPTY",EMPTY} 
+};
+
+typedef struct //Definition d'une structure pour un item de la map
+{
+	int i;
+	int j;
+	Tiles tile;
+}Item;
+
 class Map
 {
 private:
@@ -34,7 +59,7 @@ public:
 	/*
 	Initialisation de la map en fonction de la taille de l'écran
 	*/
-	Map();// 
+	Map(string filename);// 
 	~Map();
 
 	/*
@@ -52,6 +77,11 @@ public:
 	Méthode pour dessiner la map dans la fenêtre
 	*/
 	void drawField(RenderWindow & window);
+
+	/*
+	Méthode pour intitialiser la map à partir d'un fichier
+	*/
+	void loadMapFromFile(string filename);
 	
 };
 

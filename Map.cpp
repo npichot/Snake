@@ -3,7 +3,7 @@
 
 
 // La map prend la forme d'une matrice où chaque élément symbolise un élément du décor
-Map::Map()
+Map::Map(string filename)
 {
 	int row_number, column_number;//Paramètre de la map, nombre 
 
@@ -19,6 +19,10 @@ Map::Map()
 			row.push_back(EMPTY);
 		field.push_back(row);
 	}
+
+	if (!filename.empty())
+		loadMapFromFile(filename);
+
 }
 
 Map::~Map()
@@ -64,8 +68,6 @@ void Map::drawField(RenderWindow & window)
 	background.setPosition(marginLeft, marginTop);
 	background.setSize(Vector2f(width, height));
 	background.setFillColor(Color::Green);
-	background.setOutlineColor(Color::Red);
-	background.setOutlineThickness(5);
 	window.draw(background);
 
 	//On affiche les tiles du terrain
@@ -117,3 +119,28 @@ void Map::drawField(RenderWindow & window)
 			window.draw(tile);
 		}
 }
+
+void Map::loadMapFromFile(string filename)
+{		
+		//on essaye d'ouvrir le fichier en lecture
+		ifstream is(filename);
+		if (!is)
+		{
+			cout << "Fichier non trouvé" << endl;
+		}
+		int i, j;
+		string tile;
+
+		//On lit les lignes une par une 
+		while (is >> i>> j>> tile)
+		{
+			updateField(i, j, getEnumValue.at(tile));//On met à jour la map
+		}
+
+		// close the opened file.
+		is.close();
+
+}
+
+
+
