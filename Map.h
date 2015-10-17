@@ -51,7 +51,7 @@ public:
 	/*
 	Méthode pour dessiner la map dans la fenêtre
 	*/
-	void drawField(RenderWindow * window);
+	void drawField(RenderWindow & window);
 	
 };
 

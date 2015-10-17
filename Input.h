@@ -10,11 +10,11 @@ public:
 };
 
 
-const enum Button
+typedef enum 
 {
 	UP,
 	DOWN,
 	RIGHT,
 	LEFT,
 	ESCAPE,
-};
+}Button;

@@ -50,7 +50,7 @@ Tiles Map::getTile(int i, int j)
 	}
 }
 
-void Map::drawField(RenderWindow * window)
+void Map::drawField(RenderWindow & window)
 {
 	//Chargement du fond
 		//On initialise les paramètres
@@ -66,7 +66,7 @@ void Map::drawField(RenderWindow * window)
 	background.setFillColor(Color::Green);
 	background.setOutlineColor(Color::Red);
 	background.setOutlineThickness(5);
-	window->draw(background);
+	window.draw(background);
 
 	//On affiche les tiles du terrain
 	
@@ -114,6 +114,6 @@ void Map::drawField(RenderWindow * window)
 			}
 
 			//On ajoute la tile à la fenêtre
-			window->draw(tile);
+			window.draw(tile);
 		}
 }
