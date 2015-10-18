@@ -44,12 +44,6 @@ const map<string, Tiles> getEnumValue =
 	{"EMPTY",EMPTY} 
 };
 
-typedef struct //Definition d'une structure pour un item de la map
-{
-	int i;
-	int j;
-	Tiles tile;
-}Item;
 
 class Map
 {
