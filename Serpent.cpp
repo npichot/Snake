@@ -4,6 +4,7 @@
 
 Serpent::Serpent()
 {
+	int test(0);
 }
 
 
