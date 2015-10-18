@@ -151,7 +151,7 @@ void Map::loadMapFromFile(string filename)
 		ifstream is(filename);
 		if (!is)
 		{
-			cout << "Fichier non trouvŽ" << endl;
+			cout << "Fichier introuvable" << endl;
 		}
 		int i, j;
 		string tile;
