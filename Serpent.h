@@ -21,7 +21,11 @@ struct Tail { // Structure pour identifier la queue du serpent
 //Classe permettant de gérer le serpent en temps réel.
 class Serpent
 {
-public:
+    public:
+    //Mthodes
+    void guiderTete(); //Guide la tte en fonction de l'input
+    void allongerQueue();//Allonge la queue si fruit mang
+    bool estVivant() const;//Test si le serpent est vivant
 	Serpent();
 	~Serpent();
 private:

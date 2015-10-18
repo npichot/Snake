@@ -4,10 +4,25 @@
 
 Serpent::Serpent()
 {
-	int test(0);
+    
 }
-
 
 Serpent::~Serpent()
 {
+    
+}
+
+void Serpent::guiderTete()
+{
+	
+}
+
+void Serpent::allongerQueue()
+{
+
+}
+
+bool Serpent::estVivant() const
+{
+    
 }
