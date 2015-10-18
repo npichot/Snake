@@ -151,7 +151,7 @@ void Map::loadMapFromFile(string filename)
 		ifstream is(filename);
 		if (!is)
 		{
-			cout << "Fichier non trouvé" << endl;
+			cout << "Fichier non trouvŽ" << endl;
 		}
 		int i, j;
 		string tile;
