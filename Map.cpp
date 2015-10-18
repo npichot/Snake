@@ -1,6 +1,6 @@
 #include "Map.h"
 #include "Main.h"
-
+#include <math.h>
 
 // La map prend la forme d'une matrice où chaque élément symbolise un élément du décor
 Map::Map(string filename)
