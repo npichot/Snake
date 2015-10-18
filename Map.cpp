@@ -85,26 +85,51 @@ void Map::drawField(RenderWindow & window)
 			switch (getTile(i,j))
 			{
 			case BUSHES :
-				if (texture.loadFromFile("Ressources/bushes.png"))
+				if (texture.loadFromFile("Ressources/tree.png"))
 					tile.setTexture(&texture);
 				else
 					tile.setFillColor(Color::Blue);
 				break;
 			case HEAD_NORTH:
+				if (texture.loadFromFile("Ressources/head_N.png"))
+					tile.setTexture(&texture);
+				else
+					tile.setFillColor(Color::Yellow);
+				break;
 			case HEAD_SOUTH:
+				if (texture.loadFromFile("Ressources/head_S.png"))
+					tile.setTexture(&texture);
+				else
+					tile.setFillColor(Color::Yellow);
+				break;
 			case HEAD_EAST:
+				if (texture.loadFromFile("Ressources/head_E.png"))
+					tile.setTexture(&texture);
+				else
+					tile.setFillColor(Color::Yellow);
+				break;
 			case HEAD_WEST:
+				if (texture.loadFromFile("Ressources/head_W.png"))
+					tile.setTexture(&texture);
+				else
+					tile.setFillColor(Color::Yellow);
+				break;
 			case BODY_NORTH:
 			case BODY_SOUTH:
+				if (texture.loadFromFile("Ressources/body_NS.png"))
+					tile.setTexture(&texture);
+				else
+					tile.setFillColor(Color::Yellow);
+				break;
 			case BODY_EAST:
 			case BODY_WEST:
-				if (texture.loadFromFile("Ressources/body.png"))
+				if (texture.loadFromFile("Ressources/body_EW.png"))
 					tile.setTexture(&texture);
 				else
 					tile.setFillColor(Color::Yellow);
 				break;
 			case FRUIT:
-				if (texture.loadFromFile("Ressources/fruit.png"))
+				if (texture.loadFromFile("Ressources/cherry.png"))
 					tile.setTexture(&texture);
 				else
 					tile.setFillColor(Color::Magenta);
