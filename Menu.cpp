@@ -15,7 +15,7 @@ void Menu::drawMenu(RenderWindow & window)
 {
 }
 
-MenuChoice Menu::getMenuChoice()
+MenuChoice Menu::getMenuChoice(RenderWindow & window)
 {
 	return MenuChoice();
 }

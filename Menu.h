@@ -1,12 +1,10 @@
 #pragma once
-#include "SFML\Graphics.hpp"
-
-using namespace std;
-using namespace sf;
+#include "Main.h"
 
 typedef enum
 {
 	PLAY,
+	HOWTO,
 	QUIT,
 }MenuChoice;
 
@@ -19,15 +17,17 @@ public:
 	Menu();
 	~Menu();
 	/*
+	Retourne le choix de l'utilisateur dans le menu 
+	*/
+	MenuChoice getMenuChoice(RenderWindow & window);
+private:
+	vector<string> items; // Liste des élements du menu
+	int curseur;// determine l'élément du menu qui est sélectionner
+	Font font; //Police du menu
+
+	/*
 	Dessine le menu
 	*/
 	void drawMenu(RenderWindow & window);
-	/*
-	Retourne le choix de l'utilisateur dans le menu 
-	*/
-	MenuChoice getMenuChoice();
-private:
-	vector<string> items; // Liste des élements du menu
-
 };
 
