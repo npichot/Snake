@@ -6,6 +6,7 @@ typedef enum
 	PLAY,
 	HOWTO,
 	QUIT,
+	NONE,
 }MenuChoice;
 
 class Menu
