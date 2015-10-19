@@ -4,7 +4,8 @@ using namespace std;
 using namespace sf;
 
 
-Menu::Menu()
+Menu::Menu(RenderWindow & window) 
+	:window(window)
 {
 	//Chargement des items
 	items.push_back("Play");
@@ -12,7 +13,7 @@ Menu::Menu()
 	items.push_back("Quit");
 
 	//Chargement de la police
-	if (!font.loadFromFile("arial.ttf"))
+	if (!font.loadFromFile("Police/arial.ttf"))
 	{
 		// TODO erreur...
 	}
@@ -25,7 +26,7 @@ Menu::~Menu()
 {
 }
 
-void Menu::drawMenu(RenderWindow & window)
+void Menu::drawMenu()
 {
 	window.clear(Color(175,182,55,255));
 	
@@ -56,7 +57,7 @@ void Menu::drawMenu(RenderWindow & window)
 	
 }
 
-MenuChoice Menu::getMenuChoice(RenderWindow & window)
+MenuChoice Menu::getMenuChoice()
 {
 	MenuChoice mc = NONE;
 	while (mc == NONE)
@@ -71,7 +72,7 @@ MenuChoice Menu::getMenuChoice(RenderWindow & window)
 			else if (event.type == Event::KeyPressed && event.key.code == Keyboard::Down)
 				(curseur == items.size() - 1) ? curseur = 0 : curseur++;
 
-			drawMenu(window);
+			drawMenu();
 			window.display();
 		}
 	}

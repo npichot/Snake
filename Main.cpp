@@ -8,13 +8,13 @@ int main()
 	// Chargement de la fenetre
 	RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32),"Snake");
 	
-	Menu menu;
+	Menu menu(window);
 
 	//Lancement de la boucle principale
 	if (window.isOpen())
 	{
 		//Gestion du menu
-		switch (menu.getMenuChoice(window))
+		switch (menu.getMenuChoice())
 		{
 		case PLAY:
 			play(window);
@@ -27,7 +27,7 @@ void play(RenderWindow & window)
 {
 	while (window.isOpen())
 	{
-		Map map("MapConfig/Config1.dat");
+		Map map("MapConfig/Config1.dat",window);
 		//Controle des inputs claviers 
 
 		//Mise a jour du serpent 
@@ -36,7 +36,7 @@ void play(RenderWindow & window)
 
 		//dessin de la map 
 		window.clear();
-		map.drawField(window);
+		map.drawField();
 		window.display();
 	}
 }

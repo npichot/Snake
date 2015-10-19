@@ -4,13 +4,14 @@ using namespace sf;
 using namespace std;
 
 // La map prend la forme d'une matrice où chaque element symbolise un element du decor
-Map::Map(string filename)
+Map::Map(string filename, RenderWindow & window)
+	:window(window)
 {
 	int row_number, column_number;//Parametre de la map, nombre 
 
 	//Calcule des parametres 
-	column_number = floor((800 - 3 * TILE_SIZE) / TILE_SIZE);//On prevoit une marge min de 3 tile (~100 px)
-	row_number= floor((600 - 3 * TILE_SIZE) / TILE_SIZE);
+	column_number = floor((window.getSize().x - 3 * TILE_SIZE) / TILE_SIZE);//On prevoit une marge min de 3 tile (~100 px)
+	row_number= floor((window.getSize().y - 3 * TILE_SIZE) / TILE_SIZE);
 	
 	//Remplissage de la map
 	for (int i = 0; i < row_number; ++i)
@@ -55,7 +56,7 @@ Tiles Map::getTile(int i, int j)
 	}
 }
 
-void Map::drawField(RenderWindow & window)
+void Map::drawField()
 {
 	//Chargement du fond
 		//On initialise les parametres

@@ -17,13 +17,14 @@ public:
 	/*
 	Initialisation du menu avec le remplissage de items
 	*/
-	Menu();
+	Menu(sf::RenderWindow & window);
 	~Menu();
 	/*
 	Retourne le choix de l'utilisateur dans le menu 
 	*/
-	MenuChoice getMenuChoice(sf::RenderWindow & window);
+	MenuChoice getMenuChoice();
 private:
+	sf::RenderWindow & window; // reference sur la fenetre active dans laquelle le menu est dessine
 	std::vector<std::string> items; // Liste des elements du menu
 	int curseur;// determine l'element du menu qui est selectionner
 	sf::Font font; //Police du menu
@@ -31,7 +32,7 @@ private:
 	/*
 	Dessine le menu
 	*/
-	void drawMenu(sf::RenderWindow & window);
+	void drawMenu();
 };
 
 #endif // __MENU_H_INCLUDED__

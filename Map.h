@@ -51,11 +51,12 @@ class Map
 {
 private:
 	std::vector < std::vector <Tiles> > field; // Le terrain ne peut pas etre modifie directement. Notamment sa taille est calculee et fixee une fois au debut.
+	sf::RenderWindow & window;
 public:
 	/*
 	Initialisation de la map en fonction de la taille de l'ecran
 	*/
-	Map(std::string filename);// 
+	Map(std::string filename, sf::RenderWindow & window);
 	~Map();
 
 	/*
@@ -72,7 +73,7 @@ public:
 	/*
 	Methode pour dessiner la map dans la fenetre
 	*/
-	void drawField(sf::RenderWindow & window);
+	void drawField();
 
 	/*
 	Methode pour intitialiser la map a partir d'un fichier
