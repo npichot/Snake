@@ -1,5 +1,7 @@
 #include "Menu.h"
 
+using namespace std;
+using namespace sf;
 
 
 Menu::Menu()
@@ -12,13 +14,12 @@ Menu::Menu()
 	//Chargement de la police
 	if (!font.loadFromFile("arial.ttf"))
 	{
-		// erreur...
+		// TODO erreur...
 	}
 
 	//on initialise le curseur
 	curseur = 0;
 }
-
 
 Menu::~Menu()
 {
@@ -38,7 +39,7 @@ void Menu::drawMenu(RenderWindow & window)
 		(curseur==i) ? text.setColor(sf::Color::Red): text.setColor(sf::Color::White);// choix de la couleur du texte
 		//Centrer le texte sur la fenetre
 		FloatRect fr = text.getLocalBounds();
-		text.setPosition((WINDOW_WIDTH - fr.width) / 2, (WINDOW_HEIGHT-100*items.size()+50)/2+100* i); //chaque element a une hauteur de 50 et on laisse 100 entre chaque element
+		text.setPosition((window.getSize().x - fr.width) / 2, (window.getSize().y -100*items.size()+50)/2+100* i); //chaque element a une hauteur de 50 et on laisse 100 entre chaque element
 		window.draw(text);
 	}
 
@@ -49,7 +50,7 @@ void Menu::drawMenu(RenderWindow & window)
 	text.setColor(sf::Color::White);// choix de la couleur du texte
 	//Centrer le texte en bas de la fenetre
 	FloatRect fr = text.getLocalBounds();
-	text.setPosition((WINDOW_WIDTH - fr.width) / 2, (WINDOW_HEIGHT - 50)); //On laisse un marge de 25 en bas
+	text.setPosition((window.getSize().x - fr.width) / 2, (window.getSize().y - 50)); //On laisse un marge de 25 en bas
 	window.draw(text);
 
 	

@@ -1,6 +1,6 @@
 #include "Serpent.h"
 
-//TODO définition de la classe
+//TODO definition de la classe
 
 Serpent::Serpent()
 {
@@ -22,7 +22,7 @@ void Serpent::allongerQueue()
 
 }
 
-bool Serpent::estVivant() const
+bool Serpent::estVivant() 
 {
-    
+	return true;
 }

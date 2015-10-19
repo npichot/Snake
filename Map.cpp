@@ -1,15 +1,16 @@
 #include "Map.h"
-#include "Main.h"
-#include <math.h>
 
-// La map prend la forme d'une matrice où chaque élément symbolise un élément du décor
+using namespace sf;
+using namespace std;
+
+// La map prend la forme d'une matrice où chaque element symbolise un element du decor
 Map::Map(string filename)
 {
-	int row_number, column_number;//Paramètre de la map, nombre 
+	int row_number, column_number;//Parametre de la map, nombre 
 
-	//Calcule des paramètres 
-	column_number = floor((WINDOW_WIDTH - 3 * TILE_SIZE) / TILE_SIZE);//On prévoit une marge min de 3 tile (~100 px)
-	row_number= floor((WINDOW_HEIGHT - 3 * TILE_SIZE) / TILE_SIZE);
+	//Calcule des parametres 
+	column_number = floor((800 - 3 * TILE_SIZE) / TILE_SIZE);//On prevoit une marge min de 3 tile (~100 px)
+	row_number= floor((600 - 3 * TILE_SIZE) / TILE_SIZE);
 	
 	//Remplissage de la map
 	for (int i = 0; i < row_number; ++i)
@@ -37,7 +38,6 @@ void Map::updateField(int i, int j, Tiles t)
 			field[i][j] = t;
 			return;
 		}
-	//else
 	printf("Error 1 : Can't update the tile because the coordinates are outside the field");
 }
 
@@ -51,19 +51,20 @@ Tiles Map::getTile(int i, int j)
 	else
 	{
 		printf("Error 2 : Can't get the tile because the coordinates are outside the field");
+		return UNKNOWN;
 	}
 }
 
 void Map::drawField(RenderWindow & window)
 {
 	//Chargement du fond
-		//On initialise les paramètres
+		//On initialise les parametres
 	int width = TILE_SIZE* field[0].size();
 	int height = TILE_SIZE* field.size();
-	double marginLeft = (WINDOW_WIDTH - width) / 2;
-	double marginTop = (WINDOW_HEIGHT - height) / 2;
+	double marginLeft = (window.getSize().x - width) / 2;
+	double marginTop = (window.getSize().y - height) / 2;
 
-		//On construit le rectangle d'arrière plan
+		//On construit le rectangle d'arriere plan
 	RectangleShape background;
 	background.setPosition(marginLeft, marginTop);
 	background.setSize(Vector2f(width, height));
@@ -75,7 +76,7 @@ void Map::drawField(RenderWindow & window)
 	for (int i = 0; i < field.size();++i)
 		for (int j = 0; j < field[i].size(); ++j)
 		{
-			//On débute la construction du rectangle
+			//On debute la construction du rectangle
 			RectangleShape tile;
 			Texture texture;
 			tile.setPosition(marginLeft + j * TILE_SIZE, marginTop + i * TILE_SIZE);
@@ -140,7 +141,7 @@ void Map::drawField(RenderWindow & window)
 				break;
 			}
 
-			//On ajoute la tile à la fenêtre
+			//On ajoute la tile a la fenetre
 			window.draw(tile);
 		}
 }
@@ -151,7 +152,7 @@ void Map::loadMapFromFile(string filename)
 		ifstream is(filename);
 		if (!is)
 		{
-			cout << "Fichier introuvable" << endl;
+			printf("Fichier introuvable");
 		}
 		int i, j;
 		string tile;
@@ -159,7 +160,7 @@ void Map::loadMapFromFile(string filename)
 		//On lit les lignes une par une 
 		while (is >> i>> j>> tile)
 		{
-			updateField(i, j, getEnumValue.at(tile));//On met à jour la map
+			updateField(i, j, getEnumValue.at(tile));//On met a jour la map
 		}
 
 		// close the opened file.

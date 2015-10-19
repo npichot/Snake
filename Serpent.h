@@ -1,31 +1,35 @@
-#pragma once
-using namespace std;
+#ifndef __SERPENT_H_INCLUDED__
+#define __SERPENT_H_INCLUDED__
 
-typedef enum  //Pour la tÍte du serpent
+enum Orientation //Pour la tete du serpent
 {
 	NORTH,
 	SOUTH,
 	EAST,
 	WEST,
-}Orientation;
+};
 
-struct Head { //Structure pour la tÍte du serpent
+//Structure pour la tete du serpent
+struct Head 
+{ 
 	int line, column;//Position ligne/colonne dans la grille de jeu
 	Orientation orientation; //orientation
 };
 
-struct Tail { // Structure pour identifier la queue du serpent
+// Structure pour identifier la queue du serpent
+struct Tail 
+{ 
 	int row, column;
 };
 
-//Classe permettant de gÈrer le serpent en temps rÈel.
+//Classe permettant de gerer le serpent en temps reel.
 class Serpent
 {
-    public:
-    //Méthodes
+public:
+    //Methodes
     void guiderTete(); //Guide la tête en fonction de l'input
-    void allongerQueue();//Allonge la queue si fruit mangé
-    bool estVivant() const;//Test si le serpent est vivant
+    void allongerQueue();//Allonge la queue si fruit est mange
+    bool estVivant();//Test si le serpent est vivant
 	Serpent();
 	~Serpent();
 private:
@@ -33,7 +37,7 @@ private:
 	Tail tail;
 };
 
-
+#endif // !__SERPENT_H_INCLUDED__
 
 
 

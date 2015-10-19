@@ -1,6 +1,6 @@
 #include "Input.h"
 
-//TODO définition de la classe
+//TODO definition de la classe
 
 Input::Input()
 {

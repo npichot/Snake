@@ -1,6 +1,7 @@
 #include "Main.h"
 
 using namespace std;
+using namespace sf;
 
 int main()
 {

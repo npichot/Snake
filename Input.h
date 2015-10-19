@@ -1,5 +1,5 @@
-#pragma once
-using namespace std;
+#ifndef __INPUT_H_INCLUDED__
+#define __INPUT_H_INCLUDED__
 
 //Classe pour le controle des commandes claviers
 class Input
@@ -10,11 +10,13 @@ public:
 };
 
 
-typedef enum 
+enum Button
 {
 	UP,
 	DOWN,
 	RIGHT,
 	LEFT,
 	ESCAPE,
-}Button;
+};
+
+#endif

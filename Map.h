@@ -1,15 +1,17 @@
-#pragma once
+#ifndef __MAP_H_INCLUDED__
+#define __MAP_H_INCLUDED__
+
 #include <vector>
-#include <iostream>
 #include <fstream>
 #include <SFML/Graphics.hpp>
-using namespace sf;
-using namespace std;
+#include <string>
+#include <math.h>
 
-//Chaque élement de la map est représenté par un carré de 32*32
+
+//Chaque element de la map est represente par un carre de 32*32
 const int TILE_SIZE = 32;
 
-typedef enum  //differentes tuiles dessin
+enum Tiles //differentes tuiles dessin
 {
 	//Element Fixes
 	BUSHES,
@@ -25,10 +27,11 @@ typedef enum  //differentes tuiles dessin
 	//Autres
 	FRUIT,
 	EMPTY,
-} Tiles;
+	UNKNOWN
+};
 
-//Définition d'une map pour convertir un string en enum
-const map<string, Tiles> getEnumValue = 
+//Definition d'une map pour convertir un string en enum
+const std::map<std::string, Tiles> getEnumValue = 
 { 
 	{"BUSHES",BUSHES},
 	{"BODY_NORTH",BODY_NORTH},
@@ -40,43 +43,44 @@ const map<string, Tiles> getEnumValue =
 	{"HEAD_EAST",HEAD_EAST},
 	{"HEAD_WEST",HEAD_WEST},
 	{"FRUIT",FRUIT},
-	{"EMPTY",EMPTY} 
+	{"EMPTY",EMPTY}, 
 };
 
 
 class Map
 {
 private:
-	vector < vector <Tiles> > field; // Le terrain ne peut pas être modifié directement. Notamment sa taille est calculée et fixée une fois au début.
+	std::vector < std::vector <Tiles> > field; // Le terrain ne peut pas etre modifie directement. Notamment sa taille est calculee et fixee une fois au debut.
 public:
 	/*
-	Initialisation de la map en fonction de la taille de l'écran
+	Initialisation de la map en fonction de la taille de l'ecran
 	*/
-	Map(string filename);// 
+	Map(std::string filename);// 
 	~Map();
 
 	/*
-	Méthode pour modifier indirectement les éléments de la map
-	On modifie l'élément à la position (i,j) par la Tile t
+	Methode pour modifier indirectement les elements de la map
+	On modifie l'element a la position (i,j) par la Tile t
 	*/
 	void updateField(int i, int j, Tiles t);
 
 	/*
-	Récupérer la tile à l'emplacement (i, j)
+	Recuperer la tile a l'emplacement (i, j)
 	*/
 	Tiles getTile(int i, int j);
 
 	/*
-	Méthode pour dessiner la map dans la fenêtre
+	Methode pour dessiner la map dans la fenetre
 	*/
-	void drawField(RenderWindow & window);
+	void drawField(sf::RenderWindow & window);
 
 	/*
-	Méthode pour intitialiser la map à partir d'un fichier
+	Methode pour intitialiser la map a partir d'un fichier
 	*/
-	void loadMapFromFile(string filename);
+	void loadMapFromFile(std::string filename);
 	
 };
 
+#endif
 
 

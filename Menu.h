@@ -1,13 +1,15 @@
-#pragma once
-#include "Main.h"
+#ifndef __MENU_H_INCLUDED__
+#define __MENU_H_INCLUDED__
 
-typedef enum
+#include "SFML/Graphics.hpp"
+
+enum MenuChoice
 {
 	PLAY,
 	HOWTO,
 	QUIT,
 	NONE,
-}MenuChoice;
+};
 
 class Menu
 {
@@ -20,15 +22,16 @@ public:
 	/*
 	Retourne le choix de l'utilisateur dans le menu 
 	*/
-	MenuChoice getMenuChoice(RenderWindow & window);
+	MenuChoice getMenuChoice(sf::RenderWindow & window);
 private:
-	vector<string> items; // Liste des élements du menu
-	int curseur;// determine l'élément du menu qui est sélectionner
-	Font font; //Police du menu
+	std::vector<std::string> items; // Liste des elements du menu
+	int curseur;// determine l'element du menu qui est selectionner
+	sf::Font font; //Police du menu
 
 	/*
 	Dessine le menu
 	*/
-	void drawMenu(RenderWindow & window);
+	void drawMenu(sf::RenderWindow & window);
 };
 
+#endif // __MENU_H_INCLUDED__
