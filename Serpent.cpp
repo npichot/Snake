@@ -12,10 +12,10 @@ Serpent::~Serpent()
     
 }
 
-void Serpent::nextPosition(Input input) // Plus condition dans l'input empechant le serpent de revenir en arrière
+void Serpent::nextPosition(Button entree) // Plus condition dans l'input empechant le serpent de revenir en arrière
 {
 
-	switch (input)
+	switch (entree)
 	{
 	case UP:
 		m_headFuture = Head(m_head.getLine() + 1, m_head.getColumn(), NORTH);
@@ -42,7 +42,7 @@ void Serpent::allongerQueue()
 
 }
 
-bool Serpent::estVivant() 
+bool Serpent::isAlive(Map carte) const
 {
 	return true;
 }

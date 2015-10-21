@@ -1,6 +1,10 @@
 #ifndef __SERPENT_H_INCLUDED__
 #define __SERPENT_H_INCLUDED__
 
+#include "Map.h"
+#include "Input.h"
+#include "Head.h"
+
 enum Orientation //Pour la tete du serpent
 {
 	NORTH,
@@ -9,12 +13,6 @@ enum Orientation //Pour la tete du serpent
 	WEST,
 };
 
-//Structure pour la tete du serpent
-struct Head 
-{ 
-	int line, column;//Position ligne/colonne dans la grille de jeu
-	Orientation orientation; //orientation
-};
 
 // Structure pour identifier la queue du serpent
 struct Tail 
