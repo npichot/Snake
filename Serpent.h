@@ -27,14 +27,17 @@ class Serpent
 {
 public:
     //Methodes
-    void guiderTete(); //Guide la tête en fonction de l'input
-    void allongerQueue();//Allonge la queue si fruit est mange
-    bool estVivant();//Test si le serpent est vivant
 	Serpent();
 	~Serpent();
+    void guiderTete(); //Guide la tête en fonction de l'input
+    void allongerQueue();//Allonge la queue si fruit est mange
+	void nextPosition(Button entree); //MÈthode pour obtenir la future position de la tÍte, sans changer la position actuelle
+	bool isAlive(Map carte) const; 
+	
 private:
-	Head head;
-	Tail tail;
+	Head m_head; 
+	Head m_headFuture;
+	Tail m_tail;
 };
 
 #endif // !__SERPENT_H_INCLUDED__
