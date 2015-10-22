@@ -1,13 +1,7 @@
-#pragma once
+#ifndef __HEAD_H_INCLUDED__
+#define __HEAD_H_INCLUDED__
 
-
-typedef enum  //Pour la tête du serpent
-{
-	NORTH,
-	SOUTH,
-	EAST,
-	WEST,
-}Orientation;
+enum Orientation;
 
 class Head { //Classe pour la tête du serpent
 
@@ -24,3 +18,5 @@ class Head { //Classe pour la tête du serpent
 	int m_line, m_column;//Position ligne/colonne dans la grille de jeu
 	Orientation m_orientation; //orientation
 };
+
+#endif
