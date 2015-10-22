@@ -18,7 +18,7 @@ public:
 	Head(int line, int column, Orientation orientation);
 	int getLine() const;
 	int getColumn() const;
-	Orientation getOrientation();
+	Orientation getOrientation() const;
 	
 private:
 	//Attributs

@@ -4,6 +4,7 @@
 #include "Map.h"
 #include "Input.h"
 #include "Head.h"
+#include <vector>
 
 
 
@@ -21,14 +22,16 @@ public:
     //Methodes
 	Serpent();
 	~Serpent();
-    void guiderTete(); //Guide la tête en fonction de l'input
+	vector<vector<int>> deplacementSerpent(); // MÈthode qui permet de dÈplacer le serpent
     void allongerQueue();//Allonge la queue si fruit est mange
-	void nextPosition(Button entree); //MÈthode pour obtenir la future position de la tÍte, sans changer la position actuelle
-	bool isAlive(Map carte) const; 
+	void nextHead(Button entree); //MÈthode pour obtenir la future position de la tÍte, sans changer la position actuelle
+	bool isAlive(Map carte) const;
+	bool 
 	
 private:
+	vector<vector<int>> m_posSerpent;
 	Head m_head; 
-	Head m_headFuture;
+	Head m_headFuture; // Rajouter des commentaires
 	Tail m_tail;
 };
 

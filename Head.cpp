@@ -30,7 +30,7 @@ int Head::getColumn() const
 	return m_column;
 }
 
-Orientation Head::getOrientation()
+Orientation Head::getOrientation() const
 {
 	return m_orientation;
 }

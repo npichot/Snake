@@ -2,7 +2,7 @@
 
 //TODO definition de la classe
 
-Serpent::Serpent()
+Serpent::Serpent() // Ne pas oublier d'initialiser le vector
 {
     
 }
