@@ -37,7 +37,7 @@ void Serpent::allongerQueue()
 
 }
 
-bool Serpent::isAlive(Map carte) const
+bool Serpent::isAlive(Map carte)
 {
 	return true;
 }

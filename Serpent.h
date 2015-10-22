@@ -25,13 +25,14 @@ public:
     std::vector<std::vector<int>> deplacementSerpent(); // Méthode qui permet de déplacer le serpent
     void allongerQueue();//Allonge la queue si fruit est mange
 	void nextHead(Button entree); //Méthode pour obtenir la future position de la tête, sans changer la position actuelle
-	bool isAlive(Map carte) const;
+	bool isAlive(Map carte);
 	
 private:
     std::vector<std::vector<int>> m_posSerpent;
 	Head m_head; 
 	Head m_headFuture; // Rajouter des commentaires
 	Tail m_tail;
+    bool m_alive;
 };
 
 #endif // !__SERPENT_H_INCLUDED__
