@@ -12,7 +12,7 @@ Serpent::~Serpent()
     
 }
 
-void Serpent::nextPosition(Button entree) // Plus condition dans l'input empechant le serpent de revenir en arrière
+void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant le serpent de revenir en arrière
 {
 
 	switch (entree)
@@ -30,11 +30,6 @@ void Serpent::nextPosition(Button entree) // Plus condition dans l'input empecha
 		m_headFuture = Head(m_head.getLine(), m_head.getColumn() - 1, WEST);
 		break;
 	}
-}
-
-void Serpent::guiderTete()
-{
-	
 }
 
 void Serpent::allongerQueue()
