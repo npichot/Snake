@@ -1,4 +1,6 @@
 #include "Main.h"
+#include "Map.h"
+#include "Serpent.h"
 
 using namespace std;
 using namespace sf;
@@ -25,6 +27,8 @@ int main()
 
 void play(RenderWindow & window)
 {
+    //Initialisation du serpent
+    //map.updateField(m_posSerpent[0].row, m_posSerpent[0].column, m_posSerpent[0].Orientation);
 	while (window.isOpen())
 	{
 		Map map("MapConfig/Config1.dat",window);

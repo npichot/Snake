@@ -1,13 +1,24 @@
 #include "Serpent.h"
 
 //TODO definition de la classe
+using namespace std;
 
 Serpent::Serpent() // Ne pas oublier d'initialiser le vector
 {
+    elementSerpent body = {5, 5, EAST};
+    m_posSerpent.push_back(body);
     
+    Head m_head;
+    Head m_headFuture; // Rajouter des commentaires
+    bool m_alive;
 }
 
 Serpent::~Serpent()
+{
+   
+}
+
+vector<elementSerpent> Serpent::deplacementSerpent()
 {
     
 }
