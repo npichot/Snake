@@ -5,13 +5,7 @@
 #include "Input.h"
 #include "Head.h"
 
-enum Orientation //Pour la tete du serpent
-{
-	NORTH,
-	SOUTH,
-	EAST,
-	WEST,
-};
+
 
 
 // Structure pour identifier la queue du serpent
