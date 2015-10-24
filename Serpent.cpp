@@ -10,7 +10,7 @@ Serpent::Serpent() // Ne pas oublier d'initialiser le vector
     
     Head m_head;
     Head m_headFuture; // Rajouter des commentaires
-    bool m_alive;
+    m_alive=true; 
 }
 
 Serpent::~Serpent()
@@ -20,7 +20,7 @@ Serpent::~Serpent()
 
 vector<elementSerpent> Serpent::deplacementSerpent()
 {
-    
+	return m_posSerpent;
 }
 
 void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant le serpent de revenir en arrière
