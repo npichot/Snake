@@ -5,7 +5,7 @@ using namespace std;
 
 Serpent::Serpent() // Ne pas oublier d'initialiser le vector
 {
-    elementSerpent body = {5, 5, EAST};
+    ElementSerpent body = {5, 5, EAST};
     m_posSerpent.push_back(body);
     
     Head m_head;
@@ -18,7 +18,7 @@ Serpent::~Serpent()
    
 }
 
-vector<elementSerpent> Serpent::deplacementSerpent()
+vector<ElementSerpent> Serpent::deplacementSerpent()
 {
     
 }
