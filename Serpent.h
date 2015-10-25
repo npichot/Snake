@@ -18,7 +18,7 @@ public:
     std::vector<ElementSerpent> deplacementSerpent(); // Méthode qui permet de déplacer le serpent
     void allongerQueue();//Allonge la queue si fruit est mange
 	void nextHead(Button entree); //Méthode pour obtenir la future position de la tête, sans changer la position actuelle
-	bool isAlive(Map carte);
+	void isAlive(Map carte);
 	
 private:
     std::vector<ElementSerpent> m_posSerpent; 

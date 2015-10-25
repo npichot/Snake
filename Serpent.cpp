@@ -48,7 +48,16 @@ void Serpent::allongerQueue()
 
 }
 
-bool Serpent::isAlive(Map carte)
+void Serpent::isAlive(Map carte)
 {
-	return true;
+	Tiles element;
+	element = carte.getTile(m_headFuture.getLine(), m_headFuture.getColumn());
+	if (element == FRUIT || element == EMPTY)
+	{
+		m_alive = true; // S'il y a un fruit ou que la case est vide, m_alive reste true
+	}
+	else
+	{
+		m_alive = false; // Les autres cas sont a priori des cas où le serpent meurt
+	}
 }
