@@ -8,8 +8,8 @@ Serpent::Serpent() // Ne pas oublier d'initialiser le vector
     ElementSerpent body = {5, 5, EAST};
     m_posSerpent.push_back(body);
     
-    Head m_head;
-    Head m_headFuture; // Rajouter des commentaires
+    ElementSerpent m_head;
+    ElementSerpent m_headFuture; // Rajouter des commentaires
     m_alive=true; 
 }
 
@@ -29,16 +29,16 @@ void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant l
 	switch (entree)
 	{
 	case UP:
-		m_headFuture = Head(m_head.getLine() + 1, m_head.getColumn(), NORTH);
+		m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), NORTH);
 		break;
 	case DOWN:
-		m_headFuture = Head(m_head.getLine() - 1, m_head.getColumn(), SOUTH);
+		m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), SOUTH);
 		break;
 	case EAST:
-		m_headFuture = Head(m_head.getLine(), m_head.getColumn() + 1, EAST);
+		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() + 1, EAST);
 		break;
 	case WEST:
-		m_headFuture = Head(m_head.getLine(), m_head.getColumn() - 1, WEST);
+		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() - 1, WEST);
 		break;
 	}
 }

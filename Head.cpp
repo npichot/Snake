@@ -4,33 +4,33 @@ using namespace std;
 
 //TODO définition de la classe
 
-Head::Head()   // Valeurs initiales à revoir
+ElementSerpent::ElementSerpent()   // Valeurs initiales à revoir
 {
 	m_line = 10;
 	m_column = 10;
 	m_orientation = EAST; // Utilisation de l'enum à revoir
 }
 
-Head::~Head()
+ElementSerpent::~ElementSerpent()
 {
 }
 
-Head::Head(int line, int column, Orientation orientation) : m_line(line), m_column(column), m_orientation(orientation)
+ElementSerpent::ElementSerpent(int line, int column, Orientation orientation) : m_line(line), m_column(column), m_orientation(orientation)
 {
 
 }
 
-int Head::getLine() const
+int ElementSerpent::getLine() const
 {
 	return m_line;
 }
 
-int Head::getColumn() const
+int ElementSerpent::getColumn() const
 {
 	return m_column;
 }
 
-Orientation Head::getOrientation() const
+Orientation ElementSerpent::getOrientation() const
 {
 	return m_orientation;
 }

@@ -6,12 +6,7 @@
 #include "Head.h"
 #include <vector>
 
-// Structure pour identifier un ŽlŽment du serpent (ligne, colonne, orientation);
-struct ElementSerpent
-{ 
-	int row, column;
-    Orientation orientation;
-};
+
 
 //Classe permettant de gerer le serpent en temps reel.
 class Serpent
@@ -26,9 +21,9 @@ public:
 	bool isAlive(Map carte);
 	
 private:
-    std::vector<ElementSerpent> m_posSerpent;
-	Head m_head; 
-	Head m_headFuture; // Rajouter des commentaires
+    std::vector<ElementSerpent> m_posSerpent; 
+	ElementSerpent m_head; 
+	ElementSerpent m_headFuture; // Permet de garder la position future de la tête en attributs, afin de pouvoir réaliser le check des conditions
     bool m_alive;
 };
 
