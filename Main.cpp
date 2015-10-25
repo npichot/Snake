@@ -1,6 +1,4 @@
 #include "Main.h"
-#include "Map.h"
-#include "Serpent.h"
 
 using namespace std;
 using namespace sf;

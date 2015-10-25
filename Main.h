@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp> //Chargement bibliotheque Graphique
 #include "Map.h" // Gestion de l'affichage
 #include "Menu.h" // Gestion du menu
+#include "Serpent.h"//Gestion du serpent
 
 // Definition de la fenetre
 const unsigned int WINDOW_WIDTH = 800;
