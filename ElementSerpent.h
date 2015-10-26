@@ -1,5 +1,5 @@
-#ifndef __HEAD_H_INCLUDED__
-#define __HEAD_H_INCLUDED__
+#ifndef __ELEMENTSERPENT_H_INCLUDED__
+#define __ELEMENTSERPENT_H_INCLUDED__
 
 enum Orientation //Pour l'orientation de chaque élément
 {
