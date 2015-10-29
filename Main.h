@@ -7,10 +7,6 @@
 #include "Serpent.h"//Gestion du serpent
 #include "MapCreation.h"//interface de creation de map
 
-// Definition de la fenetre
-const unsigned int WINDOW_WIDTH = 800;
-const unsigned int WINDOW_HEIGHT = 600;
-
 void play(sf::RenderWindow & window);
 
 #endif

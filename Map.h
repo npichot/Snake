@@ -7,6 +7,9 @@
 #include <string>
 #include <math.h>
 
+// Definition de la fenetre principale
+const unsigned int WINDOW_WIDTH = 800;
+const unsigned int WINDOW_HEIGHT = 600;
 
 //Chaque element de la map est represente par un carre de 32*32
 const int TILE_SIZE = 32;
