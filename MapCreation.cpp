@@ -16,6 +16,6 @@ void MapCreation::launchInterface()
 {
 	while (m.getParentWindow().isOpen())
 	{
-		m.drawField();
+		m.drawField(true);
 	}
 }

@@ -73,7 +73,7 @@ public:
 	/*
 	Methode pour dessiner la map dans la fenetre
 	*/
-	void drawField();
+	void drawField(bool gridOn);
 
 	/*
 	Methode pour intitialiser la map a partir d'un fichier

@@ -56,7 +56,7 @@ Tiles Map::getTile(int i, int j)
 	}
 }
 
-void Map::drawField()
+void Map::drawField(bool gridOn)
 {
 	window.clear();
 
@@ -84,6 +84,11 @@ void Map::drawField()
 			Texture texture;
 			tile.setPosition(marginLeft + j * TILE_SIZE, marginTop + i * TILE_SIZE);
 			tile.setSize(Vector2f(TILE_SIZE,TILE_SIZE));
+			if (gridOn)
+			{
+				tile.setOutlineColor(Color::Blue);
+				tile.setOutlineThickness(2);
+			}
 
 			//On initialise le fond en fonction de la nature de la tile
 			switch (getTile(i,j))
