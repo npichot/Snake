@@ -2,7 +2,6 @@
 #define __TOOLBAR_H__
 
 #include "Tool.h" 
-#include "Map.h"
 
 class Toolbar
 {
@@ -13,6 +12,7 @@ public:
 	Toolbar(sf::RenderWindow & window);
 	~Toolbar();
 	void drawBar();
+	std::vector<Tool> & getTools() { return tools; };
 };
 
 #endif __TOOLBAR_H__

@@ -7,8 +7,8 @@ Toolbar::Toolbar(RenderWindow & window)
 	:window(window)
 {
 	//New tool tree added to the toolbar
-	Texture textureTree; textureTree.loadFromFile("Ressources/tree.png");
-	Tool toolTree(textureTree,"tree",false);
+	Texture texture; texture.loadFromFile("Ressources/tree.png");
+	Tool toolTree(texture,"tree",false);
 	tools.push_back(toolTree);
 
 }
@@ -32,15 +32,9 @@ void Toolbar::drawBar()
 	//Add tools
 	for (int i = 0; i < tools.size();i++)
 	{
-		RectangleShape button;
-		button.setTexture(&(tools[i].getTexture()));
-		button.setPosition(framework.getPosition().x + 10 + (TILE_SIZE + 2.5)*i, 5);
-		button.setSize(Vector2f(TILE_SIZE, TILE_SIZE));
-		if (tools[i].isActivated())
-		{
-			button.setOutlineColor(Color::Red);
-			button.setOutlineThickness(2);
-		}
-		window.draw(button);
+		Texture texture; texture.loadFromFile("Ressources/tree.png");
+		tools[i].setTexture(&texture);//TODO optimiser en supprimant ca et en mettant le set texture dans Tool.cpp tout en évitant le pb du carré blanc
+		tools[i].setPosition(framework.getPosition().x + 10 + (TILE_SIZE + 2.5)*i, 5);
+		window.draw(tools[i]);
 	}
 }

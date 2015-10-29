@@ -2,18 +2,20 @@
 #define __TOOL_H__
 
 #include "SFML/Graphics.hpp"
+#include "Map.h"
 
-class Tool
+class Tool: public sf::RectangleShape
 {
 private:
-	sf::Texture texture;
+	sf::Texture & texture;
 	std::string name;
 	bool activated;
 public:
-	Tool(sf::Texture, std::string, bool);
+	Tool(sf::Texture t, std::string s, bool b);
 	~Tool();
-	sf::Texture & getTexture() { return texture; };
+	void activate(bool b);
 	bool isActivated() { return activated; };
+	sf::Texture * getTheTexture() { return &texture; };
 };
 
 #endif // !__TOOL_H__
