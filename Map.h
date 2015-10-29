@@ -79,6 +79,11 @@ public:
 	Methode pour intitialiser la map a partir d'un fichier
 	*/
 	void loadMapFromFile(std::string filename);
+
+	/*
+	Methode pour récupérer la fenêtre
+	*/
+	sf::RenderWindow & getParentWindow() { return window; };
 	
 };
 

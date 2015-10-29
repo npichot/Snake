@@ -14,4 +14,8 @@ MapCreation::~MapCreation()
 
 void MapCreation::launchInterface()
 {
+	while (m.getParentWindow().isOpen())
+	{
+		m.drawField();
+	}
 }
