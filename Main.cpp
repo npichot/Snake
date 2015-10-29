@@ -48,8 +48,6 @@ void play(RenderWindow & window)
 		//Gestion des actions
 
 		//dessin de la map 
-		window.clear();
 		map.drawField();
-		window.display();
 	}
 }
