@@ -6,7 +6,6 @@
 enum MenuChoice
 {
 	PLAY,
-	MAPCREATION,
 	HOWTO,
 	QUIT,
 	NONE,
