@@ -1,5 +1,5 @@
 # Snake
-Projet C++ de réalisation d'un jeu snake
+Projet C++ de réalisation d'un jeu snake.
 
 Ce projet est réalisé dans le cadre de la troisième année du cycle d'ingénieur.
 Les spécifications seront éventuellement décrites plus tard.
