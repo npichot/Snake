@@ -9,6 +9,7 @@ Menu::Menu(RenderWindow & window)
 {
 	//Chargement des items
 	items.push_back("Play");
+	items.push_back("Create Map");
 	items.push_back("How to play");
 	items.push_back("Quit");
 
