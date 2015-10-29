@@ -3,7 +3,7 @@
 
 
 MapCreation::MapCreation(Map m)
-	:m(m)
+	:m(m), tb(Toolbar(m.getParentWindow()))
 {
 }
 
@@ -16,6 +16,9 @@ void MapCreation::launchInterface()
 {
 	while (m.getParentWindow().isOpen())
 	{
+		m.getParentWindow().clear();
 		m.drawField(true);
+		tb.drawBar();
+		m.getParentWindow().display();
 	}
 }

@@ -10,8 +10,10 @@ private:
 	std::string name;
 	bool activated;
 public:
-	Tool();
+	Tool(sf::Texture, std::string, bool);
 	~Tool();
+	sf::Texture & getTexture() { return texture; };
+	bool isActivated() { return activated; };
 };
 
 #endif // !__TOOL_H__

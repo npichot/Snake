@@ -2,6 +2,7 @@
 #define __MAPCREATION_H__
 
 #include "Map.h"
+#include "Toolbar.h"
 
 /*
 Classe permettant d'afficher tout l'environnement de creation et de le gerer par rapport aux inputs utilisateur
@@ -10,6 +11,7 @@ class MapCreation
 {
 private:
 	Map m;
+	Toolbar tb;
 public:
 	MapCreation(Map m);
 	~MapCreation();
