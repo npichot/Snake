@@ -17,7 +17,18 @@ int main()
 		switch (menu.getMenuChoice())
 		{
 		case PLAY:
+		{
 			play(window);
+			break;
+		}
+		case CREATION:
+		{
+			MapCreation mc(Map("",window));
+			mc.launchInterface();
+			break;
+		}
+		default:
+			break;
 		}
 	}
 	return 0;

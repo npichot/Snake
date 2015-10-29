@@ -6,6 +6,7 @@
 enum MenuChoice
 {
 	PLAY,
+	CREATION,
 	HOWTO,
 	QUIT,
 	NONE,
