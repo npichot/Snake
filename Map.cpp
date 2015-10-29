@@ -58,8 +58,6 @@ Tiles Map::getTile(int i, int j)
 
 void Map::drawField(bool gridOn)
 {
-	window.clear();
-
 	//Chargement du fond
 		//On initialise les parametres
 	int width = TILE_SIZE* field[0].size();
@@ -152,8 +150,6 @@ void Map::drawField(bool gridOn)
 			//On ajoute la tile a la fenetre
 			window.draw(tile);
 		}
-
-	window.display();
 }
 
 void Map::loadMapFromFile(string filename)
