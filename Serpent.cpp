@@ -61,3 +61,11 @@ void Serpent::isAlive(Map carte)
 		m_alive = false; // Les autres cas sont a priori des cas où le serpent meurt
 	}
 }
+
+ElementSerpent Serpent::getElement(int i)
+{
+    ElementSerpent res;
+    res = this->m_posSerpent[i];
+    
+    return res;
+}
