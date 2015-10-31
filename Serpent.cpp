@@ -9,7 +9,7 @@ Serpent::Serpent() // Ne pas oublier d'initialiser le vector
     m_posSerpent.push_back(body);
     
     ElementSerpent m_head;
-    ElementSerpent m_headFuture; // Rajouter des commentaires
+    ElementSerpent m_headFuture; 
     m_alive=true; 
 }
 
@@ -34,11 +34,28 @@ void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant l
 	case DOWN:
 		m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), SOUTH);
 		break;
-	case EAST:
+	case RIGHT:
 		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() + 1, EAST);
 		break;
-	case WEST:
+	case LEFT:
 		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() - 1, WEST);
+		break;
+	default: // S'il n'y a pas eu d'input, la prochaine position dépend de l'orientation de la tête
+		switch (m_head.getOrientation())
+		{
+		case NORTH:
+			m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), NORTH);
+			break;
+		case SOUTH:
+			m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), SOUTH);
+			break;
+		case EAST:
+			m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() + 1, EAST);
+			break;
+		case LEFT:
+			m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() - 1, WEST);
+			break;
+		}
 		break;
 	}
 }
@@ -52,9 +69,14 @@ void Serpent::isAlive(Map carte)
 {
 	Tiles element;
 	element = carte.getTile(m_headFuture.getLine(), m_headFuture.getColumn());
-	if (element == FRUIT || element == EMPTY)
+	if (element == EMPTY)
 	{
 		m_alive = true; // S'il y a un fruit ou que la case est vide, m_alive reste true
+	}
+	else if (element == FRUIT)
+	{
+		allongerQueue(); //On allonge la queue du serpent s'il y a un fruit
+		m_alive = true; //
 	}
 	else
 	{
