@@ -2,14 +2,17 @@
 
 //TODO definition de la classe
 using namespace std;
+using namespace sf;
 
 Serpent::Serpent() // Ne pas oublier d'initialiser le vector
 {
     ElementSerpent head = {5, 5, HEAD_EAST};
     m_posSerpent.push_back(head);
+    ElementSerpent body = {5, 4, BODY_EAST};
+    m_posSerpent.push_back(body);
     
-    //ElementSerpent m_head;//A quoi ca sert ?
-    //ElementSerpent m_headFuture;//A quoi ca sert ?
+    ElementSerpent m_head;//A quoi ca sert ?
+    ElementSerpent m_headFuture;//A quoi ca sert ?
     m_alive=true; 
 }
 
@@ -18,9 +21,12 @@ Serpent::~Serpent()
    
 }
 
-vector<ElementSerpent> Serpent::deplacementSerpent()
+vector<ElementSerpent> Serpent::deplacementSerpent()//A terminer
 {
-	return m_posSerpent;
+    Event event;
+    if (event.type == Event::KeyPressed && event.key.code == Keyboard::Up)
+        
+    return m_posSerpent;
 }
 
 void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant le serpent de revenir en arrière
@@ -41,7 +47,7 @@ void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant l
 		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() - 1, HEAD_WEST);
 		break;
 	default: // S'il n'y a pas eu d'input, la prochaine position dépend de l'orientation de la tête
-		switch (m_head.getOrientation())
+		switch (m_head.gettile())
 		{
 		case NORTH:
 			m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), HEAD_NORTH);
@@ -84,10 +90,15 @@ void Serpent::isAlive(Map carte)
 	}
 }
 
-ElementSerpent Serpent::getElement(int i) 
+ElementSerpent Serpent::getElement(int i)
 {
     ElementSerpent res;
     res = this->m_posSerpent[i];
     
     return res;
+}
+
+int Serpent::sizeSerpent()
+{
+    return m_posSerpent.size();
 }
