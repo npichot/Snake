@@ -19,7 +19,7 @@ public:
     void allongerQueue();//Allonge la queue si fruit est mange
 	void nextHead(Button entree); //MÈthode pour obtenir la future position de la tÍte, sans changer la position actuelle
 	void isAlive(Map carte);
-    ElementSerpent getElement(int i); //Methode pour retourner l'élément i du vecteur m_posSerpent
+    ElementSerpent *getElement(int i); //Methode pour retourner l'élément i du vecteur m_posSerpent
     int sizeSerpent();//Permet d'accéder à la taille du serpent
 	
 private:

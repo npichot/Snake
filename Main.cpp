@@ -26,15 +26,17 @@ int main()
 void play(RenderWindow & window)
 {
     //Initialisation du serpent
-
+        Serpent serpent;
 	while (window.isOpen())
 	{
 		Map map("MapConfig/Config1.dat",window);
-        Serpent serpent;
         for (int i = 0 ; i < serpent.sizeSerpent(); ++i)
         {
-        map.updateField(serpent.getElement(i).getLine(), serpent.getElement(i).getColumn(), serpent.getElement(i).gettile());
+        map.updateField(serpent.getElement(i)->getLine(), serpent.getElement(i)->getColumn(), serpent.getElement(i)->gettile());
         }
+        cout << serpent.getElement(0)->getLine() << endl;
+        serpent.getElement(0)->setLine(1);
+        
         //Controle des inputs claviers
         //cout << serpent.getElement(0) << endl;
 		//Mise a jour du serpent 
@@ -45,5 +47,6 @@ void play(RenderWindow & window)
 		window.clear();
 		map.drawField();
 		window.display();
+        sleep(2);
 	}
 }

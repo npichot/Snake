@@ -6,9 +6,9 @@ using namespace sf;
 
 Serpent::Serpent() // Ne pas oublier d'initialiser le vector
 {
-    ElementSerpent head = {5, 5, HEAD_EAST};
+    ElementSerpent head = {5, 4, HEAD_EAST};
     m_posSerpent.push_back(head);
-    ElementSerpent body = {5, 4, BODY_EAST};
+    ElementSerpent body = {5, 3, BODY_EAST};
     m_posSerpent.push_back(body);
     
     ElementSerpent m_head;//A quoi ca sert ?
@@ -91,12 +91,12 @@ void Serpent::isAlive(Map carte)
 	}
 }
 
-ElementSerpent Serpent::getElement(int i)
+ElementSerpent *Serpent::getElement(int i)
 {
-    ElementSerpent res;
+    /*ElementSerpent res;
     res = this->m_posSerpent[i];
-    
-    return res;
+    */
+    return &m_posSerpent[i];
 }
 
 int Serpent::sizeSerpent()
