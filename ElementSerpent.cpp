@@ -1,6 +1,7 @@
 #include "ElementSerpent.h"
 
 using namespace std;
+using namespace sf;
 
 //TODO définition de la classe
 
@@ -30,4 +31,19 @@ int ElementSerpent::getColumn() const
 Tiles ElementSerpent::gettile() const
 {
 	return m_tile;
+}
+
+void ElementSerpent::setLine(int i)
+{
+    m_line = m_line + i;
+}
+
+void ElementSerpent::setColumn(int i)
+{
+    m_column = m_column + i;
+}
+
+void ElementSerpent::setOrientationTile(Tiles tile)
+{
+    m_tile = tile;
 }

@@ -20,6 +20,9 @@ public:
 	int getLine() const;
 	int getColumn() const;
 	Tiles gettile() const;
+    void setLine(int i);//Changer la ligne d'un ElementSerpent
+    void setColumn(int i);//Changer la colonne d'un Elemeserpent
+    void setOrientationTile(Tiles tile);//Changer l'orientation du tile d'un ElementSerpent
 	
 private: 
 	//Attributs

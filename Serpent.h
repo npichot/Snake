@@ -20,7 +20,7 @@ public:
 	void nextHead(Button entree); //MÈthode pour obtenir la future position de la tÍte, sans changer la position actuelle
 	void isAlive(Map carte);
     ElementSerpent getElement(int i); //Methode pour retourner l'élément i du vecteur m_posSerpent
-    int sizeSerpent();
+    int sizeSerpent();//Permet d'accéder à la taille du serpent
 	
 private:
     std::vector<ElementSerpent> m_posSerpent; 

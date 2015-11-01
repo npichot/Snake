@@ -23,9 +23,10 @@ Serpent::~Serpent()
 
 vector<ElementSerpent> Serpent::deplacementSerpent()//A terminer
 {
-    Event event;
+ /*   Event event;
     if (event.type == Event::KeyPressed && event.key.code == Keyboard::Up)
-        
+        m_posSerpent[0].m_tile
+   */     
     return m_posSerpent;
 }
 
