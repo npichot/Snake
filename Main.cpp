@@ -1,5 +1,5 @@
 #include "Main.h"
-
+#include <iostream>
 using namespace std;
 using namespace sf;
 
@@ -31,9 +31,12 @@ void play(RenderWindow & window)
 	{
 		Map map("MapConfig/Config1.dat",window);
         Serpent serpent;
-        map.updateField(serpent.getElement(0).getLine(), serpent.getElement(0).getColumn(), HEAD_EAST);
-		//Controle des inputs claviers 
-
+        for (int i = 0 ; i < serpent.sizeSerpent(); ++i)
+        {
+        map.updateField(serpent.getElement(i).getLine(), serpent.getElement(i).getColumn(), serpent.getElement(i).gettile());
+        }
+        //Controle des inputs claviers
+        //cout << serpent.getElement(0) << endl;
 		//Mise a jour du serpent 
 
 		//Gestion des actions
