@@ -5,11 +5,11 @@ using namespace std;
 
 Serpent::Serpent() // Ne pas oublier d'initialiser le vector
 {
-    ElementSerpent body = {5, 5, EAST};
-    m_posSerpent.push_back(body);
+    ElementSerpent head = {5, 5, HEAD_EAST};
+    m_posSerpent.push_back(head);
     
-    ElementSerpent m_head;
-    ElementSerpent m_headFuture; 
+    //ElementSerpent m_head;//A quoi ca sert ?
+    //ElementSerpent m_headFuture;//A quoi ca sert ?
     m_alive=true; 
 }
 
@@ -29,31 +29,31 @@ void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant l
 	switch (entree)
 	{
 	case UP:
-		m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), NORTH);
+		m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), HEAD_NORTH);
 		break;
 	case DOWN:
-		m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), SOUTH);
+		m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), HEAD_SOUTH);
 		break;
 	case RIGHT:
-		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() + 1, EAST);
+		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() + 1, HEAD_EAST);
 		break;
 	case LEFT:
-		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() - 1, WEST);
+		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() - 1, HEAD_WEST);
 		break;
 	default: // S'il n'y a pas eu d'input, la prochaine position dépend de l'orientation de la tête
 		switch (m_head.getOrientation())
 		{
 		case NORTH:
-			m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), NORTH);
+			m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), HEAD_NORTH);
 			break;
 		case SOUTH:
-			m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), SOUTH);
+			m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), HEAD_SOUTH);
 			break;
 		case EAST:
-			m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() + 1, EAST);
+			m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() + 1, HEAD_EAST);
 			break;
 		case LEFT:
-			m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() - 1, WEST);
+			m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() - 1, HEAD_WEST);
 			break;
 		}
 		break;
@@ -84,7 +84,7 @@ void Serpent::isAlive(Map carte)
 	}
 }
 
-ElementSerpent Serpent::getElement(int i)
+ElementSerpent Serpent::getElement(int i) 
 {
     ElementSerpent res;
     res = this->m_posSerpent[i];

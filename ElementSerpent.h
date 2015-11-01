@@ -1,7 +1,8 @@
 #ifndef __ELEMENTSERPENT_H_INCLUDED__
 #define __ELEMENTSERPENT_H_INCLUDED__
+#include "Map.h"
 
-enum Orientation //Pour l'orientation de chaque élément
+enum Orientation //Plus besoin
 {
     NORTH,
     SOUTH,
@@ -15,15 +16,15 @@ class ElementSerpent { //Classe pour chaque élément du serpent
 public:
 	ElementSerpent();
 	~ElementSerpent();
-	ElementSerpent(int line, int column, Orientation orientation);
+	ElementSerpent(int line, int column, Tiles tile);
 	int getLine() const;
 	int getColumn() const;
-	Orientation getOrientation() const;
+	Tiles getOrientation() const;
 	
 private: 
 	//Attributs
 	int m_line, m_column;//Position ligne/colonne dans la grille de jeu
-	Orientation m_orientation; //orientation
+	Tiles m_tile; //orientation
 };
 
 #endif

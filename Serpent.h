@@ -19,7 +19,7 @@ public:
     void allongerQueue();//Allonge la queue si fruit est mange
 	void nextHead(Button entree); //Méthode pour obtenir la future position de la tête, sans changer la position actuelle
 	void isAlive(Map carte);
-    ElementSerpent getElement(int i);
+    ElementSerpent getElement(int i); //Methode pour retourner l'ŽlŽment i du vecteur m_posSerpent
 	
 private:
     std::vector<ElementSerpent> m_posSerpent; 
