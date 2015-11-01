@@ -19,7 +19,7 @@ public:
 	ElementSerpent(int line, int column, Tiles tile);
 	int getLine() const;
 	int getColumn() const;
-	Tiles getOrientation() const;
+	Tiles gettile() const;
 	
 private: 
 	//Attributs

@@ -27,7 +27,7 @@ int ElementSerpent::getColumn() const
 	return m_column;
 }
 
-Tiles ElementSerpent::getOrientation() const
+Tiles ElementSerpent::gettile() const
 {
 	return m_tile;
 }
