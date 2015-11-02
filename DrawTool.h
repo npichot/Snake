@@ -1,6 +1,7 @@
 #ifndef __DRAWTOOL_H__
 #define __DRAWTOOL_H__
 #include "Tool.h"
+#include <iostream>
 
 class DrawTool :
 	public Tool

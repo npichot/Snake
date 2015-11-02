@@ -1,5 +1,7 @@
 #include "DrawTool.h"
+
 using namespace sf;
+using namespace std;
 
 
 DrawTool::DrawTool(sf::Texture t, std::string s, bool b, Tiles tile)
