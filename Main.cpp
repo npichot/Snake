@@ -76,22 +76,7 @@ void play(RenderWindow & window)
                     serpent.getElement(0)->setColumn(serpent.getElement(0)->getColumn()-1);
                     break;
             }
-            /*if (event.type ==Event::KeyPressed && event.key.code == Keyboard::Up)
-            {
-                serpent.getElement(0)->setAttribut(serpent.getElement(0)->getLine()-1, serpent.getElement(0)->getColumn(), HEAD_NORTH);
-            }}
-            else if (event.type ==Event::KeyPressed && event.key.code == Keyboard::Right)
-            {
-                m_posSerpent[0].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn()+1, HEAD_EAST);
-            }
-            else if (event.type ==Event::KeyPressed && event.key.code == Keyboard::Down)
-            {
-                m_posSerpent[0].setAttribut(m_posSerpent[0].getLine()+1, m_posSerpent[0].getColumn(), HEAD_SOUTH);
-            }
-            else if (event.type ==Event::KeyPressed && event.key.code == Keyboard::Left)
-            {
-                m_posSerpent[0].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn()-1, HEAD_WEST);
-        }*/
+        
             
 		//Mise a jour du serpent 
 
