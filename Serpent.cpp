@@ -35,6 +35,7 @@ void Serpent::deplacementSerpent(Serpent &serpent)
    */
     for (int i = serpent.sizeSerpent()-1; i >= 2; --i)
     {
+		m_lastPosition = m_posSerpent[m_posSerpent.size() - 1]; // Pour sauvegarder la dernière position de la queue
         m_posSerpent[i]=m_posSerpent[i-1];
     }
     m_posSerpent[1].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn(), convertHeadtoBody.at(m_posSerpent[0].gettile()));
@@ -125,7 +126,7 @@ void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant l
 
 void Serpent::allongerQueue()
 {
-
+	m_posSerpent.push_back(m_lastPosition); // On rajoute un élément Serpent à la dernière position de la queue pour allonger le Serpent
 }
 
 void Serpent::isAlive(Map carte)
