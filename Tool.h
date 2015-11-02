@@ -1,7 +1,6 @@
 #ifndef __TOOL_H__
 #define __TOOL_H__
 
-#include "SFML/Graphics.hpp"
 #include "Map.h"
 
 class Tool: public sf::RectangleShape
