@@ -16,7 +16,6 @@ MapCreation::~MapCreation()
 void MapCreation::executeInterface(RenderWindow & window, Map & map)
 {
 	bool mouseIsCliked = false;
-	bool mouseIsReleased = true;
 
 	int xMouse0 = 0;
 	int yMouse0 = 0;
@@ -24,10 +23,12 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 	int xMouse = 0;
 	int yMouse = 0;
 
+	Map tempMap=map;
+
 	while (window.isOpen())
 	{
 		window.clear();
-		map.drawField(window, true);
+		tempMap.drawField(window, true);
 		tb.drawBar(window);
 		vector<Tool*>  tools = tb.getTools();
 
@@ -45,19 +46,22 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 				xMouse0 = Mouse::getPosition(window).x;
 				yMouse0 = Mouse::getPosition(window).y;
 				mouseIsCliked = true;
-				bool mouseIsReleased = false;
 			}
 			else if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
 			{
 				mouseIsCliked = false;
-				bool mouseIsReleased = true;
 			}
 
 			//Gestion des actions
-			if (mouseIsCliked)
+			if (!mouseIsCliked)
 			{
+				map = tempMap;
+			}
+			else
+			{
+				tempMap = map;
 				if (tb.getSelected() != NULL)
-					if (tb.getSelected()->execute(xMouse0, yMouse0, xMouse, yMouse, map))
+					if (tb.getSelected()->execute(xMouse0, yMouse0, xMouse, yMouse, tempMap))
 						break;
 
 				for (int i = 0; i < tools.size(); i++)

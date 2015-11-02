@@ -14,7 +14,6 @@ DrawTool::~DrawTool()
 bool DrawTool::execute(int xMouse0, int yMouse0, int xMouse, int yMouse, Map & map)
 {
 	int row0, column0, row, column;
-	int cpt = 0;
 	if (((row0 = map.getRowFromMouseCoordinate(xMouse0, yMouse0)) != -1) &&
 		((column0 = map.getColumnFromMouseCoordinate(xMouse0, yMouse0)) != -1))
 		if (((row = map.getRowFromMouseCoordinate(xMouse, yMouse)) != -1) &&
