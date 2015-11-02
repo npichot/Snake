@@ -60,6 +60,22 @@ void play(RenderWindow & window)
                     break;
             }
         }
+        
+            switch (serpent.getElement(0)->gettile())
+            {
+                case HEAD_NORTH:
+                    serpent.getElement(0)->setLine(serpent.getElement(0)->getLine()-1);
+                    break;
+                case HEAD_EAST:
+                    serpent.getElement(0)->setColumn(serpent.getElement(0)->getColumn()+1);
+                    break;
+                case HEAD_SOUTH:
+                    serpent.getElement(0)->setLine(serpent.getElement(0)->getLine()+1);
+                    break;
+                case HEAD_WEST:
+                    serpent.getElement(0)->setColumn(serpent.getElement(0)->getColumn()-1);
+                    break;
+            }
             /*if (event.type ==Event::KeyPressed && event.key.code == Keyboard::Up)
             {
                 serpent.getElement(0)->setAttribut(serpent.getElement(0)->getLine()-1, serpent.getElement(0)->getColumn(), HEAD_NORTH);
@@ -76,7 +92,7 @@ void play(RenderWindow & window)
             {
                 m_posSerpent[0].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn()-1, HEAD_WEST);
         }*/
-            serpent.deplacementTete(serpent);
+            
 		//Mise a jour du serpent 
 
 		//Gestion des actions
@@ -85,6 +101,6 @@ void play(RenderWindow & window)
 		window.clear();
 		map.drawField();
 		window.display();
-        sleep(Time(milliseconds(200)));
+        sleep(Time(milliseconds(500)));
 	}
 }
