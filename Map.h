@@ -17,7 +17,7 @@ const int TILE_SIZE = 32;
 enum Tiles //differentes tuiles dessin
 {
 	//Element Fixes
-	BUSHES,
+	TREE,
 	// Serpent
 	BODY_NORTH,
 	BODY_SOUTH,
@@ -36,7 +36,7 @@ enum Tiles //differentes tuiles dessin
 //Definition d'une map pour convertir un string en enum
 const std::map<std::string, Tiles> getEnumValue = 
 { 
-	{"BUSHES",BUSHES},
+	{"TREE",TREE},
 	{"BODY_NORTH",BODY_NORTH},
 	{"BODY_SOUTH",BODY_SOUTH},
 	{"BODY_EAST",BODY_EAST},
@@ -54,12 +54,11 @@ class Map
 {
 private:
 	std::vector < std::vector <Tiles> > field; // Le terrain ne peut pas etre modifie directement. Notamment sa taille est calculee et fixee une fois au debut.
-	sf::RenderWindow & window;
 public:
 	/*
 	Initialisation de la map en fonction de la taille de l'ecran
 	*/
-	Map(std::string filename, sf::RenderWindow & window);
+	Map(std::string filename, sf::RenderWindow const & window);
 	~Map();
 
 	/*
@@ -76,7 +75,7 @@ public:
 	/*
 	Methode pour dessiner la map dans la fenetre
 	*/
-	void drawField(bool gridOn);
+	void drawField(sf::RenderWindow & window, bool gridOn);
 
 	/*
 	Methode pour intitialiser la map a partir d'un fichier
@@ -84,9 +83,14 @@ public:
 	void loadMapFromFile(std::string filename);
 
 	/*
-	Methode pour récupérer la fenêtre
+	Methode pour la ligne potentielle correspondant à une position de la souris
 	*/
-	sf::RenderWindow & getParentWindow() { return window; };
+	int getRowFromMouseCoordinate(int x, int y);
+
+	/*
+	Methode pour la colonne potentielle correspondant à une position de la souris
+	*/
+	int getColumnFromMouseCoordinate(int x, int y);
 	
 };
 

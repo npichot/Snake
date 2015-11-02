@@ -23,8 +23,9 @@ int main()
 		}
 		case CREATION:
 		{
-			MapCreation mc(Map("",window));
-			mc.launchInterface();
+			MapCreation mc;
+			Map emptyMap("", window);
+			mc.executeInterface(window,emptyMap);
 			break;
 		}
 		default:
@@ -49,7 +50,7 @@ void play(RenderWindow & window)
 
 		//dessin de la map 
 		window.clear();
-		map.drawField(false);
+		map.drawField(window, false);
 		window.display();
 	}
 }

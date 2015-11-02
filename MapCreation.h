@@ -1,7 +1,6 @@
 #ifndef __MAPCREATION_H__
 #define __MAPCREATION_H__
 
-#include "Map.h"
 #include "Toolbar.h"
 
 /*
@@ -10,12 +9,12 @@ Classe permettant d'afficher tout l'environnement de creation et de le gerer par
 class MapCreation
 {
 private:
-	Map m;
+	
 	Toolbar tb;
 public:
-	MapCreation(Map m);
+	MapCreation();
 	~MapCreation();
-	void launchInterface();
+	void executeInterface(sf::RenderWindow & window, Map & m);
 };
 
 #endif // !__MAPCREATION_H__

@@ -4,8 +4,7 @@ using namespace sf;
 using namespace std;
 
 // La map prend la forme d'une matrice où chaque element symbolise un element du decor
-Map::Map(string filename, RenderWindow & window)
-	:window(window)
+Map::Map(string filename, RenderWindow const & window)
 {
 	int row_number, column_number;//Parametre de la map, nombre 
 
@@ -24,7 +23,6 @@ Map::Map(string filename, RenderWindow & window)
 
 	if (!filename.empty())
 		loadMapFromFile(filename);
-
 }
 
 Map::~Map()
@@ -56,7 +54,7 @@ Tiles Map::getTile(int i, int j)
 	}
 }
 
-void Map::drawField(bool gridOn)
+void Map::drawField(RenderWindow & window, bool gridOn)
 {
 	//Chargement du fond
 		//On initialise les parametres
@@ -91,7 +89,7 @@ void Map::drawField(bool gridOn)
 			//On initialise le fond en fonction de la nature de la tile
 			switch (getTile(i,j))
 			{
-			case BUSHES :
+			case TREE :
 				if (texture.loadFromFile("Ressources/tree.png"))
 					tile.setTexture(&texture);
 				else
@@ -172,6 +170,34 @@ void Map::loadMapFromFile(string filename)
 		// close the opened file.
 		is.close();
 
+}
+
+int Map::getRowFromMouseCoordinate(int x, int y)
+{
+	//TODO code en double
+	int width = TILE_SIZE* field[0].size();
+	int height = TILE_SIZE* field.size();
+	double marginLeft = (800 - width) / 2;
+	double marginTop = (600 - height) / 2;
+
+	if (floor((y - marginTop) / TILE_SIZE) < field.size() && (y - marginTop) >= 0)
+		return floor((y - marginTop) / TILE_SIZE);
+
+	return -1;//Row not found
+}
+
+int Map::getColumnFromMouseCoordinate(int x, int y)
+{
+	//TODO code en double
+	int width = TILE_SIZE* field[0].size();
+	int height = TILE_SIZE* field.size();
+	double marginLeft = (800 - width) / 2;
+	double marginTop = (600 - height) / 2;
+
+	if (floor((x - marginLeft) / TILE_SIZE) < field[0].size() && (x - marginLeft) >= 0)
+		return floor((x - marginLeft) / TILE_SIZE);
+
+	return -1;//Row not found
 }
 
 

@@ -3,14 +3,12 @@
 using namespace std;
 using namespace sf;
 
-Toolbar::Toolbar(RenderWindow & window)
-	:window(window)
+Toolbar::Toolbar()
+	:selected(NULL)
 {
 	//New tool tree added to the toolbar
 	Texture texture; texture.loadFromFile("Ressources/tree.png");
-	Tool toolTree(texture,"tree",false);
-	tools.push_back(toolTree);
-
+	tools.push_back(new DrawTool(texture, "Tree", false, TREE));
 }
 
 
@@ -18,7 +16,7 @@ Toolbar::~Toolbar()
 {
 }
 
-void Toolbar::drawBar()
+void Toolbar::drawBar(RenderWindow & window)
 {
 	int width = TILE_SIZE*tools.size() + 20 + 5 * (tools.size() - 1);
 
@@ -33,8 +31,8 @@ void Toolbar::drawBar()
 	for (int i = 0; i < tools.size();i++)
 	{
 		Texture texture; texture.loadFromFile("Ressources/tree.png");
-		tools[i].setTexture(&texture);//TODO optimiser en supprimant ca et en mettant le set texture dans Tool.cpp tout en évitant le pb du carré blanc
-		tools[i].setPosition(framework.getPosition().x + 10 + (TILE_SIZE + 2.5)*i, 5);
-		window.draw(tools[i]);
+		tools[i]->setTexture(&texture);//TODO optimiser en supprimant ca et en mettant le set texture dans Tool.cpp tout en évitant le pb du carré blanc
+		tools[i]->setPosition(framework.getPosition().x + 10 + (TILE_SIZE + 2.5)*i, 5);
+		window.draw(*tools[i]);
 	}
 }

@@ -19,7 +19,6 @@ Tool::Tool(Texture t, string s, bool b)
 
 }
 
-
 Tool::~Tool()
 {
 }
@@ -32,5 +31,6 @@ void Tool::activate(bool b)
 	else
 		setOutlineThickness(0);
 }
+
 
 
