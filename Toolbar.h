@@ -1,18 +1,20 @@
 #ifndef __TOOLBAR_H__
 #define __TOOLBAR_H__
 
-#include "Tool.h" 
+#include "DrawTool.h" 
 
 class Toolbar
 {
 private:
-	sf::RenderWindow & window;
-	std::vector<Tool> tools;
+	std::vector<Tool*> tools;
+	Tool * selected;
 public:
-	Toolbar(sf::RenderWindow & window);
+	Toolbar();
 	~Toolbar();
-	void drawBar();
-	std::vector<Tool> & getTools() { return tools; };
+	void drawBar(sf::RenderWindow & window);
+	std::vector<Tool*>  getTools() { return tools; };
+	Tool * getSelected() { return selected; };
+	void setSelected(Tool * t) { selected = t; };
 };
 
 #endif __TOOLBAR_H__
