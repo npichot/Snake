@@ -15,6 +15,12 @@ MapCreation::~MapCreation()
 
 void MapCreation::executeInterface(RenderWindow & window, Map & map)
 {
+	bool mouseIsCliked = false;
+	bool mouseIsReleased = true;
+
+	int xMouse = 0;
+	int yMouse = 0;
+
 	while (window.isOpen())
 	{
 		window.clear();
@@ -22,21 +28,31 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 		tb.drawBar(window);
 		vector<Tool*>  tools = tb.getTools();
 
-		int xMouse = Mouse::getPosition(window).x;
-		int yMouse = Mouse::getPosition(window).y;
-
 		Event event;
 		while (window.pollEvent(event))// on capte les evenements
 		{
+			//Gestion des inputs
 			if (event.type == Event::MouseMoved)
 			{
-				int xMouse = Mouse::getPosition(window).x;
-				int yMouse = Mouse::getPosition(window).y;
+				xMouse = Mouse::getPosition(window).x;
+				yMouse = Mouse::getPosition(window).y;
 			}
 			else if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left)
 			{
+				mouseIsCliked = true;
+				bool mouseIsReleased = false;
+			}
+			else if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
+			{
+				mouseIsCliked = false;
+				bool mouseIsReleased = true;
+			}
+
+			//Gestion des actions
+			if (mouseIsCliked)
+			{
 				if (tb.getSelected() != NULL)
-					if (tb.getSelected()->execute(event, xMouse, yMouse, map))
+					if (tb.getSelected()->execute(xMouse, yMouse, map))
 						break;
 
 				for (int i = 0; i < tools.size(); i++)
