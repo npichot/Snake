@@ -50,6 +50,6 @@ void play(RenderWindow & window)
 		window.clear();
 		map.drawField();
 		window.display();
-        sleep(2);
+        sleep(1);
 	}
 }

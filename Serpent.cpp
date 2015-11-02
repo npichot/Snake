@@ -10,6 +10,10 @@ Serpent::Serpent() // Ne pas oublier d'initialiser le vector
     m_posSerpent.push_back(head);
     ElementSerpent body = {5, 3, BODY_EAST};
     m_posSerpent.push_back(body);
+    ElementSerpent body2 = {5, 2, BODY_EAST};
+    m_posSerpent.push_back(body2);
+    ElementSerpent body3 = {5,1,BODY_EAST};
+    m_posSerpent.push_back(body3);
 
     
     ElementSerpent m_head;//A quoi ca sert ?
@@ -32,16 +36,15 @@ void Serpent::deplacementSerpent(Serpent &serpent)//A terminer
     int temp_column(0);
     Tiles temp_tile(HEAD_NORTH);
     
-    for (int i=1; i < serpent.sizeSerpent(); ++i)
+    for (int i = serpent.sizeSerpent()-1; i >= 0; --i)
     {
-        temp_line = serpent.getElement(i-1)->getLine();
-        serpent.getElement(i)->setLine(temp_line);
-        temp_column = serpent.getElement(i-1)->getColumn();
-        serpent.getElement(i)->setColumn(temp_column);
+        //temp_line = serpent.getElement(i-1)->getLine();
+        //serpent.getElement(i)->setLine(temp_line);
+        temp_column = serpent.getElement(i)->getColumn();
+        serpent.getElement(i+1)->setColumn(temp_column);
         //temp_tile = serpent.getElement(i-1)->gettile();
         //serpent.getElement(i)->setOrientationTile(temp_tile);
     }
-    //serpent.getElement(0)->setLine(2);
     
 }
 
