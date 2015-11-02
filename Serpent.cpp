@@ -32,19 +32,11 @@ void Serpent::deplacementSerpent(Serpent &serpent)//A terminer
     if (event.type == Event::KeyPressed && event.key.code == Keyboard::Up)
         m_posSerpent[0].m_tile
    */
-    int temp_line(0);
-    int temp_column(0);
-    Tiles temp_tile(HEAD_NORTH);
-    
-    for (int i = serpent.sizeSerpent()-1; i >= 0; --i)
+    for (int i = serpent.sizeSerpent()-1; i >= 2; --i)
     {
-        //temp_line = serpent.getElement(i-1)->getLine();
-        //serpent.getElement(i)->setLine(temp_line);
-        temp_column = serpent.getElement(i)->getColumn();
-        serpent.getElement(i+1)->setColumn(temp_column);
-        //temp_tile = serpent.getElement(i-1)->gettile();
-        //serpent.getElement(i)->setOrientationTile(temp_tile);
+        m_posSerpent[i]=m_posSerpent[i-1];
     }
+    m_posSerpent[1].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn(), convertHeadtoBody.at(m_posSerpent[0].gettile()));
     
 }
 

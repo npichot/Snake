@@ -46,6 +46,13 @@ const std::map<std::string, Tiles> getEnumValue =
 	{"EMPTY",EMPTY}, 
 };
 
+const std::map<Tiles, Tiles> convertHeadtoBody =
+{
+    {HEAD_EAST, BODY_EAST},
+    {HEAD_NORTH, BODY_NORTH},
+    {HEAD_SOUTH, BODY_SOUTH},
+    {HEAD_WEST, BODY_WEST}
+};
 
 class Map
 {
