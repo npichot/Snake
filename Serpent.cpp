@@ -18,6 +18,7 @@ Serpent::Serpent() // Ne pas oublier d'initialiser le vector
     
     ElementSerpent m_head;//A quoi ca sert ?
     ElementSerpent m_headFuture;//A quoi ca sert ?
+	ElementSerpent m_lastPosition = m_posSerpent[m_posSerpent.size() - 1];
     m_alive=true; 
 }
 
