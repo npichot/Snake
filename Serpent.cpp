@@ -1,5 +1,5 @@
 #include "Serpent.h"
-
+#include <curses.h>
 //TODO definition de la classe
 using namespace std;
 using namespace sf;
@@ -26,7 +26,7 @@ Serpent::~Serpent()
    
 }
 
-void Serpent::deplacementSerpent(Serpent &serpent)//A terminer
+void Serpent::deplacementSerpent(Serpent &serpent)
 {
  /*   Event event;
     if (event.type == Event::KeyPressed && event.key.code == Keyboard::Up)
@@ -37,6 +37,51 @@ void Serpent::deplacementSerpent(Serpent &serpent)//A terminer
         m_posSerpent[i]=m_posSerpent[i-1];
     }
     m_posSerpent[1].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn(), convertHeadtoBody.at(m_posSerpent[0].gettile()));
+    
+}
+
+void Serpent::deplacementTete(Serpent &serpent)
+{
+    Event event;
+    if (event.type ==Event::KeyPressed && event.key.code == Keyboard::Up)
+    {
+        m_posSerpent[0].setAttribut(m_posSerpent[0].getLine()-1, m_posSerpent[0].getColumn(), HEAD_NORTH);
+    }
+    else if (event.type ==Event::KeyPressed && event.key.code == Keyboard::Right)
+    {
+        m_posSerpent[0].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn()+1, HEAD_EAST);
+    }
+    else if (event.type ==Event::KeyPressed && event.key.code == Keyboard::Down)
+    {
+        m_posSerpent[0].setAttribut(m_posSerpent[0].getLine()+1, m_posSerpent[0].getColumn(), HEAD_SOUTH);
+    }
+    else if (event.type ==Event::KeyPressed && event.key.code == Keyboard::Left)
+    {
+        m_posSerpent[0].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn()-1, HEAD_WEST);
+    }
+    else
+    {
+        if (m_posSerpent[0].gettile() == HEAD_NORTH)
+        {
+            m_posSerpent[0].setAttribut(m_posSerpent[0].getLine()-1, m_posSerpent[0].getColumn(), HEAD_NORTH);
+        }
+        
+        else if (m_posSerpent[0].gettile() == HEAD_EAST)
+        {
+            m_posSerpent[0].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn()+1, HEAD_EAST);
+        }
+        
+         else if (m_posSerpent[0].gettile() == HEAD_SOUTH)
+        {
+            m_posSerpent[0].setAttribut(m_posSerpent[0].getLine()+1, m_posSerpent[0].getColumn(), HEAD_SOUTH);
+        }
+        
+        else
+        {
+            m_posSerpent[0].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn()-1, HEAD_WEST);
+        }
+    }
+    
     
 }
 

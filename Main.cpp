@@ -37,8 +37,8 @@ void play(RenderWindow & window)
         cout << serpent.getElement(0)->getLine() << endl;
         cout << serpent.sizeSerpent() << endl;
         serpent.deplacementSerpent(serpent);
-        serpent.getElement(0)->setColumn(serpent.getElement(0)->getColumn()+1);
-        
+        //serpent.getElement(0)->setColumn(serpent.getElement(0)->getColumn()+1);
+        serpent.deplacementTete(serpent);
         
         //Controle des inputs claviers
         //cout << serpent.getElement(0) << endl;
@@ -52,4 +52,9 @@ void play(RenderWindow & window)
 		window.display();
         sleep(1);
 	}
+}
+
+void waitforInput()
+{
+    
 }
