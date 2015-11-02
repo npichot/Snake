@@ -1,5 +1,5 @@
 #include "Serpent.h"
-#include <curses.h>
+
 //TODO definition de la classe
 using namespace std;
 using namespace sf;
@@ -42,7 +42,7 @@ void Serpent::deplacementSerpent(Serpent &serpent)
 
 void Serpent::deplacementTete(Serpent &serpent)
 {
-    Event event;
+    /*Event event;
     if (event.type ==Event::KeyPressed && event.key.code == Keyboard::Up)
     {
         m_posSerpent[0].setAttribut(m_posSerpent[0].getLine()-1, m_posSerpent[0].getColumn(), HEAD_NORTH);
@@ -60,7 +60,7 @@ void Serpent::deplacementTete(Serpent &serpent)
         m_posSerpent[0].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn()-1, HEAD_WEST);
     }
     else
-    {
+    {*/
         if (m_posSerpent[0].gettile() == HEAD_NORTH)
         {
             m_posSerpent[0].setAttribut(m_posSerpent[0].getLine()-1, m_posSerpent[0].getColumn(), HEAD_NORTH);
@@ -83,7 +83,7 @@ void Serpent::deplacementTete(Serpent &serpent)
     }
     
     
-}
+//}
 
 void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant le serpent de revenir en arrière
 {
