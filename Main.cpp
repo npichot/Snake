@@ -85,6 +85,6 @@ void play(RenderWindow & window)
 		window.clear();
 		map.drawField();
 		window.display();
-        sleep(1);
+        sleep(Time(milliseconds(200)));
 	}
 }
