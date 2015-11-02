@@ -10,6 +10,7 @@ Serpent::Serpent() // Ne pas oublier d'initialiser le vector
     m_posSerpent.push_back(head);
     ElementSerpent body = {5, 3, BODY_EAST};
     m_posSerpent.push_back(body);
+
     
     ElementSerpent m_head;//A quoi ca sert ?
     ElementSerpent m_headFuture;//A quoi ca sert ?
@@ -21,13 +22,27 @@ Serpent::~Serpent()
    
 }
 
-vector<ElementSerpent> Serpent::deplacementSerpent()//A terminer
+void Serpent::deplacementSerpent(Serpent &serpent)//A terminer
 {
  /*   Event event;
     if (event.type == Event::KeyPressed && event.key.code == Keyboard::Up)
         m_posSerpent[0].m_tile
-   */     
-    return m_posSerpent;
+   */
+    int temp_line(0);
+    int temp_column(0);
+    Tiles temp_tile(HEAD_NORTH);
+    
+    for (int i=1; i < serpent.sizeSerpent(); ++i)
+    {
+        temp_line = serpent.getElement(i-1)->getLine();
+        serpent.getElement(i)->setLine(temp_line);
+        temp_column = serpent.getElement(i-1)->getColumn();
+        serpent.getElement(i)->setColumn(temp_column);
+        //temp_tile = serpent.getElement(i-1)->gettile();
+        //serpent.getElement(i)->setOrientationTile(temp_tile);
+    }
+    //serpent.getElement(0)->setLine(2);
+    
 }
 
 void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant le serpent de revenir en arrière

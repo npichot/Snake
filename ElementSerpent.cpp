@@ -35,12 +35,12 @@ Tiles ElementSerpent::gettile() const
 
 void ElementSerpent::setLine(int i)
 {
-    m_line = m_line + i;
+    m_line = i;
 }
 
 void ElementSerpent::setColumn(int i)
 {
-    m_column = m_column + i;
+    m_column = i;
 }
 
 void ElementSerpent::setOrientationTile(Tiles tile)

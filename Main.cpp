@@ -35,7 +35,10 @@ void play(RenderWindow & window)
         map.updateField(serpent.getElement(i)->getLine(), serpent.getElement(i)->getColumn(), serpent.getElement(i)->gettile());
         }
         cout << serpent.getElement(0)->getLine() << endl;
-        serpent.getElement(0)->setLine(1);
+        cout << serpent.sizeSerpent() << endl;
+        serpent.deplacementSerpent(serpent);
+        serpent.getElement(0)->setColumn(serpent.getElement(0)->getColumn()+1);
+        
         
         //Controle des inputs claviers
         //cout << serpent.getElement(0) << endl;

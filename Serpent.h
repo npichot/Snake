@@ -15,7 +15,7 @@ public:
     //Methodes
 	Serpent();
 	~Serpent();
-    std::vector<ElementSerpent> deplacementSerpent(); // Méthode qui permet de déplacer le serpent
+    void deplacementSerpent(Serpent &serpent); // Méthode qui permet de déplacer le serpent
     void allongerQueue();//Allonge la queue si fruit est mange
 	void nextHead(Button entree); //Méthode pour obtenir la future position de la tête, sans changer la position actuelle
 	void isAlive(Map carte);
