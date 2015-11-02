@@ -23,6 +23,7 @@ public:
     void setLine(int i);//Changer la ligne d'un ElementSerpent
     void setColumn(int i);//Changer la colonne d'un Elemeserpent
     void setOrientationTile(Tiles tile);//Changer l'orientation du tile d'un ElementSerpent
+    void setAttribut(int i, int j, Tiles tile);
 	
 private: 
 	//Attributs

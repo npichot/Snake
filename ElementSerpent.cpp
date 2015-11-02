@@ -47,3 +47,10 @@ void ElementSerpent::setOrientationTile(Tiles tile)
 {
     m_tile = tile;
 }
+
+void ElementSerpent::setAttribut(int i, int j, Tiles tile)
+{
+    m_line = i;
+    m_column = j;
+    m_tile = tile;
+}
