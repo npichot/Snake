@@ -11,13 +11,18 @@ DrawTool::~DrawTool()
 {
 }
 
-void DrawTool::execute(sf::Event & event, int xMouse, int yMouse, Map & map)
+bool DrawTool::execute(sf::Event & event, int xMouse, int yMouse, Map & map)
 {
 	if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left)
 	{
 		int row, column;
 		if ((row = map.getRowFromMouseCoordinate(xMouse, yMouse)) != -1)
 			if ((column = map.getColumnFromMouseCoordinate(xMouse, yMouse)) != -1)
+			{
 				map.updateField(row, column, getTile());
+				return true;
+			}
+
+		return false;//Nothing changed
 	}
 }

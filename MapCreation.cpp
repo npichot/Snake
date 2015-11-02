@@ -33,9 +33,12 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 				int xMouse = Mouse::getPosition(window).x;
 				int yMouse = Mouse::getPosition(window).y;
 			}
-
-			if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left)
+			else if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left)
 			{
+				if (tb.getSelected() != NULL)
+					if (tb.getSelected()->execute(event, xMouse, yMouse, map))
+						break;
+
 				for (int i = 0; i < tools.size(); i++)
 					if (tools[i]->getGlobalBounds().contains(xMouse, yMouse))
 					{
@@ -48,8 +51,6 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 							tb.setSelected(NULL);
 						break;
 					}
-				if (tb.getSelected() != NULL)
-					tb.getSelected()->execute(event,xMouse,yMouse, map);
 			}
 
 		}

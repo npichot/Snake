@@ -16,7 +16,7 @@ public:
 	void activate(bool b);
 	bool isActivated() { return activated; };
 	sf::Texture * getTheTexture() { return &texture; };
-	virtual void execute(sf::Event & event, int x, int y, Map & map)=0;
+	virtual bool execute(sf::Event & event, int x, int y, Map & map)=0;
 };
 
 #endif // !__TOOL_H__
