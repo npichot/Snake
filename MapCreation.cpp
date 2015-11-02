@@ -18,6 +18,9 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 	bool mouseIsCliked = false;
 	bool mouseIsReleased = true;
 
+	int xMouse0 = 0;
+	int yMouse0 = 0;
+
 	int xMouse = 0;
 	int yMouse = 0;
 
@@ -39,6 +42,8 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 			}
 			else if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left)
 			{
+				xMouse0 = Mouse::getPosition(window).x;
+				yMouse0 = Mouse::getPosition(window).y;
 				mouseIsCliked = true;
 				bool mouseIsReleased = false;
 			}
@@ -52,7 +57,7 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 			if (mouseIsCliked)
 			{
 				if (tb.getSelected() != NULL)
-					if (tb.getSelected()->execute(xMouse, yMouse, map))
+					if (tb.getSelected()->execute(xMouse0, yMouse0, xMouse, yMouse, map))
 						break;
 
 				for (int i = 0; i < tools.size(); i++)

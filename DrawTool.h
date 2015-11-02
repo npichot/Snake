@@ -11,7 +11,7 @@ public:
 	DrawTool(sf::Texture t, std::string s, bool b, Tiles tile);
 	~DrawTool();
 	Tiles getTile() { return t; };
-	bool execute(int x, int y, Map & map) override;
+	bool execute(int x0, int y0, int x, int y, Map & map) override;
 };
 
 #endif __DRAWTOOL_H__

@@ -11,13 +11,25 @@ DrawTool::~DrawTool()
 {
 }
 
-bool DrawTool::execute(int xMouse, int yMouse, Map & map)
+bool DrawTool::execute(int xMouse0, int yMouse0, int xMouse, int yMouse, Map & map)
 {
-	int row, column;
-	if ((row = map.getRowFromMouseCoordinate(xMouse, yMouse)) != -1)
-		if ((column = map.getColumnFromMouseCoordinate(xMouse, yMouse)) != -1)
+	int row0, column0, row, column;
+	int cpt = 0;
+	if (((row0 = map.getRowFromMouseCoordinate(xMouse0, yMouse0)) != -1) &&
+		((column0 = map.getColumnFromMouseCoordinate(xMouse0, yMouse0)) != -1))
+		if (((row = map.getRowFromMouseCoordinate(xMouse, yMouse)) != -1) &&
+			((column = map.getColumnFromMouseCoordinate(xMouse, yMouse)) != -1))
 		{
-			map.updateField(row, column, getTile());
+			for (int i = min(row0, row); i <= max(row0, row); i++)
+				for (int j = min(column0, column); j <= max(column0, column); j++)
+				{
+					map.updateField(i, j, getTile());
+				}
+			return true;
+		}
+		else
+		{
+			map.updateField(row0, column0, getTile());
 			return true;
 		}
 
