@@ -17,7 +17,7 @@ public:
 	Serpent();
 	~Serpent();
     void deplacementSerpent(Serpent &serpent); // Méthode qui permet de déplacer le serpent
-    void deplacementTete(Serpent &serpent);
+    void deplacementTete(Serpent &serpent, Tiles head_tile);
     void allongerQueue();//Allonge la queue si fruit est mange
 	void nextHead(Button entree); //Méthode pour obtenir la future position de la tête, sans changer la position actuelle
 	void isAlive(Map carte);

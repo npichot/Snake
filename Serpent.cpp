@@ -42,50 +42,27 @@ void Serpent::deplacementSerpent(Serpent &serpent)
     
 }
 
-void Serpent::deplacementTete(Serpent &serpent)
+void Serpent::deplacementTete(Serpent &serpent, Tiles head_tile)//Gre le dŽplacement de la tte
 {
-    /*Event event;
-    if (event.type ==Event::KeyPressed && event.key.code == Keyboard::Up)
+    switch (head_tile)
     {
-        m_posSerpent[0].setAttribut(m_posSerpent[0].getLine()-1, m_posSerpent[0].getColumn(), HEAD_NORTH);
+        case HEAD_NORTH:
+            serpent.getElement(0)->setAttribut(serpent.getElement(0)->getLine()-1, serpent.getElement(0)->getColumn(), HEAD_NORTH);
+            break;
+        case HEAD_EAST:
+            serpent.getElement(0)->setAttribut(serpent.getElement(0)->getLine(), serpent.getElement(0)->getColumn()+1, HEAD_EAST);
+            break;
+        case HEAD_SOUTH:
+            serpent.getElement(0)->setAttribut(serpent.getElement(0)->getLine()+1, serpent.getElement(0)->getColumn(), HEAD_SOUTH);
+            break;
+        case HEAD_WEST:
+            serpent.getElement(0)->setAttribut(serpent.getElement(0)->getLine(), serpent.getElement(0)->getColumn()-1, HEAD_WEST);
+            break;
+        default:
+            break;
     }
-    else if (event.type ==Event::KeyPressed && event.key.code == Keyboard::Right)
-    {
-        m_posSerpent[0].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn()+1, HEAD_EAST);
-    }
-    else if (event.type ==Event::KeyPressed && event.key.code == Keyboard::Down)
-    {
-        m_posSerpent[0].setAttribut(m_posSerpent[0].getLine()+1, m_posSerpent[0].getColumn(), HEAD_SOUTH);
-    }
-    else if (event.type ==Event::KeyPressed && event.key.code == Keyboard::Left)
-    {
-        m_posSerpent[0].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn()-1, HEAD_WEST);
-    }
-    else
-    {*/
-        if (m_posSerpent[0].gettile() == HEAD_NORTH)
-        {
-            m_posSerpent[0].setAttribut(m_posSerpent[0].getLine()-1, m_posSerpent[0].getColumn(), HEAD_NORTH);
-        }
-        
-        else if (m_posSerpent[0].gettile() == HEAD_EAST)
-        {
-            m_posSerpent[0].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn()+1, HEAD_EAST);
-        }
-        
-         else if (m_posSerpent[0].gettile() == HEAD_SOUTH)
-        {
-            m_posSerpent[0].setAttribut(m_posSerpent[0].getLine()+1, m_posSerpent[0].getColumn(), HEAD_SOUTH);
-        }
-        
-        else
-        {
-            m_posSerpent[0].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn()-1, HEAD_WEST);
-        }
-    }
-    
-    
-//}
+
+}
 
 void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant le serpent de revenir en arrière
 {
