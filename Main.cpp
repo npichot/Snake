@@ -7,6 +7,7 @@ int main()
 {
 	// Chargement de la fenetre
 	RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32),"Snake");
+    window.setFramerateLimit(10);//Gere le nombre de FPS
 	
 	Menu menu(window);
 
@@ -41,6 +42,8 @@ void play(RenderWindow & window)
         
         //Controle des inputs claviers
         Event event;
+        if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
+            window.close();
         while (window.pollEvent(event)) {
             switch (event.key.code)
             {
@@ -86,6 +89,6 @@ void play(RenderWindow & window)
 		window.clear();
 		map.drawField();
 		window.display();
-        sleep(Time(milliseconds(500)));
+        
 	}
 }
