@@ -29,10 +29,6 @@ Serpent::~Serpent()
 
 void Serpent::deplacementSerpent(Serpent &serpent)
 {
- /*   Event event;
-    if (event.type == Event::KeyPressed && event.key.code == Keyboard::Up)
-        m_posSerpent[0].m_tile
-   */
     for (int i = serpent.sizeSerpent()-1; i >= 2; --i)
     {
 		m_lastPosition = m_posSerpent[m_posSerpent.size() - 1]; // Pour sauvegarder la dernière position de la queue
@@ -127,9 +123,6 @@ void Serpent::isAlive(Map carte)
 
 ElementSerpent *Serpent::getElement(int i)
 {
-    /*ElementSerpent res;
-    res = this->m_posSerpent[i];
-    */
     return &m_posSerpent[i];
 }
 
