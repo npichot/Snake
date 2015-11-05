@@ -29,6 +29,8 @@ void play(RenderWindow & window)
     //Initialisation du serpent
     Serpent serpent;
     Tiles head_tile = serpent.getElement(0)->gettile();
+    
+    //Gestion des actions
 	while (window.isOpen())
 	{
 		Map map("MapConfig/Config1.dat",window);
@@ -38,32 +40,27 @@ void play(RenderWindow & window)
         }
         cout << serpent.getElement(0)->getLine() << endl;
         serpent.deplacementSerpent(serpent);
-        //serpent.getElement(0)->setColumn(serpent.getElement(0)->getColumn()+1);
-        //serpent.deplacementTete(serpent);
+
         
         //Controle des inputs claviers
         Event event;
-        if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape)
-            window.close();
         while (window.pollEvent(event)) {
             switch (event.key.code)
             {
                 case Keyboard::Up:
                     head_tile = HEAD_NORTH;
-                    //serpent.getElement(0)->setAttribut(serpent.getElement(0)->getLine()-1, serpent.getElement(0)->getColumn(), HEAD_NORTH);
                     break;
                 case Keyboard::Right:
                     head_tile = HEAD_EAST;
-                    //serpent.getElement(0)->setAttribut(serpent.getElement(0)->getLine(), serpent.getElement(0)->getColumn()+1, HEAD_EAST);
                     break;
                 case Keyboard::Down:
                     head_tile = HEAD_SOUTH;
-                    //serpent.getElement(0)->setAttribut(serpent.getElement(0)->getLine()+1, serpent.getElement(0)->getColumn(), HEAD_SOUTH);
                     break;
                 case Keyboard::Left:
                     head_tile = HEAD_WEST;
-                    //serpent.getElement(0)->setAttribut(serpent.getElement(0)->getLine(), serpent.getElement(0)->getColumn()-1, HEAD_WEST);
                     break;
+                case Keyboard::Escape:
+                    window.close();
                 default:
                     break;
             }
