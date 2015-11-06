@@ -29,18 +29,17 @@ void play(RenderWindow & window)
     //Initialisation du serpent
     Serpent serpent;
     Tiles head_tile = serpent.getElement(0)->gettile();
-    
-    //Gestion des actions
+	Map map("MapConfig/Config1.dat", window);
 	while (window.isOpen())
 	{
-		Map map("MapConfig/Config1.dat",window);
         for (int i = 0 ; i < serpent.sizeSerpent(); ++i)
         {
-        map.updateField(serpent.getElement(i)->getLine(), serpent.getElement(i)->getColumn(), serpent.getElement(i)->gettile());
+			map.updateField(serpent.getElement(i)->getLine(), serpent.getElement(i)->getColumn(), serpent.getElement(i)->gettile());
         }
-        cout << serpent.getElement(0)->getLine() << endl;
-        serpent.deplacementSerpent(serpent);
 
+		//Suppression du derniere element sur la map avant deplaement
+		map.updateField(serpent.getElement(serpent.sizeSerpent()-1)->getLine(), serpent.getElement(serpent.sizeSerpent()-1)->getColumn(), EMPTY);
+		serpent.deplacementSerpent(serpent);
         
         //Controle des inputs claviers
         Event event;
@@ -66,13 +65,7 @@ void play(RenderWindow & window)
             }
         }
         
-        
         serpent.deplacementTete(serpent, head_tile);
-        
-            
-		//Mise a jour du serpent 
-
-		//Gestion des actions
 
 		//dessin de la map 
 		window.clear();
