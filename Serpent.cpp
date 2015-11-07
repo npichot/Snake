@@ -130,3 +130,8 @@ int Serpent::sizeSerpent()
 {
     return m_posSerpent.size();
 }
+
+bool Serpent::getAlive() const
+{
+	return m_alive;
+}

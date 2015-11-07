@@ -64,7 +64,11 @@ void play(RenderWindow & window)
                     break;
             }
         }
-        
+		if (serpent.getAlive()!=true)
+		{
+			window.close();
+		}
+		
         serpent.deplacementTete(serpent, head_tile);
 
 		//dessin de la map 
@@ -73,4 +77,5 @@ void play(RenderWindow & window)
 		window.display();
         
 	}
+	
 }
