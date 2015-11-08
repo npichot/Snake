@@ -5,8 +5,13 @@ using namespace std;
 
 
 DrawTool::DrawTool(sf::Texture t, std::string s, bool b, Tiles tile)
-	:Tool(t,s,b), t(tile)
+	:Tool(t,s), t(tile), activated(b)
 {
+
+	if (activated)
+		setOutlineThickness(2);
+	else
+		setOutlineThickness(0);
 }
 
 DrawTool::~DrawTool()
@@ -35,4 +40,13 @@ bool DrawTool::execute(int xMouse0, int yMouse0, int xMouse, int yMouse, Map & m
 		}
 
 	return false;//Nothing changed
+}
+
+void DrawTool::activate(bool b)
+{
+	activated = b;
+	if (activated)
+		setOutlineThickness(2);
+	else
+		setOutlineThickness(0);
 }

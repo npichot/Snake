@@ -30,7 +30,7 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 		window.clear();
 		tempMap.drawField(window, true);
 		tb.drawBar(window);
-		vector<Tool*>  tools = tb.getTools();
+		vector<DrawTool*>  drawTools = tb.getDrawTools();
 
 		Event event;
 		while (window.pollEvent(event))// on capte les evenements
@@ -64,19 +64,19 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 					if (tb.getSelected()->execute(xMouse0, yMouse0, xMouse, yMouse, tempMap))
 						break;
 
-				for (int i = 0; i < tools.size(); i++)
-					if (tools[i]->getGlobalBounds().contains(xMouse, yMouse))
+				for (int i = 0; i < drawTools.size(); i++)
+					if (drawTools[i]->getGlobalBounds().contains(xMouse, yMouse))
 					{
-						tools[i]->activate(!tools[i]->isActivated());
-						for (int j = 0; j < tools.size(); j++)
+						drawTools[i]->activate(!drawTools[i]->isActivated());
+						for (int j = 0; j < drawTools.size(); j++)
 						{
 							if (i != j)
-								tools[j]->activate(false);
+								drawTools[j]->activate(false);
 						}
 
-						if (tools[i]->isActivated())
+						if (drawTools[i]->isActivated())
 						{
-							tb.setSelected(tools[i]);
+							tb.setSelected(drawTools[i]);
 						}
 						else
 							tb.setSelected(NULL);

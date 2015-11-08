@@ -7,12 +7,9 @@ class Tool: public sf::RectangleShape
 {
 private:
 	std::string name;
-	bool activated;
 public:
-	Tool(sf::Texture t, std::string s, bool b);
-	~Tool();
-	void activate(bool b);
-	bool isActivated() { return activated; };
+	Tool(sf::Texture t, std::string s);
+	~Tool();	
 	virtual bool execute(int x0, int y0, int x, int y, Map & map)=0;
 };
 
