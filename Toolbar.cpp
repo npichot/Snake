@@ -9,6 +9,14 @@ Toolbar::Toolbar()
 	//New tool tree added to the toolbar
 	Texture texture; texture.loadFromFile("Ressources/tree.png");
 	tools.push_back(new DrawTool(texture, "Tree", false, TREE));
+
+	//New tool grass added to the toolbar
+	texture.loadFromFile("Ressources/grass.png");
+	tools.push_back(new DrawTool(texture, "Grass", false, EMPTY));
+
+	//New tool Head_E added to the toolbar
+	texture.loadFromFile("Ressources/head_E.png");
+	tools.push_back(new DrawTool(texture, "Head_E", false, HEAD_EAST));
 }
 
 
