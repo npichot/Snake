@@ -34,7 +34,7 @@ enum Tiles //differentes tuiles dessin
 };
 
 //Definition d'une map pour convertir un string en enum
-const std::map<std::string, Tiles> getEnumValue = 
+const std::map<std::string, Tiles> stringToEnum = 
 { 
 	{"TREE",TREE},
 	{"BODY_NORTH",BODY_NORTH},
@@ -49,11 +49,26 @@ const std::map<std::string, Tiles> getEnumValue =
 	{"EMPTY",EMPTY}, 
 };
 
+const std::map<Tiles,std::string> enumToString =
+{
+	{ TREE,"TREE" },
+	{ BODY_NORTH,"BODY_NORTH" },
+	{ BODY_SOUTH,"BODY_SOUTH" },
+	{ BODY_EAST,"BODY_EAST" },
+	{ BODY_WEST,"BODY_WEST" },
+	{ HEAD_NORTH,"HEAD_NORTH" },
+	{ HEAD_SOUTH,"HEAD_SOUTH" },
+	{ HEAD_EAST,"HEAD_EAST" },
+	{ HEAD_WEST,"HEAD_WEST" },
+	{ FRUIT,"FRUIT" },
+	{ EMPTY,"EMPTY" },
+};
+
 
 class Map
 {
 private:
-	std::vector < std::vector <Tiles> > field; // Le terrain ne peut pas etre modifie directement. Notamment sa taille est calculee et fixee une fois au debut.
+	std::vector<std::vector<Tiles>> field; // Le terrain ne peut pas etre modifie directement. Notamment sa taille est calculee et fixee une fois au debut.
 public:
 	/*
 	Initialisation de la map en fonction de la taille de l'ecran
@@ -91,6 +106,8 @@ public:
 	Methode pour la colonne potentielle correspondant à une position de la souris
 	*/
 	int getColumnFromMouseCoordinate(int x, int y);
+
+	std::vector<std::vector<Tiles>> getField() { return field; }
 	
 };
 

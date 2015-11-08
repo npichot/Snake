@@ -15,11 +15,11 @@ MainTool::~MainTool()
 bool MainTool::execute(int x0, int y0, int x, int y, Map & map)
 {
 	if (getName() == "Save")
-		saveMap();
+		saveMap(map);
 	return true;
 }
 
-void MainTool::saveMap()
+void MainTool::saveMap(Map map)
 {
 	RenderWindow saveWindow(VideoMode(400, 100, 32), "Save Map");
 	string inputText;
@@ -76,7 +76,7 @@ void MainTool::saveMap()
 			{
 				if (inputText.size() > 0)
 				{
-					writeConfig(inputText);
+					writeConfig(inputText, map);
 					saveWindow.close();
 				}
 			}
@@ -220,6 +220,19 @@ bool MainTool::isCancelClicked(int x, int y)
 		return false;
 }
 
-void MainTool::writeConfig(string name)
+void MainTool::writeConfig(string name, Map map)
 {
+	ofstream fichier("MapConfig/" + name + ".dat", ios::out | ios::trunc);
+	if (fichier)
+	{
+		for (int i = 0; i < map.getField().size(); ++i)
+			for (int j = 0; j < map.getField()[i].size(); ++j)
+			{
+				fichier << i << " " << j << " " << enumToString.at(map.getTile(i, j)) << endl;
+			}
+
+		fichier.close();
+	}
+	else
+		cout << "Erreur écriture !";
 }

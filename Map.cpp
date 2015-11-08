@@ -164,7 +164,7 @@ void Map::loadMapFromFile(string filename)
 		//On lit les lignes une par une 
 		while (is >> i>> j>> tile)
 		{
-			updateField(i, j, getEnumValue.at(tile));//On met a jour la map
+			updateField(i, j, stringToEnum.at(tile));//On met a jour la map
 		}
 
 		// close the opened file.
