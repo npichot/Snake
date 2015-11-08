@@ -73,72 +73,57 @@ void Map::drawField()
 	window.draw(background);
 
 	//On affiche les tiles du terrain
-	
+	Texture texture;
+	Texture headTexture; headTexture.loadFromFile("Ressources/head.png");
+	Texture bodyTexture; bodyTexture.loadFromFile("Ressources/body.png");
+
+
 	for (int i = 0; i < field.size();++i)
 		for (int j = 0; j < field[i].size(); ++j)
 		{
 			//On debute la construction du rectangle
-			RectangleShape tile;
-			Texture texture;
-			tile.setPosition(marginLeft + j * TILE_SIZE, marginTop + i * TILE_SIZE);
-			tile.setSize(Vector2f(TILE_SIZE,TILE_SIZE));
+			Sprite tile;
+			tile.setOrigin(TILE_SIZE / 2, TILE_SIZE / 2);
+			tile.setPosition(marginLeft + j * TILE_SIZE + TILE_SIZE / 2, marginTop + i * TILE_SIZE + TILE_SIZE / 2);
 
 			//On initialise le fond en fonction de la nature de la tile
 			switch (getTile(i,j))
 			{
 			case BUSHES :
 				if (texture.loadFromFile("Ressources/tree.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Blue);
+					tile.setTexture(texture);
 				break;
 			case HEAD_NORTH:
-				if (texture.loadFromFile("Ressources/head_N.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Yellow);
+				tile.setTexture(headTexture);
 				break;
 			case HEAD_SOUTH:
-				if (texture.loadFromFile("Ressources/head_S.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Yellow);
+				tile.setTexture(headTexture);
+				tile.setRotation(180);
 				break;
 			case HEAD_EAST:
-				if (texture.loadFromFile("Ressources/head_E.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Yellow);
+				tile.setTexture(headTexture);
+				tile.setRotation(90);
 				break;
 			case HEAD_WEST:
-				if (texture.loadFromFile("Ressources/head_W.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Yellow);
+				tile.setTexture(headTexture);
+				tile.setRotation(270);
 				break;
 			case BODY_NORTH:
 			case BODY_SOUTH:
-				if (texture.loadFromFile("Ressources/body_NS.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Yellow);
+				tile.setTexture(bodyTexture);
 				break;
 			case BODY_EAST:
 			case BODY_WEST:
-				if (texture.loadFromFile("Ressources/body_EW.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Yellow);
+				tile.setTexture(bodyTexture);
+				tile.setRotation(90);
 				break;
 			case FRUIT:
 				if (texture.loadFromFile("Ressources/cherry.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Magenta);
+					tile.setTexture(texture);
 				break;
 			default:
 				if (texture.loadFromFile("Ressources/grass.png"))
-					tile.setTexture(&texture);
+					tile.setTexture(texture);
 				break;
 			}
 
