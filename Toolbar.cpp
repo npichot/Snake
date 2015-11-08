@@ -17,6 +17,10 @@ Toolbar::Toolbar()
 	//New tool Head_E added to the toolbar
 	texture.loadFromFile("Ressources/head_E.png");
 	tools.push_back(new DrawTool(texture, "Head_E", false, HEAD_EAST));
+
+	//New tool Body_E added to the toolbar
+	texture.loadFromFile("Ressources/body_EW.png");
+	tools.push_back(new DrawTool(texture, "body_E", false, BODY_EAST));
 }
 
 
