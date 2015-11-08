@@ -8,5 +8,6 @@ public:
 	~MainTool();
 	bool execute(int x0, int y0, int x, int y, Map & map) override;
 	void saveMap();
+	void buildTheWindow(sf::RenderWindow & window);
 };
 
