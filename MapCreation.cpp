@@ -68,6 +68,12 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 					if (tools[i]->getGlobalBounds().contains(xMouse, yMouse))
 					{
 						tools[i]->activate(!tools[i]->isActivated());
+						for (int j = 0; j < tools.size(); j++)
+						{
+							if (i != j)
+								tools[j]->activate(false);
+						}
+
 						if (tools[i]->isActivated())
 						{
 							tb.setSelected(tools[i]);
