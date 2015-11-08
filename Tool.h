@@ -6,7 +6,6 @@
 class Tool: public sf::RectangleShape
 {
 private:
-	sf::Texture & texture;
 	std::string name;
 	bool activated;
 public:
@@ -14,7 +13,6 @@ public:
 	~Tool();
 	void activate(bool b);
 	bool isActivated() { return activated; };
-	sf::Texture * getTheTexture() { return &texture; };
 	virtual bool execute(int x0, int y0, int x, int y, Map & map)=0;
 };
 

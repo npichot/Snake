@@ -4,10 +4,10 @@ using namespace sf;
 
 
 Tool::Tool(Texture t, string s, bool b)
-	: texture(t), name(s), activated(b)
+	: name(s), activated(b)
 {
 	
-	setTexture(&texture);
+	setTexture(new Texture(t));
 
 	setOutlineColor(Color::Red);
 	if (activated)

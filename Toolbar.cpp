@@ -30,9 +30,7 @@ void Toolbar::drawBar(RenderWindow & window)
 	//Add tools
 	for (int i = 0; i < tools.size();i++)
 	{
-		Texture texture; texture.loadFromFile("Ressources/tree.png");
-		tools[i]->setTexture(&texture);//TODO optimiser en supprimant ca et en mettant le set texture dans Tool.cpp tout en évitant le pb du carré blanc
-		tools[i]->setPosition(framework.getPosition().x + 10 + (TILE_SIZE + 2.5)*i, 5);
+		tools[i]->setPosition(framework.getPosition().x + 10 + (TILE_SIZE + 5)*i, 5);
 		window.draw(*tools[i]);
 	}
 }
