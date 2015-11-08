@@ -9,7 +9,8 @@ private:
 	std::string name;
 public:
 	Tool(sf::Texture t, std::string s);
-	~Tool();	
+	~Tool();
+	std::string getName() { return name; }
 	virtual bool execute(int x0, int y0, int x, int y, Map & map)=0;
 };
 
