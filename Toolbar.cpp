@@ -8,19 +8,23 @@ Toolbar::Toolbar()
 {
 	//New tool tree added to the toolbar
 	Texture texture; texture.loadFromFile("Ressources/tree.png");
-	tools.push_back(new DrawTool(texture, "Tree", false, TREE));
+	drawTools.push_back(new DrawTool(texture, "Tree", false, TREE));
 
 	//New tool grass added to the toolbar
 	texture.loadFromFile("Ressources/grass.png");
-	tools.push_back(new DrawTool(texture, "Grass", false, EMPTY));
+	drawTools.push_back(new DrawTool(texture, "Grass", false, EMPTY));
 
 	//New tool Head_E added to the toolbar
 	texture.loadFromFile("Ressources/head_E.png");
-	tools.push_back(new DrawTool(texture, "Head_E", false, HEAD_EAST));
+	drawTools.push_back(new DrawTool(texture, "Head_E", false, HEAD_EAST));
 
 	//New tool Body_E added to the toolbar
 	texture.loadFromFile("Ressources/body_EW.png");
-	tools.push_back(new DrawTool(texture, "body_E", false, BODY_EAST));
+	drawTools.push_back(new DrawTool(texture, "Body_E", false, BODY_EAST));
+
+	//New tool Save added to the toolbar
+	texture.loadFromFile("Ressources/save.png");
+	mainTools.push_back(new MainTool(texture, "Save"));
 }
 
 
@@ -30,7 +34,7 @@ Toolbar::~Toolbar()
 
 void Toolbar::drawBar(RenderWindow & window)
 {
-	int width = TILE_SIZE*tools.size() + 20 + 5 * (tools.size() - 1);
+	int width = TILE_SIZE*(drawTools.size()+ mainTools.size()) + 40 + 5 * (drawTools.size() - 1);
 
 	//build framework
 	RectangleShape framework;
@@ -40,9 +44,17 @@ void Toolbar::drawBar(RenderWindow & window)
 	window.draw(framework);
 
 	//Add tools
-	for (int i = 0; i < tools.size();i++)
+	for (int i = 0; i < drawTools.size()+mainTools.size();i++)
 	{
-		tools[i]->setPosition(framework.getPosition().x + 10 + (TILE_SIZE + 5)*i, 5);
-		window.draw(*tools[i]);
+		if (i < drawTools.size())
+		{
+			drawTools[i]->setPosition(framework.getPosition().x + 10 + (TILE_SIZE + 5)*i, 5);
+			window.draw(*drawTools[i]);
+		}
+		else
+		{
+			mainTools[i- drawTools.size()]->setPosition(framework.getPosition().x + 30 + (TILE_SIZE + 5)*i, 5);
+			window.draw(*mainTools[i - drawTools.size()]);
+		}
 	}
 }
