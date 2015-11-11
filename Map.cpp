@@ -8,23 +8,45 @@ Map::Map(string filename, RenderWindow & window)
 	:window(window)
 {
 	int row_number, column_number;//Parametre de la map, nombre 
-
-	//Calcule des parametres 
 	column_number = floor((window.getSize().x - 3 * TILE_SIZE) / TILE_SIZE);//On prevoit une marge min de 3 tile (~100 px)
-	row_number= floor((window.getSize().y - 3 * TILE_SIZE) / TILE_SIZE);
+	row_number = floor((window.getSize().y - 3 * TILE_SIZE) / TILE_SIZE);
+
+	//On initialise les parametres pour les sprites
+	int width = TILE_SIZE * column_number;
+	int height = TILE_SIZE * row_number;
+	double marginLeft = (window.getSize().x - width) / 2;
+	double marginTop = (window.getSize().y - height) / 2;
+
+	//Chargement des textures
+	Texture texture;
+	texture.loadFromFile("Ressources/tree.png");
+	textures[0] = texture;
+	texture.loadFromFile("Ressources/body.png");
+	textures[1] = texture;
+	texture.loadFromFile("Ressources/head.png");
+	textures[2] = texture;
+	texture.loadFromFile("Ressources/cherry.png");
+	textures[3] = texture;
+	texture.loadFromFile("Ressources/grass.png");
+	textures[4] = texture;
 	
 	//Remplissage de la map
+	Sprite tile;
+	tile.setOrigin(TILE_SIZE / 2, TILE_SIZE / 2);
+	tile.setTexture(textures[4]);
 	for (int i = 0; i < row_number; ++i)
 	{
-		vector<Tiles> row;
+		vector<Sprite> row;
 		for (int j = 0; j < column_number; ++j)
-			row.push_back(EMPTY);
+		{
+			tile.setPosition(marginLeft + j * TILE_SIZE + TILE_SIZE / 2, marginTop + i * TILE_SIZE + TILE_SIZE / 2);
+			row.push_back(tile);
+		}
 		field.push_back(row);
 	}
 
 	if (!filename.empty())
 		loadMapFromFile(filename);
-
 }
 
 Map::~Map()
@@ -36,7 +58,8 @@ void Map::updateField(int i, int j, Tiles t)
 	if (i >= 0 && i < field.size())
 		if (j >= 0 && j < field[0].size())
 		{
-			field[i][j] = t;
+			field[i][j].setTexture(textures[(int)floor(t / 10)]);
+			field[i][j].setRotation((t - ((int)floor(t / 10)) * 10)*90);
 			return;
 		}
 	printf("Error 1 : Can't update the tile because the coordinates are outside the field");
@@ -47,7 +70,12 @@ Tiles Map::getTile(int i, int j)
 	if (i >= 0 && i < field.size())
 	{
 		if (j >= 0 && j < field[0].size())
-			return field[i][j];
+		{
+			for (int h = 0; h < sizeof(textures); h++)
+				if (field[i][j].getTexture() == &textures[h])
+					return static_cast<Tiles>(h * 10 + (int)floor(field[i][j].getRotation() / 90));
+		}
+			
 	}
 	else
 	{
@@ -73,63 +101,9 @@ void Map::drawField()
 	window.draw(background);
 
 	//On affiche les tiles du terrain
-	Texture texture;
-	Texture headTexture; headTexture.loadFromFile("Ressources/head.png");
-	Texture bodyTexture; bodyTexture.loadFromFile("Ressources/body.png");
-
-
 	for (int i = 0; i < field.size();++i)
 		for (int j = 0; j < field[i].size(); ++j)
-		{
-			//On debute la construction du rectangle
-			Sprite tile;
-			tile.setOrigin(TILE_SIZE / 2, TILE_SIZE / 2);
-			tile.setPosition(marginLeft + j * TILE_SIZE + TILE_SIZE / 2, marginTop + i * TILE_SIZE + TILE_SIZE / 2);
-
-			//On initialise le fond en fonction de la nature de la tile
-			switch (getTile(i,j))
-			{
-			case BUSHES :
-				if (texture.loadFromFile("Ressources/tree.png"))
-					tile.setTexture(texture);
-				break;
-			case HEAD_NORTH:
-				tile.setTexture(headTexture);
-				break;
-			case HEAD_SOUTH:
-				tile.setTexture(headTexture);
-				tile.setRotation(180);
-				break;
-			case HEAD_EAST:
-				tile.setTexture(headTexture);
-				tile.setRotation(90);
-				break;
-			case HEAD_WEST:
-				tile.setTexture(headTexture);
-				tile.setRotation(270);
-				break;
-			case BODY_NORTH:
-			case BODY_SOUTH:
-				tile.setTexture(bodyTexture);
-				break;
-			case BODY_EAST:
-			case BODY_WEST:
-				tile.setTexture(bodyTexture);
-				tile.setRotation(90);
-				break;
-			case FRUIT:
-				if (texture.loadFromFile("Ressources/cherry.png"))
-					tile.setTexture(texture);
-				break;
-			default:
-				if (texture.loadFromFile("Ressources/grass.png"))
-					tile.setTexture(texture);
-				break;
-			}
-
-			//On ajoute la tile a la fenetre
-			window.draw(tile);
-		}
+			window.draw(field[i][j]);
 }
 
 void Map::loadMapFromFile(string filename)
@@ -151,7 +125,6 @@ void Map::loadMapFromFile(string filename)
 
 		// close the opened file.
 		is.close();
-
 }
 
 

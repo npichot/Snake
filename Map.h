@@ -14,26 +14,26 @@ const int TILE_SIZE = 32;
 enum Tiles //differentes tuiles dessin
 {
 	//Element Fixes
-	BUSHES,
+	TREE=0,
 	// Serpent
-	BODY_NORTH,
-	BODY_SOUTH,
-	BODY_EAST,
-	BODY_WEST,
-	HEAD_NORTH,
-	HEAD_SOUTH,
-	HEAD_EAST,
-	HEAD_WEST,
+	BODY_NORTH=10,
+	BODY_EAST=11,
+	BODY_SOUTH=12,
+	BODY_WEST=13,
+	HEAD_NORTH=20,
+	HEAD_EAST=21,
+	HEAD_SOUTH=22,
+	HEAD_WEST=23,
 	//Autres
-	FRUIT,
-	EMPTY,
+	FRUIT=30,
+	EMPTY=40,
 	UNKNOWN
 };
 
 //Definition d'une map pour convertir un string en enum
 const std::map<std::string, Tiles> getEnumValue = 
 { 
-	{"BUSHES",BUSHES},
+	{"BUSHES",TREE},
 	{"BODY_NORTH",BODY_NORTH},
 	{"BODY_SOUTH",BODY_SOUTH},
 	{"BODY_EAST",BODY_EAST},
@@ -57,8 +57,9 @@ const std::map<Tiles, Tiles> convertHeadtoBody =
 class Map
 {
 private:
-	std::vector < std::vector <Tiles> > field; // Le terrain ne peut pas etre modifie directement. Notamment sa taille est calculee et fixee une fois au debut.
+	std::vector < std::vector <sf::Sprite> > field; // Le terrain ne peut pas etre modifie directement. Notamment sa taille est calculee et fixee une fois au debut.
 	sf::RenderWindow & window;
+	sf::Texture textures[5];
 public:
 	/*
 	Initialisation de la map en fonction de la taille de l'ecran
