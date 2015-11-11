@@ -18,22 +18,26 @@ Map::Map(string filename, RenderWindow & window)
 	double marginTop = (window.getSize().y - height) / 2;
 
 	//Chargement des textures
-	Texture texture;
-	texture.loadFromFile("Ressources/tree.png");
-	textures[0] = texture;
-	texture.loadFromFile("Ressources/body.png");
-	textures[1] = texture;
-	texture.loadFromFile("Ressources/head.png");
-	textures[2] = texture;
-	texture.loadFromFile("Ressources/cherry.png");
-	textures[3] = texture;
-	texture.loadFromFile("Ressources/grass.png");
-	textures[4] = texture;
+	Texture t0;
+	t0.loadFromFile("Ressources/tree.png");
+	textures[0] = new Texture(t0);
+	Texture t1;
+	t1.loadFromFile("Ressources/body.png");
+	textures[1] = new Texture(t1);
+	Texture t2;
+	t2.loadFromFile("Ressources/head.png");
+	textures[2] = new Texture(t2);
+	Texture t3;
+	t3.loadFromFile("Ressources/cherry.png");
+	textures[3] = new Texture(t3);
+	Texture t4;
+	t4.loadFromFile("Ressources/grass.png");
+	textures[4] = new Texture(t4);
 	
 	//Remplissage de la map
 	Sprite tile;
 	tile.setOrigin(TILE_SIZE / 2, TILE_SIZE / 2);
-	tile.setTexture(textures[4]);
+	tile.setTexture(*textures[4]);
 	for (int i = 0; i < row_number; ++i)
 	{
 		vector<Sprite> row;
@@ -58,7 +62,7 @@ void Map::updateField(int i, int j, Tiles t)
 	if (i >= 0 && i < field.size())
 		if (j >= 0 && j < field[0].size())
 		{
-			field[i][j].setTexture(textures[(int)floor(t / 10)]);
+			field[i][j].setTexture(*textures[(int)floor(t / 10)]);
 			field[i][j].setRotation((t - ((int)floor(t / 10)) * 10)*90);
 			return;
 		}
@@ -71,8 +75,8 @@ Tiles Map::getTile(int i, int j)
 	{
 		if (j >= 0 && j < field[0].size())
 		{
-			for (int h = 0; h < sizeof(textures); h++)
-				if (field[i][j].getTexture() == &textures[h])
+			for (int h = 0; h < sizeof(textures)/sizeof(Texture*); h++)
+				if (field[i][j].getTexture() == textures[h])
 					return static_cast<Tiles>(h * 10 + (int)floor(field[i][j].getRotation() / 90));
 		}
 			
