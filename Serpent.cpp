@@ -15,7 +15,9 @@ Serpent::Serpent() // Ne pas oublier d'initialiser le vector
     ElementSerpent body3 = {5,1,BODY_EAST};
     m_posSerpent.push_back(body3);
 
-   	m_headFuture = ElementSerpent(5,5, HEAD_EAST);
+    
+    ElementSerpent m_head;//A quoi ca sert ?
+    ElementSerpent m_headFuture;//A quoi ca sert ?
 	ElementSerpent m_lastPosition = m_posSerpent[m_posSerpent.size() - 1];
     m_alive=true; 
 }
@@ -33,7 +35,7 @@ void Serpent::deplacementSerpent(Serpent &serpent)
         m_posSerpent[i]=m_posSerpent[i-1];
     }
     m_posSerpent[1].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn(), convertHeadtoBody.at(m_posSerpent[0].gettile()));
-	    
+    
 }
 
 void Serpent::deplacementTete(Serpent &serpent, Tiles head_tile)//Gère le déplacement de la tête
@@ -64,10 +66,10 @@ void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant l
 	switch (entree)
 	{
 	case UP:
-		m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), HEAD_NORTH);
+		m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), HEAD_NORTH);
 		break;
 	case DOWN:
-		m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), HEAD_SOUTH);
+		m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), HEAD_SOUTH);
 		break;
 	case RIGHT:
 		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() + 1, HEAD_EAST);
