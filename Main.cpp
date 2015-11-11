@@ -66,10 +66,11 @@ void play(RenderWindow & window)
         }
 		if (serpent.getAlive()!=true)
 		{
-			window.close();
+			map.updateField(1, 1, FRUIT);
 		}
 		
         serpent.deplacementTete(serpent, head_tile);
+		serpent.isAlive(map);
 
 		//dessin de la map 
 		window.clear();
