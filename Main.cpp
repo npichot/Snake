@@ -11,7 +11,7 @@ int main()
 	Menu menu(window);
 
 	//Lancement de la boucle principale
-	if (window.isOpen())
+	while (window.isOpen())
 	{
 		//Gestion du menu
 		switch (menu.getMenuChoice())
@@ -28,6 +28,9 @@ int main()
 			mc.executeInterface(window,emptyMap);
 			break;
 		}
+		case QUIT:
+			return 0;
+			break;
 		default:
 			break;
 		}
