@@ -34,6 +34,8 @@ void Serpent::deplacementSerpent(Serpent &serpent)
 		m_lastPosition = m_posSerpent[m_posSerpent.size() - 1]; // Pour sauvegarder la dernière position de la queue
         m_posSerpent[i]=m_posSerpent[i-1];
     }
+
+	//Remplace la tête précédente par un élément corps
     m_posSerpent[1].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn(), convertHeadtoBody.at(m_posSerpent[0].gettile()));
     
 }
@@ -105,7 +107,8 @@ void Serpent::allongerQueue()
 void Serpent::isAlive(Map carte)
 {
 	Tiles element;
-	element = carte.getTile(m_headFuture.getLine(), m_headFuture.getColumn());
+	m_head = m_posSerpent[0];
+	element = carte.getTile(m_head.getLine(), m_head.getColumn());
 	if (element == EMPTY)
 	{
 		m_alive = true; // S'il y a un fruit ou que la case est vide, m_alive reste true

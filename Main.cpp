@@ -64,12 +64,16 @@ void play(RenderWindow & window)
                     break;
             }
         }
+
+		serpent.deplacementTete(serpent, head_tile);
+		serpent.isAlive(map);
+
 		if (serpent.getAlive()!=true)
 		{
-			window.close();
+			map.updateField(1, 1, FRUIT);
 		}
 		
-        serpent.deplacementTete(serpent, head_tile);
+        
 
 		//dessin de la map 
 		window.clear();
