@@ -66,10 +66,10 @@ void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant l
 	switch (entree)
 	{
 	case UP:
-		m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), HEAD_NORTH);
+		m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), HEAD_NORTH);
 		break;
 	case DOWN:
-		m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), HEAD_SOUTH);
+		m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), HEAD_SOUTH);
 		break;
 	case RIGHT:
 		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() + 1, HEAD_EAST);
@@ -81,10 +81,10 @@ void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant l
 		switch (m_head.gettile())
 		{
 		case NORTH:
-			m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), HEAD_NORTH);
+			m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), HEAD_NORTH);
 			break;
 		case SOUTH:
-			m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), HEAD_SOUTH);
+			m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), HEAD_SOUTH);
 			break;
 		case EAST:
 			m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() + 1, HEAD_EAST);
