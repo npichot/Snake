@@ -18,13 +18,13 @@ Toolbar::Toolbar()
 	texture.loadFromFile("Ressources/head_E.png");
 	drawTools.push_back(new DrawTool(texture, "Head_E", false, HEAD_EAST));
 
-	//New tool Body_E added to the toolbar
-	texture.loadFromFile("Ressources/body_EW.png");
-	drawTools.push_back(new DrawTool(texture, "Body_E", false, BODY_EAST));
-
 	//New tool Save added to the toolbar
 	texture.loadFromFile("Ressources/save.png");
 	mainTools.push_back(new MainTool(texture, "Save"));
+
+	//New tool Quit added to the toolbar
+	texture.loadFromFile("Ressources/quit.png");
+	mainTools.push_back(new MainTool(texture, "Quit"));
 }
 
 

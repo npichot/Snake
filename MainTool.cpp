@@ -16,6 +16,8 @@ bool MainTool::execute(int x0, int y0, int x, int y, Map & map)
 {
 	if (getName() == "Save")
 		saveMap(map);
+	else if (getName() == "Quit")
+		return false;
 	return true;
 }
 

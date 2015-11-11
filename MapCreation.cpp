@@ -68,7 +68,8 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 				for (int i = 0; i < mainTools.size(); i++)
 					if (mainTools[i]->getGlobalBounds().contains(xMouse, yMouse))
 					{
-						mainTools[i]->execute(xMouse0, yMouse0, xMouse, yMouse, tempMap);
+						if (!mainTools[i]->execute(xMouse0, yMouse0, xMouse, yMouse, tempMap))
+							return;
 						break;
 					}
 
