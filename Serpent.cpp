@@ -15,9 +15,7 @@ Serpent::Serpent() // Ne pas oublier d'initialiser le vector
     ElementSerpent body3 = {5,1,BODY_EAST};
     m_posSerpent.push_back(body3);
 
-    
-    ElementSerpent m_head;//A quoi ca sert ?
-    ElementSerpent m_headFuture;//A quoi ca sert ?
+   
 	ElementSerpent m_lastPosition = m_posSerpent[m_posSerpent.size() - 1];
     m_alive=true; 
 }
@@ -62,42 +60,6 @@ void Serpent::deplacementTete(Serpent &serpent, Tiles head_tile)//Gère le déplac
 
 }
 
-void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant le serpent de revenir en arriËre
-{
-
-	switch (entree)
-	{
-	case UP:
-		m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), HEAD_NORTH);
-		break;
-	case DOWN:
-		m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), HEAD_SOUTH);
-		break;
-	case RIGHT:
-		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() + 1, HEAD_EAST);
-		break;
-	case LEFT:
-		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() - 1, HEAD_WEST);
-		break;
-	default: // S'il n'y a pas eu d'input, la prochaine position dÈpend de l'orientation de la tÍte
-		switch (m_head.gettile())
-		{
-		case NORTH:
-			m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), HEAD_NORTH);
-			break;
-		case SOUTH:
-			m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), HEAD_SOUTH);
-			break;
-		case EAST:
-			m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() + 1, HEAD_EAST);
-			break;
-		case LEFT:
-			m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() - 1, HEAD_WEST);
-			break;
-		}
-		break;
-	}
-}
 
 void Serpent::allongerQueue()
 {
@@ -107,20 +69,42 @@ void Serpent::allongerQueue()
 void Serpent::isAlive(Map carte)
 {
 	Tiles element;
-	m_head = m_posSerpent[0];
-	element = carte.getTile(m_head.getLine(), m_head.getColumn());
-	if (element == EMPTY)
+	element = carte.getTile(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn());
+	switch (element)
 	{
-		m_alive = true; // S'il y a un fruit ou que la case est vide, m_alive reste true
-	}
-	else if (element == FRUIT)
-	{
-		allongerQueue(); //On allonge la queue du serpent s'il y a un fruit
-		m_alive = true; //
-	}
-	else
-	{
-		m_alive = false; // Les autres cas sont a priori des cas o˘ le serpent meurt
+	case HEAD_NORTH:
+		m_alive = false;
+		break;
+	case HEAD_EAST:
+		m_alive = false;
+		break;
+	case HEAD_SOUTH:
+		m_alive = false;
+		break;
+	case HEAD_WEST:
+		m_alive = false;
+		break;
+	case BODY_NORTH:
+		m_alive = false;
+		break;
+	case BODY_EAST:
+		m_alive = false;
+		break;
+	case BODY_SOUTH:
+		m_alive = false;
+		break;
+	case BODY_WEST:
+		m_alive = false;
+		break;
+	case TREE:
+		m_alive = false;
+		break;
+	case FRUIT:
+		allongerQueue();
+		break;
+	default:
+		break;
+		 
 	}
 }
 
