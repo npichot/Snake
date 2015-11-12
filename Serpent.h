@@ -19,7 +19,7 @@ public:
     void deplacementSerpent(Serpent &serpent); // Méthode qui permet de déplacer le serpent
     void deplacementTete(Serpent &serpent, Tiles head_tile);
     void allongerQueue();//Allonge la queue si fruit est mange
-	void isAlive(Map carte);
+	void isAlive(Map & map);
     ElementSerpent *getElement(int i); //Methode pour retourner l'ŽlŽment i du vecteur m_posSerpent
     int sizeSerpent();//Permet d'accŽder ˆ la taille du serpent
 	bool getAlive() const; // Permet de récupérer l'attribut m_alive
