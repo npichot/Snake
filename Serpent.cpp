@@ -4,7 +4,7 @@
 using namespace std;
 using namespace sf;
 
-Serpent::Serpent() // Ne pas oublier d'initialiser le vector
+Serpent::Serpent() 
 {
     ElementSerpent head = {5, 4, HEAD_EAST};
     m_posSerpent.push_back(head);

@@ -60,17 +60,34 @@ void play(RenderWindow & window)
             switch (event.key.code)
             {
                 case Keyboard::Up:
-                    head_tile = HEAD_NORTH;
-                    break;
-                case Keyboard::Right:
-                    head_tile = HEAD_EAST;
-                    break;
-                case Keyboard::Down:
-                    head_tile = HEAD_SOUTH;
-                    break;
-                case Keyboard::Left:
-                    head_tile = HEAD_WEST;
-                    break;
+					if (head_tile != HEAD_SOUTH)
+					{
+						head_tile = HEAD_NORTH;
+						break;
+					}
+					break;
+				case Keyboard::Right:
+					if (head_tile != HEAD_WEST)
+					{
+						head_tile = HEAD_EAST;
+						break;
+					}
+					break;
+				case Keyboard::Left:
+					if (head_tile != HEAD_EAST)
+					{
+						head_tile = HEAD_WEST;
+						break;
+					}
+					break;
+				case Keyboard::Down:
+					if (head_tile != HEAD_NORTH)
+					{
+						head_tile = HEAD_SOUTH;
+						break;
+					}
+					break;
+
                 case Keyboard::Escape:
                     window.close();
                 default:
