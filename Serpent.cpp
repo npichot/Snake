@@ -72,7 +72,7 @@ void Serpent::isAlive(Map carte)
 	element = carte.getTile(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn());
 	switch (element)
 	{
-	case HEAD_NORTH:
+	/*case HEAD_NORTH:
 		m_alive = false;
 		break;
 	case HEAD_EAST:
@@ -83,7 +83,7 @@ void Serpent::isAlive(Map carte)
 		break;
 	case HEAD_WEST:
 		m_alive = false;
-		break;
+		break;*/
 	case BODY_NORTH:
 		m_alive = false;
 		break;

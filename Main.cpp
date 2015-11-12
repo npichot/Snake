@@ -7,7 +7,7 @@ int main()
 {
 	// Chargement de la fenetre
 	RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32),"Snake");
-    window.setFramerateLimit(10);//Gere le nombre de FPS
+    window.setFramerateLimit(1);//Gere le nombre de FPS
 	
 	Menu menu(window);
 
@@ -33,6 +33,17 @@ void play(RenderWindow & window)
 	Map map("MapConfig/Config1.dat", window);
 	while (window.isOpen())
 	{
+
+        serpent.deplacementSerpent(serpent);
+        serpent.deplacementTete(serpent, head_tile);        
+        
+        serpent.isAlive(map);
+        
+        if (serpent.getAlive()==false)
+        {
+            map.updateField(1, 1, FRUIT);
+        }
+        
         for (int i = 0 ; i < serpent.sizeSerpent(); ++i)
         {
 			map.updateField(serpent.getElement(i)->getLine(), serpent.getElement(i)->getColumn(), serpent.getElement(i)->gettile());
@@ -40,7 +51,7 @@ void play(RenderWindow & window)
 
 		//Suppression du derniere element sur la map avant deplaement
 		map.updateField(serpent.getElement(serpent.sizeSerpent()-1)->getLine(), serpent.getElement(serpent.sizeSerpent()-1)->getColumn(), EMPTY);
-		serpent.deplacementSerpent(serpent);
+		
         
         //Controle des inputs claviers
         Event event;
@@ -66,13 +77,8 @@ void play(RenderWindow & window)
             }
         }
 
-		serpent.deplacementTete(serpent, head_tile);
-		serpent.isAlive(map);
-	
-		if (serpent.getAlive()==false)
-		{
-			map.updateField(1, 1, FRUIT);
-		}
+		
+		
 		
         
 
