@@ -31,8 +31,10 @@ void play(RenderWindow & window)
 
     Serpent serpent;
     Tiles head_tile = serpent.getElement(0)->gettile();
+
 	Map map("MapConfig/Config1.dat", window);
-	map.updateField(4, 4, FRUIT);
+	map.popFruit();
+
 	while (window.isOpen())
 	{    
 		////////////////////////////////
