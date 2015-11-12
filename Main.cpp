@@ -20,6 +20,9 @@ int main()
 		case PLAY:
 			play(window);
 			break;
+		case QUIT:
+			window.close();
+			break;
 		}
 	}
 	return 0;

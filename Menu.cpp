@@ -60,6 +60,11 @@ void Menu::drawMenu()
 MenuChoice Menu::getMenuChoice()
 {
 	MenuChoice mc = NONE;
+
+	window.clear();
+	drawMenu();
+	window.display();
+
 	while (mc == NONE)
 	{
 		Event event;
