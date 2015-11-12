@@ -27,7 +27,6 @@ int main()
 void play(RenderWindow & window)
 {
     //Initialisation du serpent
-
     Serpent serpent;
     Tiles head_tile = serpent.getElement(0)->gettile();
 	Map map("MapConfig/Config1.dat", window);
@@ -68,8 +67,8 @@ void play(RenderWindow & window)
 
 		serpent.deplacementTete(serpent, head_tile);
 		serpent.isAlive(map);
-	
-		if (serpent.getAlive()==false)
+
+		if (serpent.getAlive()!=true)
 		{
 			map.updateField(1, 1, FRUIT);
 		}
