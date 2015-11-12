@@ -72,35 +72,17 @@ void Serpent::isAlive(Map carte)
 	element = carte.getTile(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn());
 	switch (element)
 	{
-	/*case HEAD_NORTH:
-		m_alive = false;
-		break;
-	case HEAD_EAST:
-		m_alive = false;
-		break;
-	case HEAD_SOUTH:
-		m_alive = false;
-		break;
-	case HEAD_WEST:
-		m_alive = false;
-		break;*/
+	
 	case BODY_NORTH:
-		m_alive = false;
-		break;
 	case BODY_EAST:
-		m_alive = false;
-		break;
 	case BODY_SOUTH:
-		m_alive = false;
-		break;
 	case BODY_WEST:
-		m_alive = false;
-		break;
 	case TREE:
 		m_alive = false;
 		break;
 	case FRUIT:
 		allongerQueue();
+		carte.popFruit();
 		break;
 	default:
 		break;

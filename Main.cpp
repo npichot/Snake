@@ -7,7 +7,7 @@ int main()
 {
 	// Chargement de la fenetre
 	RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32),"Snake");
-    window.setFramerateLimit(1);//Gere le nombre de FPS
+    window.setFramerateLimit(10);//Gere le nombre de FPS
 	
 	Menu menu(window);
 
@@ -31,6 +31,7 @@ void play(RenderWindow & window)
     Serpent serpent;
     Tiles head_tile = serpent.getElement(0)->gettile();
 	Map map("MapConfig/Config1.dat", window);
+	map.updateField(4, 4, FRUIT);
 	while (window.isOpen())
 	{
 

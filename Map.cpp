@@ -131,5 +131,16 @@ void Map::loadMapFromFile(string filename)
 		is.close();
 }
 
-
+void Map::popFruit()
+{
+	int i(0), j(0);
+	do
+	{
+		srand(time(NULL)); //Initialisation du timer
+		i = rand() % (field.size() - 3) + 1;
+		j = rand() % (field[0].size() - 3) + 1;
+	} while (getTile(i, j) != EMPTY);
+	updateField(i, j, FRUIT);
+		
+}
 

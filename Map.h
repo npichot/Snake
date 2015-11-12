@@ -6,6 +6,10 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <math.h>
+#include <stdio.h>      /* printf, scanf, puts, NULL */
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
+
 
 
 //Chaque element de la map est represente par un carre de 32*32
@@ -87,7 +91,12 @@ public:
 	Methode pour intitialiser la map a partir d'un fichier
 	*/
 	void loadMapFromFile(std::string filename);
-	
+
+	/*
+	Methode pour faire apparaitre un fruit aleatoirement
+	*/
+	void popFruit();
+
 };
 
 #endif
