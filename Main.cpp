@@ -34,6 +34,8 @@ void play(RenderWindow & window)
 	map.updateField(4, 4, FRUIT);
 	while (window.isOpen())
 	{
+		//Suppression du derniere element sur la map avant deplacement
+		map.updateField(serpent.getElement(serpent.sizeSerpent() - 1)->getLine(), serpent.getElement(serpent.sizeSerpent() - 1)->getColumn(), EMPTY);
 
         serpent.deplacementSerpent(serpent);
         serpent.deplacementTete(serpent, head_tile);        
@@ -49,10 +51,6 @@ void play(RenderWindow & window)
         {
 			map.updateField(serpent.getElement(i)->getLine(), serpent.getElement(i)->getColumn(), serpent.getElement(i)->gettile());
         }
-
-		//Suppression du derniere element sur la map avant deplaement
-		map.updateField(serpent.getElement(serpent.sizeSerpent()-1)->getLine(), serpent.getElement(serpent.sizeSerpent()-1)->getColumn(), EMPTY);
-		
         
         //Controle des inputs claviers
         Event event;
