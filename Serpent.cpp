@@ -17,7 +17,7 @@ Serpent::Serpent()
 
    
 	ElementSerpent m_lastPosition = m_posSerpent[m_posSerpent.size() - 1];
-    m_alive=true; 
+    alive=true; 
 }
 
 Serpent::~Serpent()
@@ -66,7 +66,7 @@ void Serpent::allongerQueue()
 	m_posSerpent.push_back(m_lastPosition); // On rajoute un élément Serpent à la dernière position de la queue pour allonger le Serpent
 }
 
-void Serpent::isAlive(Map & map)
+void Serpent::setAlive(Map & map)
 {
 	int i, j;
 	Tiles element;
@@ -79,7 +79,7 @@ void Serpent::isAlive(Map & map)
 	case BODY_SOUTH:
 	case BODY_WEST:
 	case TREE:
-		m_alive = false;
+		alive = false;
 		break;
 	case FRUIT:
 		allongerQueue();
@@ -99,9 +99,4 @@ ElementSerpent *Serpent::getElement(int i)
 int Serpent::sizeSerpent()
 {
     return m_posSerpent.size();
-}
-
-bool Serpent::getAlive() const
-{
-	return m_alive;
 }

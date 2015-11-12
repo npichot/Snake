@@ -12,13 +12,14 @@ int main()
 	Menu menu(window);
 
 	//Lancement de la boucle principale
-	if (window.isOpen())
+	while (window.isOpen())
 	{
 		//Gestion du menu
 		switch (menu.getMenuChoice())
 		{
 		case PLAY:
 			play(window);
+			break;
 		}
 	}
 	return 0;
@@ -33,28 +34,13 @@ void play(RenderWindow & window)
 	Map map("MapConfig/Config1.dat", window);
 	map.updateField(4, 4, FRUIT);
 	while (window.isOpen())
-	{
-		//Suppression du derniere element sur la map avant deplacement
-		map.updateField(serpent.getElement(serpent.sizeSerpent() - 1)->getLine(), serpent.getElement(serpent.sizeSerpent() - 1)->getColumn(), EMPTY);
-
-        serpent.deplacementSerpent(serpent);
-        serpent.deplacementTete(serpent, head_tile);        
-        
-        serpent.isAlive(map);
-        
-        if (serpent.getAlive()==false)
-        {
-            map.updateField(1, 1, FRUIT);
-        }
-        
-        for (int i = 0 ; i < serpent.sizeSerpent(); ++i)
-        {
-			map.updateField(serpent.getElement(i)->getLine(), serpent.getElement(i)->getColumn(), serpent.getElement(i)->gettile());
-        }
-        
-        //Controle des inputs claviers
+	{    
+		////////////////////////////////
+        //Controle des inputs claviers//
+		////////////////////////////////
         Event event;
-        while (window.pollEvent(event)) {
+        while (window.pollEvent(event)) 
+		{
             switch (event.key.code)
             {
                 case Keyboard::Up:
@@ -88,19 +74,57 @@ void play(RenderWindow & window)
 
                 case Keyboard::Escape:
                     window.close();
+					break;
+				case Keyboard::Return:
+					if (!serpent.isAlive())
+						return;
                 default:
                     break;
             }
         }
 
 		
-        
+		
 
-		//dessin de la map 
+		//////////////
+		//Traitement//
+		//////////////
+		if (!serpent.isAlive())//On attend le retour au menu par enter
+			continue;
+
+		map.updateField(serpent.getElement(serpent.sizeSerpent() - 1)->getLine(), serpent.getElement(serpent.sizeSerpent() - 1)->getColumn(), EMPTY);//Suppression du derniere element sur la map avant deplacement
+		serpent.deplacementSerpent(serpent);
+		serpent.deplacementTete(serpent, head_tile);
+		serpent.setAlive(map);
+
+		for (int i = 0; i < serpent.sizeSerpent(); ++i)
+		{
+			map.updateField(serpent.getElement(i)->getLine(), serpent.getElement(i)->getColumn(), serpent.getElement(i)->gettile());
+		}
+		
+		////////////////////
+		//dessin de la map//
+		////////////////////
 		window.clear();
 		map.drawField();
+		if (!serpent.isAlive())
+		{
+			Font font;
+			if (!font.loadFromFile("Police/arial.ttf"))
+			{
+				// TODO erreur...
+			}
+			Text gameOver;
+			gameOver.setFont(font);
+			gameOver.setString("GAME OVER");
+			gameOver.setCharacterSize(80);
+			gameOver.setColor(Color::White);
+			FloatRect fr = gameOver.getLocalBounds();
+			gameOver.setOrigin(fr.width/ 2, fr.height / 2);
+			gameOver.setPosition(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+			window.draw(gameOver);
+		}
 		window.display();
-        
 	}
 	
 }
