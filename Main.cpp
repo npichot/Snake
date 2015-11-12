@@ -79,8 +79,6 @@ void play(RenderWindow & window)
         }
 
 		
-		
-		
         
 
 		//dessin de la map 

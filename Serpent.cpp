@@ -82,7 +82,7 @@ void Serpent::isAlive(Map carte)
 		break;
 	case FRUIT:
 		allongerQueue();
-		carte.popFruit();
+		carte.updateField(8, 8, FRUIT);
 		break;
 	default:
 		break;
