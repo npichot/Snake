@@ -27,7 +27,7 @@ int main()
 
 void play(RenderWindow & window)
 {
-    //Initialisation du serpent
+	bool pause = false;
 
     Serpent serpent;
     Tiles head_tile = serpent.getElement(0)->gettile();
@@ -43,50 +43,51 @@ void play(RenderWindow & window)
         Event event;
         while (window.pollEvent(event)) 
 		{
-            switch (event.key.code)
-            {
-                case Keyboard::Up:
-					if (head_tile != HEAD_SOUTH)
+			if (event.type == Event::KeyReleased)
+			{
+				switch (event.key.code)
+				{
+				case Keyboard::Up:
+					if (head_tile != HEAD_SOUTH && !pause)
 					{
 						head_tile = HEAD_NORTH;
-						break;
 					}
 					break;
 				case Keyboard::Right:
-					if (head_tile != HEAD_WEST)
+					if (head_tile != HEAD_WEST && !pause)
 					{
 						head_tile = HEAD_EAST;
-						break;
 					}
 					break;
 				case Keyboard::Left:
-					if (head_tile != HEAD_EAST)
+					if (head_tile != HEAD_EAST && !pause)
 					{
 						head_tile = HEAD_WEST;
-						break;
 					}
 					break;
 				case Keyboard::Down:
-					if (head_tile != HEAD_NORTH)
+					if (head_tile != HEAD_NORTH && !pause)
 					{
 						head_tile = HEAD_SOUTH;
-						break;
 					}
 					break;
 
-                case Keyboard::Escape:
-                    window.close();
+				case Keyboard::Escape:
+					window.close();
 					break;
 				case Keyboard::Return:
 					if (!serpent.isAlive())
 						return;
-                default:
-                    break;
-            }
+					break;
+				case Keyboard::Space:
+					pause = !pause;
+					break;
+				default:
+					break;
+				}
+				break;// Autoriser qu'une prise de touche à la fois
+			}
         }
-
-		
-		
 
 		//////////////
 		//Traitement//
@@ -94,14 +95,17 @@ void play(RenderWindow & window)
 		if (!serpent.isAlive())//On attend le retour au menu par enter
 			continue;
 
-		map.updateField(serpent.getElement(serpent.sizeSerpent() - 1)->getLine(), serpent.getElement(serpent.sizeSerpent() - 1)->getColumn(), EMPTY);//Suppression du derniere element sur la map avant deplacement
-		serpent.deplacementSerpent(serpent);
-		serpent.deplacementTete(serpent, head_tile);
-		serpent.setAlive(map);
-
-		for (int i = 0; i < serpent.sizeSerpent(); ++i)
+		if (!pause)
 		{
-			map.updateField(serpent.getElement(i)->getLine(), serpent.getElement(i)->getColumn(), serpent.getElement(i)->gettile());
+			map.updateField(serpent.getElement(serpent.sizeSerpent() - 1)->getLine(), serpent.getElement(serpent.sizeSerpent() - 1)->getColumn(), EMPTY);//Suppression du derniere element sur la map avant deplacement
+			serpent.deplacementSerpent(serpent);
+			serpent.deplacementTete(serpent, head_tile);
+			serpent.setAlive(map);
+
+			for (int i = 0; i < serpent.sizeSerpent(); ++i)
+			{
+				map.updateField(serpent.getElement(i)->getLine(), serpent.getElement(i)->getColumn(), serpent.getElement(i)->gettile());
+			}
 		}
 		
 		////////////////////
@@ -109,22 +113,25 @@ void play(RenderWindow & window)
 		////////////////////
 		window.clear();
 		map.drawField();
-		if (!serpent.isAlive())
+		if (!serpent.isAlive() || pause)
 		{
 			Font font;
 			if (!font.loadFromFile("Police/arial.ttf"))
 			{
 				// TODO erreur...
 			}
-			Text gameOver;
-			gameOver.setFont(font);
-			gameOver.setString("GAME OVER");
-			gameOver.setCharacterSize(80);
-			gameOver.setColor(Color::White);
-			FloatRect fr = gameOver.getLocalBounds();
-			gameOver.setOrigin(fr.width/ 2, fr.height / 2);
-			gameOver.setPosition(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
-			window.draw(gameOver);
+			Text additionnalText;
+			additionnalText.setFont(font);
+			if (!pause)
+				additionnalText.setString("GAME OVER");
+			else
+				additionnalText.setString("PAUSE");
+			additionnalText.setCharacterSize(80);
+			additionnalText.setColor(Color::White);
+			FloatRect fr = additionnalText.getLocalBounds();
+			additionnalText.setOrigin(fr.width / 2, fr.height / 2);
+			additionnalText.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+			window.draw(additionnalText);
 		}
 		window.display();
 	}
