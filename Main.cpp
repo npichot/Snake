@@ -104,6 +104,7 @@ void play(RenderWindow & window)
 			serpent.deplacementSerpent(serpent);
 			serpent.deplacementTete(serpent, head_tile);
 			serpent.setAlive(map);
+            serpent.fruit_action(map);
 
 			for (int i = 0; i < serpent.sizeSerpent(); ++i)
 			{

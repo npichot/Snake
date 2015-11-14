@@ -66,9 +66,22 @@ void Serpent::allongerQueue()
 	m_posSerpent.push_back(m_lastPosition); // On rajoute un élément Serpent à la dernière position de la queue pour allonger le Serpent
 }
 
+void Serpent::fruit_action(Map & map)
+{
+    Tiles fruit;
+    fruit = map.getTile(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn());
+    switch (fruit) {
+        case FRUIT:
+            allongerQueue();
+            map.popFruit();
+            break;
+        default:
+            break;
+    }
+}
+
 void Serpent::setAlive(Map & map)
 {
-	int i, j;
 	Tiles element;
 	element = map.getTile(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn());
 	switch (element)
@@ -81,10 +94,7 @@ void Serpent::setAlive(Map & map)
 	case TREE:
 		alive = false;
 		break;
-	case FRUIT:
-		allongerQueue();
-		map.popFruit();
-		break;
+	
 	default:
 		break;
 		 
