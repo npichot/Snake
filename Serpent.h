@@ -2,7 +2,6 @@
 #define __SERPENT_H_INCLUDED__
 
 #include "Map.h"
-#include "Input.h"
 #include "ElementSerpent.h"
 #include <vector>
 #include "Menu.h"
