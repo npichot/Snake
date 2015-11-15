@@ -7,15 +7,15 @@ Liste en vrac dont il faudra pour chaque élément évaluer sa priorité, faisabilit
 --------------------------------
 
 Bonus
--	Vitesse du serpent (soit choix de différents niveaux soit un fruit particulier entraine une variation de vitesse – plus lent ou plus rapide)
+-	Vitesse du serpent (soit choix de différents niveaux soit un fruit particulier entraine une variation de vitesse – plus lent ou plus rapide) - Edouard
 -	Changement de la taille (allongement ou rétrécissement pendant une période donnée)
 -	Passage à travers des obstacles autorisé 
 -	Clignotement (le serpent est masqué par alternance – l’utilisateur doit utiliser ses capacités d’abstractions)
--	Inversion des commandes pendant un laps de temps (haut avec bas, droite avec gauche)
+-	Inversion des commandes pendant un laps de temps (haut avec bas, droite avec gauche) - Edouard
 -	Aimant (le serpent absorbe les fruits qui sont à un rayon R – à définir - de sa tête)
 Autres
--	Création de map par l’utilisateur
+-	Création de map par l’utilisateur - Nicolas
 -	Multijoueur ou IA
--	Ajout de règles du jeu (How to play)
+-	Ajout de règles du jeu (How to play) - Edouard
 -	Gestion du score (Hi-score)
 -	Différents modes de jeu (classique – sans bonus, normal – avec bonus, multijoueur, contre la montre,…)
