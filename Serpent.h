@@ -17,7 +17,6 @@ public:
 	~Serpent();
     void deplacementSerpent(Serpent &serpent); // MÈthode qui permet de dÈplacer le serpent
     void deplacementTete(Serpent &serpent, Tiles head_tile);
-    void allongerQueue();//Allonge la queue si fruit est mange
 	void setAlive(Map & map);
     ElementSerpent *getElement(int i); //Methode pour retourner l'élément i du vecteur m_posSerpent
     int sizeSerpent();//Permet d'accéder à la taille du serpent

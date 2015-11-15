@@ -60,19 +60,13 @@ void Serpent::deplacementTete(Serpent &serpent, Tiles head_tile)//Gère le déplac
 
 }
 
-
-void Serpent::allongerQueue()
-{
-	m_posSerpent.push_back(m_lastPosition); // On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
-}
-
-void Serpent::fruit_action(Map & map)
+void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fonction du fruit mangé
 {
     Tiles fruit;
     fruit = map.getTile(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn());
     switch (fruit) {
         case FRUIT:
-            allongerQueue();
+            m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
             map.popFruit();
             break;
         default:
