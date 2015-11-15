@@ -18,8 +18,8 @@ public:
     void deplacementSerpent(Serpent &serpent); // Méthode qui permet de déplacer le serpent
     void deplacementTete(Serpent &serpent, Tiles head_tile);
 	void setAlive(Map & map);
-    ElementSerpent *getElement(int i); //Methode pour retourner l'lment i du vecteur m_posSerpent
-    int sizeSerpent();//Permet d'accder ˆ la taille du serpent
+	ElementSerpent *getElement(int i) { return &m_posSerpent[i]; }; //Methode pour retourner l'lment i du vecteur m_posSerpent
+	int sizeSerpent() { return m_posSerpent.size(); };//Permet d'accder ˆ la taille du serpent
 	bool isAlive() const { return alive; };// Permet de récupérer l'attribut m_alive
     void fruit_action(Map & map);
 	

@@ -5,37 +5,27 @@ using namespace std;
 using namespace sf;
 
 Serpent::Serpent() 
+	:alive(true)
 {
-    ElementSerpent head = {5, 4, HEAD_EAST};
-    m_posSerpent.push_back(head);
-    ElementSerpent body = {5, 3, BODY_EAST};
-    m_posSerpent.push_back(body);
-    ElementSerpent body2 = {5, 2, BODY_EAST};
-    m_posSerpent.push_back(body2);
-    ElementSerpent body3 = {5,1,BODY_EAST};
-    m_posSerpent.push_back(body3);
-
-   
-	ElementSerpent m_lastPosition = m_posSerpent[m_posSerpent.size() - 1];
-    alive=true; 
+	m_posSerpent.push_back(ElementSerpent(5, 4, HEAD_EAST));
+	m_posSerpent.push_back(ElementSerpent(5, 3, BODY_EAST));
+	m_posSerpent.push_back(ElementSerpent(5, 2, BODY_EAST));
+	m_posSerpent.push_back(ElementSerpent(5, 1, BODY_EAST));
 }
 
 Serpent::~Serpent()
 {
-   
 }
 
 void Serpent::deplacementSerpent(Serpent &serpent)
 {
+	m_lastPosition = m_posSerpent[m_posSerpent.size() - 1]; // Pour sauvegarder la derniËre position de la queue
+
     for (int i = serpent.sizeSerpent()-1; i >= 2; --i)
-    {
-		m_lastPosition = m_posSerpent[m_posSerpent.size() - 1]; // Pour sauvegarder la derniËre position de la queue
         m_posSerpent[i]=m_posSerpent[i-1];
-    }
 
 	//Remplace la tÍte prÈcÈdente par un ÈlÈment corps
     m_posSerpent[1].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn(), convertHeadtoBody.at(m_posSerpent[0].gettile()));
-    
 }
 
 void Serpent::deplacementTete(Serpent &serpent, Tiles head_tile)//Gère le déplacement de la tête
@@ -76,31 +66,16 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
 
 void Serpent::setAlive(Map & map)
 {
-	Tiles element;
-	element = map.getTile(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn());
-	switch (element)
+	switch (map.getTile(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn()))
 	{
-	
-	case BODY_NORTH:
-	case BODY_EAST:
-	case BODY_SOUTH:
-	case BODY_WEST:
-	case TREE:
-		alive = false;
-		break;
-	
-	default:
-		break;
-		 
+		case BODY_NORTH:
+		case BODY_EAST:
+		case BODY_SOUTH:
+		case BODY_WEST:
+		case TREE:
+			alive = false;
+			break;
+		default:
+			break;
 	}
-}
-
-ElementSerpent *Serpent::getElement(int i)
-{
-    return &m_posSerpent[i];
-}
-
-int Serpent::sizeSerpent()
-{
-    return m_posSerpent.size();
 }
