@@ -7,10 +7,10 @@ using namespace sf;
 Serpent::Serpent() 
 	:alive(true)
 {
-	m_posSerpent.push_back(ElementSerpent(5, 4, HEAD_EAST));
-	m_posSerpent.push_back(ElementSerpent(5, 3, BODY_EAST));
-	m_posSerpent.push_back(ElementSerpent(5, 2, BODY_EAST));
-	m_posSerpent.push_back(ElementSerpent(5, 1, BODY_EAST));
+	m_posSerpent.push_back({ 5, 4, HEAD_EAST });
+	m_posSerpent.push_back({ 5, 3, BODY_EAST });
+	m_posSerpent.push_back({ 5, 2, BODY_EAST });
+	m_posSerpent.push_back({ 5, 1, BODY_EAST });
 }
 
 Serpent::~Serpent()
@@ -25,7 +25,7 @@ void Serpent::deplacementSerpent(Serpent &serpent)
         m_posSerpent[i]=m_posSerpent[i-1];
 
 	//Remplace la tÍte prÈcÈdente par un ÈlÈment corps
-    m_posSerpent[1].setAttribut(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn(), convertHeadtoBody.at(m_posSerpent[0].gettile()));
+	m_posSerpent[1] = { m_posSerpent[0].line, m_posSerpent[0].column, convertHeadtoBody.at(m_posSerpent[0].tile) };
 }
 
 void Serpent::deplacementTete(Serpent &serpent, Tiles head_tile)//Gère le déplacement de la tête
@@ -33,16 +33,16 @@ void Serpent::deplacementTete(Serpent &serpent, Tiles head_tile)//Gère le déplac
     switch (head_tile)
     {
         case HEAD_NORTH:
-            serpent.getElement(0)->setAttribut(serpent.getElement(0)->getLine()-1, serpent.getElement(0)->getColumn(), HEAD_NORTH);
+			*(serpent.getElement(0)) = { serpent.getElement(0)->line - 1, serpent.getElement(0)->column, HEAD_NORTH };
             break;
         case HEAD_EAST:
-            serpent.getElement(0)->setAttribut(serpent.getElement(0)->getLine(), serpent.getElement(0)->getColumn()+1, HEAD_EAST);
+			*(serpent.getElement(0)) = { serpent.getElement(0)->line, serpent.getElement(0)->column+1, HEAD_EAST };
             break;
         case HEAD_SOUTH:
-            serpent.getElement(0)->setAttribut(serpent.getElement(0)->getLine()+1, serpent.getElement(0)->getColumn(), HEAD_SOUTH);
+			*(serpent.getElement(0)) = { serpent.getElement(0)->line + 1, serpent.getElement(0)->column, HEAD_SOUTH };
             break;
         case HEAD_WEST:
-            serpent.getElement(0)->setAttribut(serpent.getElement(0)->getLine(), serpent.getElement(0)->getColumn()-1, HEAD_WEST);
+			*(serpent.getElement(0)) = { serpent.getElement(0)->line, serpent.getElement(0)->column - 1, HEAD_WEST };
             break;
         default:
             break;
@@ -53,7 +53,7 @@ void Serpent::deplacementTete(Serpent &serpent, Tiles head_tile)//Gère le déplac
 void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fonction du fruit mangé
 {
     Tiles fruit;
-    fruit = map.getTile(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn());
+    fruit = map.getTile(m_posSerpent[0].line, m_posSerpent[0].column);
     switch (fruit) {
         case FRUIT:
             m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
@@ -66,7 +66,7 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
 
 void Serpent::setAlive(Map & map)
 {
-	switch (map.getTile(m_posSerpent[0].getLine(), m_posSerpent[0].getColumn()))
+	switch (map.getTile(m_posSerpent[0].line, m_posSerpent[0].column))
 	{
 		case BODY_NORTH:
 		case BODY_EAST:

@@ -33,7 +33,7 @@ void play(RenderWindow & window)
 	bool pause = false;
 
     Serpent serpent;
-    Tiles head_tile = serpent.getElement(0)->gettile();
+    Tiles head_tile = serpent.getElement(0)->tile;
 
 	Map map("MapConfig/Config1.dat", window);
 	map.popFruit();
@@ -100,7 +100,7 @@ void play(RenderWindow & window)
 
 		if (!pause)
 		{
-			map.updateField(serpent.getElement(serpent.sizeSerpent() - 1)->getLine(), serpent.getElement(serpent.sizeSerpent() - 1)->getColumn(), EMPTY);//Suppression du derniere element sur la map avant deplacement
+			map.updateField(serpent.getElement(serpent.sizeSerpent() - 1)->line, serpent.getElement(serpent.sizeSerpent() - 1)->column, EMPTY);//Suppression du derniere element sur la map avant deplacement
 			serpent.deplacementSerpent(serpent);
 			serpent.deplacementTete(serpent, head_tile);
 			serpent.setAlive(map);
@@ -108,7 +108,7 @@ void play(RenderWindow & window)
 
 			for (int i = 0; i < serpent.sizeSerpent(); ++i)
 			{
-				map.updateField(serpent.getElement(i)->getLine(), serpent.getElement(i)->getColumn(), serpent.getElement(i)->gettile());
+				map.updateField(serpent.getElement(i)->line, serpent.getElement(i)->column, serpent.getElement(i)->tile);
 			}
 		}
 		

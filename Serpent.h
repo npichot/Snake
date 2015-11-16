@@ -2,11 +2,16 @@
 #define __SERPENT_H_INCLUDED__
 
 #include "Map.h"
-#include "ElementSerpent.h"
 #include <vector>
 #include "Menu.h"
 
 
+typedef struct ElementSerpent
+{
+	int line;
+	int column;
+	Tiles tile;
+};
 
 //Classe permettant de gerer le serpent en temps reel.
 class Serpent
@@ -28,6 +33,8 @@ private:
     bool alive;
 	ElementSerpent m_lastPosition; // Permet de garder en mémoire la dernière position de la queue du serpent, pour pouvoir allonger la queue si besoin
 };
+
+
 
 #endif // !__SERPENT_H_INCLUDED__
 
