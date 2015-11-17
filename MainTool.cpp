@@ -54,10 +54,12 @@ void MainTool::saveMap(Map map)
 			{
 				xMouse = Mouse::getPosition(saveWindow).x;
 				yMouse = Mouse::getPosition(saveWindow).y;
+				break;
 			}
 			else if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
 			{
 				mouseIsReleased = true;
+				break;
 			}
 			else if (event.type == Event::TextEntered)
 			{
@@ -80,10 +82,14 @@ void MainTool::saveMap(Map map)
 				{
 					writeConfig(inputText, map);
 					saveWindow.close();
+					return;
 				}
 			}
 			else if (isCancelClicked(xMouse, yMouse))
+			{
 				saveWindow.close();
+				return;
+			}
 
 			mouseIsReleased = false;
 		}

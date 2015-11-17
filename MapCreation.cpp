@@ -15,7 +15,8 @@ MapCreation::~MapCreation()
 
 void MapCreation::executeInterface(RenderWindow & window, Map & map)
 {
-	bool mouseIsCliked = false;
+	bool mouseIsClicked = false;
+	bool mouseJustClicked = false;
 
 	int xMouse0 = 0;
 	int yMouse0 = 0;
@@ -46,15 +47,19 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 			{
 				xMouse0 = Mouse::getPosition(window).x;
 				yMouse0 = Mouse::getPosition(window).y;
-				mouseIsCliked = true;
+				mouseIsClicked = true;
+				mouseJustClicked = true;
+				break;
 			}
 			else if (event.type == Event::MouseButtonReleased && event.mouseButton.button == Mouse::Left)
 			{
-				mouseIsCliked = false;
+				mouseIsClicked = false;
+				break;
 			}
+		}
 
 			//Gestion des actions
-			if (!mouseIsCliked)
+			if (!mouseIsClicked)
 			{
 				map = tempMap;
 			}
@@ -63,14 +68,20 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 				tempMap = map;
 				if (tb.getSelected() != NULL)
 					if (tb.getSelected()->execute(xMouse0, yMouse0, xMouse, yMouse, tempMap))
-						break;
+					{
+						window.display();
+						continue;
+					}
+			}
 
+			if(mouseJustClicked)
+			{
 				for (int i = 0; i < mainTools.size(); i++)
 					if (mainTools[i]->getGlobalBounds().contains(xMouse, yMouse))
 					{
 						if (!mainTools[i]->execute(xMouse0, yMouse0, xMouse, yMouse, tempMap))
 							return;
-						break;
+						continue;
 					}
 
 				for (int i = 0; i < drawTools.size(); i++)
@@ -91,9 +102,9 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 							tb.setSelected(NULL);
 						break;
 					}
+				mouseJustClicked = false;
 			}
 
-		}
 		window.display();
 	}
 }
