@@ -25,7 +25,7 @@ int main()
 		case CREATION:
 		{
 			MapCreation mc;
-			Map emptyMap("", window);
+			Map emptyMap("", window, true);
 			mc.executeInterface(window,emptyMap);
 			break;
 		}
@@ -46,7 +46,7 @@ void play(RenderWindow & window)
     Serpent serpent;
     Tiles head_tile = serpent.getElement(0)->tile;
 
-	Map map("MapConfig/Config1.dat", window);
+	Map map("MapConfig/Config1.dat", window, true);
 	map.popFruit();
 
 	while (window.isOpen())
@@ -127,7 +127,7 @@ void play(RenderWindow & window)
 		//dessin de la map//
 		////////////////////
 		window.clear();
-		map.drawField(window, false);
+		map.drawField(window);
 		if (!serpent.isAlive() || pause)
 		{
 			Font font;

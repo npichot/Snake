@@ -31,7 +31,7 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 	while (window.isOpen())
 	{
 		window.clear();
-		tempMap.drawField(window, true);
+		tempMap.drawField(window);
 		tb.drawBar(window);
 
 		Event event;

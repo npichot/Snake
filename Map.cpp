@@ -4,7 +4,7 @@ using namespace sf;
 using namespace std;
 
 // La map prend la forme d'une matrice où chaque element symbolise un element du decor
-Map::Map(string filename, RenderWindow const & window)
+Map::Map(string filename, RenderWindow const & window, bool gridOn)
 {
 	int row_number, column_number;//Parametre de la map, nombre 
 	column_number = floor((window.getSize().x - 3 * TILE_SIZE) / TILE_SIZE);//On prevoit une marge min de 3 tile (~100 px)
@@ -35,6 +35,8 @@ Map::Map(string filename, RenderWindow const & window)
 	
 	//Remplissage de la map
 	Sprite tile;
+	if (gridOn)
+		tile.setScale(0.95, 0.95);
 	tile.setOrigin(TILE_SIZE / 2, TILE_SIZE / 2);
 	tile.setTexture(*textures[4]);
 	for (int i = 0; i < row_number; ++i)
@@ -87,7 +89,7 @@ Tiles Map::getTile(int i, int j)
 	}
 }
 
-void Map::drawField(RenderWindow & window, bool gridOn)
+void Map::drawField(RenderWindow & window)
 {
 	//Chargement du fond
 		//On initialise les parametres
@@ -96,11 +98,11 @@ void Map::drawField(RenderWindow & window, bool gridOn)
 	double marginLeft = (window.getSize().x - width) / 2;
 	double marginTop = (window.getSize().y - height) / 2;
 
-		//On construit le rectangle d'arriere plan
+	//On construit le rectangle d'arriere plan qui permet de faire la grille dans le cas de création de map
 	RectangleShape background;
 	background.setPosition(marginLeft, marginTop);
 	background.setSize(Vector2f(width, height));
-	background.setFillColor(Color::Green);
+	background.setFillColor(Color::Blue);
 	window.draw(background);
 
 	//On affiche les tiles du terrain

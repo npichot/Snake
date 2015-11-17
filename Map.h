@@ -82,7 +82,7 @@ public:
 	/*
 	Initialisation de la map en fonction de la taille de l'ecran
 	*/
-	Map(std::string filename, sf::RenderWindow const & window);
+	Map(std::string filename, sf::RenderWindow const & window, bool gridOn);
 	~Map();
 
 	/*
@@ -99,7 +99,7 @@ public:
 	/*
 	Methode pour dessiner la map dans la fenetre
 	*/
-	void drawField(sf::RenderWindow & window, bool gridOn);
+	void drawField(sf::RenderWindow & window);
 
 	/*
 	Methode pour intitialiser la map a partir d'un fichier
