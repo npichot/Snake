@@ -7,6 +7,7 @@ int main()
 {
 	// Chargement de la fenetre
 	RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32),"Snake");
+    window.setFramerateLimit(10);//Gere le nombre de FPS
 	
 	Menu menu(window);
 
@@ -40,20 +41,113 @@ int main()
 
 void play(RenderWindow & window)
 {
-    //Initialisation du serpent
-    //map.updateField(m_posSerpent[0].row, m_posSerpent[0].column, m_posSerpent[0].Orientation);
+	bool pause = false;
+
+    Serpent serpent;
+    Tiles head_tile = serpent.getElement(0)->tile;
+
+	Map map("MapConfig/Config1.dat", window);
+	map.popFruit();
+
 	while (window.isOpen())
-	{
-		Map map("MapConfig/Config1.dat",window);
-		//Controle des inputs claviers 
+	{    
+		////////////////////////////////
+        //Controle des inputs claviers//
+		////////////////////////////////
+        Event event;
+        while (window.pollEvent(event)) 
+		{
+			if (event.type == Event::KeyReleased)
+			{
+				switch (event.key.code)
+				{
+				case Keyboard::Up:
+					if (head_tile != HEAD_SOUTH && !pause)
+					{
+						head_tile = HEAD_NORTH;
+					}
+					break;
+				case Keyboard::Right:
+					if (head_tile != HEAD_WEST && !pause)
+					{
+						head_tile = HEAD_EAST;
+					}
+					break;
+				case Keyboard::Left:
+					if (head_tile != HEAD_EAST && !pause)
+					{
+						head_tile = HEAD_WEST;
+					}
+					break;
+				case Keyboard::Down:
+					if (head_tile != HEAD_NORTH && !pause)
+					{
+						head_tile = HEAD_SOUTH;
+					}
+					break;
 
-		//Mise a jour du serpent 
+				case Keyboard::Escape:
+					window.close();
+					break;
+				case Keyboard::Return:
+					if (!serpent.isAlive())
+						return;
+					break;
+				case Keyboard::Space:
+					pause = !pause;
+					break;
+				default:
+					break;
+				}
+				break;// Autoriser qu'une prise de touche à la fois
+			}
+        }
 
-		//Gestion des actions
+		//////////////
+		//Traitement//
+		//////////////
+		if (!serpent.isAlive())//On attend le retour au menu par enter
+			continue;
 
-		//dessin de la map 
+		if (!pause)
+		{
+			map.updateField(serpent.getElement(serpent.sizeSerpent() - 1)->line, serpent.getElement(serpent.sizeSerpent() - 1)->column, EMPTY);//Suppression du derniere element sur la map avant deplacement
+			serpent.deplacementSerpent(serpent);
+			serpent.deplacementTete(serpent, head_tile);
+			serpent.setAlive(map);
+            serpent.fruit_action(map);
+
+			for (int i = 0; i < serpent.sizeSerpent(); ++i)
+			{
+				map.updateField(serpent.getElement(i)->line, serpent.getElement(i)->column, serpent.getElement(i)->tile);
+			}
+		}
+		
+		////////////////////
+		//dessin de la map//
+		////////////////////
 		window.clear();
 		map.drawField(window, false);
+		if (!serpent.isAlive() || pause)
+		{
+			Font font;
+			if (!font.loadFromFile("Police/arial.ttf"))
+			{
+				// TODO erreur...
+			}
+			Text additionnalText;
+			additionnalText.setFont(font);
+			if (!pause)
+				additionnalText.setString("GAME OVER");
+			else
+				additionnalText.setString("PAUSE");
+			additionnalText.setCharacterSize(80);
+			additionnalText.setColor(Color::White);
+			FloatRect fr = additionnalText.getLocalBounds();
+			additionnalText.setOrigin(fr.width / 2, fr.height / 2);
+			additionnalText.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+			window.draw(additionnalText);
+		}
 		window.display();
 	}
 }

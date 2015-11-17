@@ -2,30 +2,39 @@
 #define __SERPENT_H_INCLUDED__
 
 #include "Map.h"
-#include "Input.h"
-#include "ElementSerpent.h"
 #include <vector>
+#include "Menu.h"
 
 
+typedef struct ElementSerpent
+{
+	int line;
+	int column;
+	Tiles tile;
+};
 
 //Classe permettant de gerer le serpent en temps reel.
 class Serpent
 {
 public:
-    //Methodes
+	//Methodes
 	Serpent();
 	~Serpent();
-    std::vector<ElementSerpent> deplacementSerpent(); // Méthode qui permet de déplacer le serpent
-    void allongerQueue();//Allonge la queue si fruit est mange
-	void nextHead(Button entree); //Méthode pour obtenir la future position de la tête, sans changer la position actuelle
-	void isAlive(Map carte);
-	
+	void deplacementSerpent(Serpent &serpent); // Méthode qui permet de déplacer le serpent
+	void deplacementTete(Serpent &serpent, Tiles head_tile);
+	void setAlive(Map & map);
+	ElementSerpent *getElement(int i) { return &m_posSerpent[i]; }; //Methode pour retourner l'ŽlŽment i du vecteur m_posSerpent
+	int sizeSerpent() { return m_posSerpent.size(); };//Permet d'accŽder ˆ la taille du serpent
+	bool isAlive() const { return alive; };// Permet de récupérer l'attribut m_alive
+	void fruit_action(Map & map);
+
 private:
-    std::vector<ElementSerpent> m_posSerpent; 
-	ElementSerpent m_head; 
-	ElementSerpent m_headFuture; // Permet de garder la position future de la tête en attributs, afin de pouvoir réaliser le check des conditions
-    bool m_alive;
+	std::vector<ElementSerpent> m_posSerpent;
+	bool alive;
+	ElementSerpent m_lastPosition; // Permet de garder en mémoire la dernière position de la queue du serpent, pour pouvoir allonger la queue si besoin
 };
+
+
 
 #endif // !__SERPENT_H_INCLUDED__
 

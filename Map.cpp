@@ -7,17 +7,44 @@ using namespace std;
 Map::Map(string filename, RenderWindow const & window)
 {
 	int row_number, column_number;//Parametre de la map, nombre 
-
-	//Calcule des parametres 
 	column_number = floor((window.getSize().x - 3 * TILE_SIZE) / TILE_SIZE);//On prevoit une marge min de 3 tile (~100 px)
-	row_number= floor((window.getSize().y - 3 * TILE_SIZE) / TILE_SIZE);
+	row_number = floor((window.getSize().y - 3 * TILE_SIZE) / TILE_SIZE);
+
+	//On initialise les parametres pour les sprites
+	int width = TILE_SIZE * column_number;
+	int height = TILE_SIZE * row_number;
+	double marginLeft = (window.getSize().x - width) / 2;
+	double marginTop = (window.getSize().y - height) / 2;
+
+	//Chargement des textures
+	Texture t0;
+	t0.loadFromFile("Ressources/tree.png");
+	textures[0] = new Texture(t0);
+	Texture t1;
+	t1.loadFromFile("Ressources/body.png");
+	textures[1] = new Texture(t1);
+	Texture t2;
+	t2.loadFromFile("Ressources/head.png");
+	textures[2] = new Texture(t2);
+	Texture t3;
+	t3.loadFromFile("Ressources/cherry.png");
+	textures[3] = new Texture(t3);
+	Texture t4;
+	t4.loadFromFile("Ressources/grass.png");
+	textures[4] = new Texture(t4);
 	
 	//Remplissage de la map
+	Sprite tile;
+	tile.setOrigin(TILE_SIZE / 2, TILE_SIZE / 2);
+	tile.setTexture(*textures[4]);
 	for (int i = 0; i < row_number; ++i)
 	{
-		vector<Tiles> row;
+		vector<Sprite> row;
 		for (int j = 0; j < column_number; ++j)
-			row.push_back(EMPTY);
+		{
+			tile.setPosition(marginLeft + j * TILE_SIZE + TILE_SIZE / 2, marginTop + i * TILE_SIZE + TILE_SIZE / 2);
+			row.push_back(tile);
+		}
 		field.push_back(row);
 	}
 
@@ -34,7 +61,8 @@ void Map::updateField(int i, int j, Tiles t)
 	if (i >= 0 && i < field.size())
 		if (j >= 0 && j < field[0].size())
 		{
-			field[i][j] = t;
+			field[i][j].setTexture(*textures[(int)floor(t / 10)]);
+			field[i][j].setRotation((t - ((int)floor(t / 10)) * 10)*90);
 			return;
 		}
 	printf("Error 1 : Can't update the tile because the coordinates are outside the field");
@@ -45,7 +73,12 @@ Tiles Map::getTile(int i, int j)
 	if (i >= 0 && i < field.size())
 	{
 		if (j >= 0 && j < field[0].size())
-			return field[i][j];
+		{
+			for (int h = 0; h < sizeof(textures)/sizeof(Texture*); h++)
+				if (field[i][j].getTexture() == textures[h])
+					return static_cast<Tiles>(h * 10 + (int)floor(field[i][j].getRotation() / 90));
+		}
+			
 	}
 	else
 	{
@@ -71,83 +104,9 @@ void Map::drawField(RenderWindow & window, bool gridOn)
 	window.draw(background);
 
 	//On affiche les tiles du terrain
-	
 	for (int i = 0; i < field.size();++i)
 		for (int j = 0; j < field[i].size(); ++j)
-		{
-			//On debute la construction du rectangle
-			RectangleShape tile;
-			Texture texture;
-			tile.setPosition(marginLeft + j * TILE_SIZE, marginTop + i * TILE_SIZE);
-			tile.setSize(Vector2f(TILE_SIZE,TILE_SIZE));
-			if (gridOn)
-			{
-				tile.setOutlineColor(Color::Blue);
-				tile.setOutlineThickness(2);
-			}
-
-			//On initialise le fond en fonction de la nature de la tile
-			switch (getTile(i,j))
-			{
-			case TREE :
-				if (texture.loadFromFile("Ressources/tree.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Blue);
-				break;
-			case HEAD_NORTH:
-				if (texture.loadFromFile("Ressources/head_N.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Yellow);
-				break;
-			case HEAD_SOUTH:
-				if (texture.loadFromFile("Ressources/head_S.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Yellow);
-				break;
-			case HEAD_EAST:
-				if (texture.loadFromFile("Ressources/head_E.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Yellow);
-				break;
-			case HEAD_WEST:
-				if (texture.loadFromFile("Ressources/head_W.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Yellow);
-				break;
-			case BODY_NORTH:
-			case BODY_SOUTH:
-				if (texture.loadFromFile("Ressources/body_NS.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Yellow);
-				break;
-			case BODY_EAST:
-			case BODY_WEST:
-				if (texture.loadFromFile("Ressources/body_EW.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Yellow);
-				break;
-			case FRUIT:
-				if (texture.loadFromFile("Ressources/cherry.png"))
-					tile.setTexture(&texture);
-				else
-					tile.setFillColor(Color::Magenta);
-				break;
-			default:
-				if (texture.loadFromFile("Ressources/grass.png"))
-					tile.setTexture(&texture);
-				break;
-			}
-
-			//On ajoute la tile a la fenetre
-			window.draw(tile);
-		}
+			window.draw(field[i][j]);
 }
 
 void Map::loadMapFromFile(string filename)
@@ -200,5 +159,16 @@ int Map::getColumnFromMouseCoordinate(int x, int y)
 	return -1;//Row not found
 }
 
-
+void Map::popFruit()
+{
+	int i(0), j(0);
+	do
+	{
+		srand(time(NULL)); //Initialisation du timer
+		i = rand() % (field.size() - 3) + 1;
+		j = rand() % (field[0].size() - 3) + 1;
+	} while (getTile(i, j) != EMPTY);
+	updateField(i, j, FRUIT);
+		
+}
 

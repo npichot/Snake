@@ -2,62 +2,80 @@
 
 //TODO definition de la classe
 using namespace std;
+using namespace sf;
 
-Serpent::Serpent() // Ne pas oublier d'initialiser le vector
+Serpent::Serpent()
+	:alive(true)
 {
-    ElementSerpent body = {5, 5, EAST};
-    m_posSerpent.push_back(body);
-    
-    ElementSerpent m_head;
-    ElementSerpent m_headFuture; // Rajouter des commentaires
-    m_alive=true; 
+	m_posSerpent.push_back({ 5, 4, HEAD_EAST });
+	m_posSerpent.push_back({ 5, 3, BODY_EAST });
+	m_posSerpent.push_back({ 5, 2, BODY_EAST });
+	m_posSerpent.push_back({ 5, 1, BODY_EAST });
 }
 
 Serpent::~Serpent()
 {
-   
 }
 
-vector<ElementSerpent> Serpent::deplacementSerpent()
+void Serpent::deplacementSerpent(Serpent &serpent)
 {
-	return m_posSerpent;
+	m_lastPosition = m_posSerpent[m_posSerpent.size() - 1]; // Pour sauvegarder la dernière position de la queue
+
+	for (int i = serpent.sizeSerpent() - 1; i >= 2; --i)
+		m_posSerpent[i] = m_posSerpent[i - 1];
+
+	//Remplace la tête précédente par un élément corps
+	m_posSerpent[1] = { m_posSerpent[0].line, m_posSerpent[0].column, convertHeadtoBody.at(m_posSerpent[0].tile) };
 }
 
-void Serpent::nextHead(Button entree) // Plus condition dans l'input empechant le serpent de revenir en arrière
+void Serpent::deplacementTete(Serpent &serpent, Tiles head_tile)//Gre le dŽplacement de la tte
 {
-
-	switch (entree)
+	switch (head_tile)
 	{
-	case UP:
-		m_headFuture = ElementSerpent(m_head.getLine() + 1, m_head.getColumn(), NORTH);
+	case HEAD_NORTH:
+		*(serpent.getElement(0)) = { serpent.getElement(0)->line - 1, serpent.getElement(0)->column, HEAD_NORTH };
 		break;
-	case DOWN:
-		m_headFuture = ElementSerpent(m_head.getLine() - 1, m_head.getColumn(), SOUTH);
+	case HEAD_EAST:
+		*(serpent.getElement(0)) = { serpent.getElement(0)->line, serpent.getElement(0)->column + 1, HEAD_EAST };
 		break;
-	case EAST:
-		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() + 1, EAST);
+	case HEAD_SOUTH:
+		*(serpent.getElement(0)) = { serpent.getElement(0)->line + 1, serpent.getElement(0)->column, HEAD_SOUTH };
 		break;
-	case WEST:
-		m_headFuture = ElementSerpent(m_head.getLine(), m_head.getColumn() - 1, WEST);
+	case HEAD_WEST:
+		*(serpent.getElement(0)) = { serpent.getElement(0)->line, serpent.getElement(0)->column - 1, HEAD_WEST };
+		break;
+	default:
+		break;
+	}
+
+}
+
+void Serpent::fruit_action(Map & map)//On dŽfinit l'action sur le serpent en fonction du fruit mangŽ
+{
+	Tiles fruit;
+	fruit = map.getTile(m_posSerpent[0].line, m_posSerpent[0].column);
+	switch (fruit) {
+	case FRUIT:
+		m_posSerpent.push_back(m_lastPosition);// On rajoute un élément Serpent à la dernière position de la queue pour allonger le Serpent
+		map.popFruit();
+		break;
+	default:
 		break;
 	}
 }
 
-void Serpent::allongerQueue()
+void Serpent::setAlive(Map & map)
 {
-
-}
-
-void Serpent::isAlive(Map carte)
-{
-	Tiles element;
-	element = carte.getTile(m_headFuture.getLine(), m_headFuture.getColumn());
-	if (element == FRUIT || element == EMPTY)
+	switch (map.getTile(m_posSerpent[0].line, m_posSerpent[0].column))
 	{
-		m_alive = true; // S'il y a un fruit ou que la case est vide, m_alive reste true
-	}
-	else
-	{
-		m_alive = false; // Les autres cas sont a priori des cas où le serpent meurt
+	case BODY_NORTH:
+	case BODY_EAST:
+	case BODY_SOUTH:
+	case BODY_WEST:
+	case TREE:
+		alive = false;
+		break;
+	default:
+		break;
 	}
 }

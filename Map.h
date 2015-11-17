@@ -6,10 +6,11 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <math.h>
+#include <stdio.h>      /* printf, scanf, puts, NULL */
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
 
-// Definition de la fenetre principale
-const unsigned int WINDOW_WIDTH = 800;
-const unsigned int WINDOW_HEIGHT = 600;
+
 
 //Chaque element de la map est represente par un carre de 32*32
 const int TILE_SIZE = 32;
@@ -17,19 +18,19 @@ const int TILE_SIZE = 32;
 enum Tiles //differentes tuiles dessin
 {
 	//Element Fixes
-	TREE,
+	TREE=0,
 	// Serpent
-	BODY_NORTH,
-	BODY_SOUTH,
-	BODY_EAST,
-	BODY_WEST,
-	HEAD_NORTH,
-	HEAD_SOUTH,
-	HEAD_EAST,
-	HEAD_WEST,
+	BODY_NORTH=10,
+	BODY_EAST=11,
+	BODY_SOUTH=12,
+	BODY_WEST=13,
+	HEAD_NORTH=20,
+	HEAD_EAST=21,
+	HEAD_SOUTH=22,
+	HEAD_WEST=23,
 	//Autres
-	FRUIT,
-	EMPTY,
+	FRUIT=30,
+	EMPTY=40,
 	UNKNOWN
 };
 
@@ -64,11 +65,19 @@ const std::map<Tiles,std::string> enumToString =
 	{ EMPTY,"EMPTY" },
 };
 
+const std::map<Tiles, Tiles> convertHeadtoBody =
+{
+    {HEAD_EAST, BODY_EAST},
+    {HEAD_NORTH, BODY_NORTH},
+    {HEAD_SOUTH, BODY_SOUTH},
+    {HEAD_WEST, BODY_WEST}
+};
 
 class Map
 {
 private:
-	std::vector<std::vector<Tiles>> field; // Le terrain ne peut pas etre modifie directement. Notamment sa taille est calculee et fixee une fois au debut.
+	std::vector < std::vector <sf::Sprite> > field; // Le terrain ne peut pas etre modifie directement. Notamment sa taille est calculee et fixee une fois au debut.
+	sf::Texture * textures[5];
 public:
 	/*
 	Initialisation de la map en fonction de la taille de l'ecran
@@ -107,8 +116,12 @@ public:
 	*/
 	int getColumnFromMouseCoordinate(int x, int y);
 
-	std::vector<std::vector<Tiles>> getField() { return field; }
+	std::vector<std::vector<sf::Sprite>> getField() { return field; }
 	
+	/*
+	Methode pour faire apparaitre un fruit aleatoirement
+	*/
+	void popFruit();
 };
 
 #endif
