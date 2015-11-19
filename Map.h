@@ -35,9 +35,9 @@ enum Tiles //differentes tuiles dessin
 };
 
 //Definition d'une map pour convertir un string en enum
-const std::map<std::string, Tiles> getEnumValue = 
+const std::map<std::string, Tiles> stringToEnum = 
 { 
-	{"BUSHES",TREE},
+	{"TREE",TREE},
 	{"BODY_NORTH",BODY_NORTH},
 	{"BODY_SOUTH",BODY_SOUTH},
 	{"BODY_EAST",BODY_EAST},
@@ -48,6 +48,21 @@ const std::map<std::string, Tiles> getEnumValue =
 	{"HEAD_WEST",HEAD_WEST},
 	{"FRUIT",FRUIT},
 	{"EMPTY",EMPTY}, 
+};
+
+const std::map<Tiles,std::string> enumToString =
+{
+	{ TREE,"TREE" },
+	{ BODY_NORTH,"BODY_NORTH" },
+	{ BODY_SOUTH,"BODY_SOUTH" },
+	{ BODY_EAST,"BODY_EAST" },
+	{ BODY_WEST,"BODY_WEST" },
+	{ HEAD_NORTH,"HEAD_NORTH" },
+	{ HEAD_SOUTH,"HEAD_SOUTH" },
+	{ HEAD_EAST,"HEAD_EAST" },
+	{ HEAD_WEST,"HEAD_WEST" },
+	{ FRUIT,"FRUIT" },
+	{ EMPTY,"EMPTY" },
 };
 
 const std::map<Tiles, Tiles> convertHeadtoBody =
@@ -62,13 +77,13 @@ class Map
 {
 private:
 	std::vector < std::vector <sf::Sprite> > field; // Le terrain ne peut pas etre modifie directement. Notamment sa taille est calculee et fixee une fois au debut.
-	sf::RenderWindow & window;
+	sf::Texture * textures[5];
 	sf::Texture * textures[5];
 public:
 	/*
 	Initialisation de la map en fonction de la taille de l'ecran
 	*/
-	Map(std::string filename, sf::RenderWindow & window);
+	Map(std::string filename, sf::RenderWindow const & window, bool gridOn);
 	~Map();
 
 	/*
@@ -85,7 +100,7 @@ public:
 	/*
 	Methode pour dessiner la map dans la fenetre
 	*/
-	void drawField();
+	void drawField(sf::RenderWindow & window);
 
 	/*
 	Methode pour intitialiser la map a partir d'un fichier
@@ -93,10 +108,21 @@ public:
 	void loadMapFromFile(std::string filename);
 
 	/*
+	Methode pour la ligne potentielle correspondant à une position de la souris
+	*/
+	int getRowFromMouseCoordinate(int x, int y);
+
+	/*
+	Methode pour la colonne potentielle correspondant à une position de la souris
+	*/
+	int getColumnFromMouseCoordinate(int x, int y);
+
+	std::vector<std::vector<sf::Sprite>> getField() { return field; }
+	
+	/*
 	Methode pour faire apparaitre un fruit aleatoirement
 	*/
 	void popFruit();
-
 };
 
 #endif

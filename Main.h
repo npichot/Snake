@@ -5,6 +5,7 @@
 #include "Map.h" // Gestion de l'affichage
 #include "Menu.h" // Gestion du menu
 #include "Serpent.h"//Gestion du serpent
+#include "MapCreation.h"//interface de creation de map
 
 // Definition de la fenetre
 const unsigned int WINDOW_WIDTH = 800;

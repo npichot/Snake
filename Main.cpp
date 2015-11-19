@@ -9,7 +9,7 @@ int main()
 	RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32),"Snake");
     window.setFramerateLimit(10);//Gere le nombre de FPS
 	
-	Menu menu(window);
+	Menu menu(window,MAIN);
 
 	//Lancement de la boucle principale
 	while (window.isOpen())
@@ -18,10 +18,21 @@ int main()
 		switch (menu.getMenuChoice())
 		{
 		case PLAY:
+		{
 			play(window);
 			break;
+		}
+		case CREATION:
+		{
+			MapCreation mc;
+			Map emptyMap("", window, true);
+			mc.executeInterface(window,emptyMap);
+			break;
+		}
 		case QUIT:
-			window.close();
+			return 0;
+			break;
+		default:
 			break;
 		}
 	}
@@ -32,11 +43,21 @@ void play(RenderWindow & window)
 {
 	bool pause = false;
 
-    Serpent serpent;
-    Tiles head_tile = serpent.getElement(0)->tile;
+	Menu mapMenu(window,MAP);
 
-	Map map("MapConfig/Config1.dat", window);
+	string pathMap = mapMenu.loadMap();
+	if (pathMap == "")
+		return;
+	Map map = Map(pathMap, window, false);
 	map.popFruit();
+
+	Serpent serpent;
+	if (!serpent.getHead(map))
+	{
+		cout << "Erreur pas de tête trouvée sur la map" << endl;
+		return;
+	}
+	Tiles head_tile = serpent.getElement(0)->tile;
 
 	while (window.isOpen())
 	{    
@@ -116,7 +137,7 @@ void play(RenderWindow & window)
 		//dessin de la map//
 		////////////////////
 		window.clear();
-		map.drawField();
+		map.drawField(window);
 		if (!serpent.isAlive() || pause)
 		{
 			Font font;
