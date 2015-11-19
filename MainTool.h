@@ -3,6 +3,8 @@
 class MainTool :
 	public Tool
 {
+private:
+	sf::Font font;
 public:
 	MainTool(sf::Texture t, std::string s);
 	~MainTool();

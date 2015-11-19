@@ -41,10 +41,7 @@ Menu::Menu(RenderWindow & window, MenuType mt)
 	}
 
 	//Chargement de la police
-	if (!font.loadFromFile("Police/arial.ttf"))
-	{
-		// TODO erreur...
-	}
+	font.loadFromFile("Police/arial.ttf");
 
 	//on initialise le curseur
 	curseur = 0;

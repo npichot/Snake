@@ -6,6 +6,7 @@ using namespace sf;
 MainTool::MainTool(sf::Texture t, std::string s)
 	:Tool(t, s)
 {
+	!font.loadFromFile("Police/arial.ttf");
 }
 
 MainTool::~MainTool()
@@ -28,11 +29,6 @@ void MainTool::saveMap(Map map)
 	bool mouseIsReleased = false;
 	int xMouse = 0;
 	int yMouse = 0;
-	Font font;
-	if (!font.loadFromFile("Police/arial.ttf"))
-	{
-		// TODO erreur...
-	}
 
 	while (saveWindow.isOpen())
 	{
@@ -108,11 +104,6 @@ void MainTool::saveMap(Map map)
 
 void MainTool::buildTheWindow(sf::RenderWindow & window)
 {
-	Font font;
-	if (!font.loadFromFile("Police/arial.ttf"))
-	{
-		// TODO erreur...
-	}
 	Text title;
 	title.setFont(font);
 	title.setString("Entre le nom de la Map que vous voulez sauvegarder :");
@@ -168,11 +159,6 @@ void MainTool::buildTheWindow(sf::RenderWindow & window)
 
 bool MainTool::isSaveClicked(int x, int y)
 {
-	Font font;
-	if (!font.loadFromFile("Police/arial.ttf"))
-	{
-		// TODO erreur...
-	}
 	Text ok;
 	ok.setFont(font);
 	ok.setString("Sauver");
@@ -199,11 +185,6 @@ bool MainTool::isSaveClicked(int x, int y)
 
 bool MainTool::isCancelClicked(int x, int y)
 {
-	Font font;
-	if (!font.loadFromFile("Police/arial.ttf"))
-	{
-		// TODO erreur...
-	}
 	Text ok;
 	ok.setFont(font);
 	ok.setString("Sauver");
