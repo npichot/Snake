@@ -119,7 +119,10 @@ public:
 	*/
 	int getColumnFromMouseCoordinate(int x, int y);
 
-	std::vector<std::vector<sf::Sprite>> getField() { return field; }
+	/*
+	Methode pour renvoyer une copie du field
+	*/
+	std::vector<std::vector<sf::Sprite>> getField() const { return field; }
 	
 	/*
 	Methode pour faire apparaitre un fruit aleatoirement

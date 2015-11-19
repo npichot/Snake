@@ -24,21 +24,21 @@ void Serpent::deplacementSerpent()
 		m_posSerpent[1] = { m_posSerpent[0].line, m_posSerpent[0].column, convertHeadtoBody.at(m_posSerpent[0].tile) };
 }
 
-void Serpent::deplacementTete(Tiles head_tile)//Gère le déplacement de la tête
+void Serpent::deplacementTete(Tiles head_tile, const Map & map)//Gère le déplacement de la tête
 {
 	switch (head_tile)
     {
 	case HEAD_NORTH:
-		m_posSerpent[0] = { m_posSerpent[0].line - 1, m_posSerpent[0].column, HEAD_NORTH };
+		m_posSerpent[0] = { (m_posSerpent[0].line - 1) < 0 ? (int)map.getField().size() - 1 : (m_posSerpent[0].line - 1) , m_posSerpent[0].column, HEAD_NORTH };
             break;
 	case HEAD_EAST:
-		m_posSerpent[0] = { m_posSerpent[0].line, m_posSerpent[0].column + 1, HEAD_EAST };
+		m_posSerpent[0] = { m_posSerpent[0].line, (m_posSerpent[0].column + 1) > (int)map.getField()[0].size() - 1 ? 0 : (m_posSerpent[0].column + 1) ,  HEAD_EAST };
             break;
 	case HEAD_SOUTH:
-		m_posSerpent[0] = { m_posSerpent[0].line + 1, m_posSerpent[0].column, HEAD_SOUTH };
+		m_posSerpent[0] = { (m_posSerpent[0].line + 1) > (int)map.getField().size()-1 ? 0 : (m_posSerpent[0].line + 1) , m_posSerpent[0].column, HEAD_SOUTH };
             break;
 	case HEAD_WEST:
-		m_posSerpent[0] = { m_posSerpent[0].line, m_posSerpent[0].column - 1, HEAD_WEST };
+		m_posSerpent[0] = { m_posSerpent[0].line, (m_posSerpent[0].column - 1) < 0 ? (int)map.getField()[0].size() - 1 : (m_posSerpent[0].column - 1) , HEAD_WEST };
 		break;
 	default:
             break;
@@ -76,7 +76,7 @@ void Serpent::run(Map & map, Tiles head_tile)
 {
 	map.updateField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
 	deplacementSerpent();
-	deplacementTete(head_tile);
+	deplacementTete(head_tile, map);
 	setAlive(map);
 	fruit_action(map);
 

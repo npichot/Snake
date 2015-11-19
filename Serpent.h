@@ -30,7 +30,7 @@ private:
 	bool alive;
 	ElementSerpent m_lastPosition; // Permet de garder en mémoire la dernière position de la queue du serpent, pour pouvoir allonger la queue si besoin
 	void deplacementSerpent(); // Méthode qui permet de déplacer le serpent
-	void deplacementTete(Tiles head_tile);
+	void deplacementTete(Tiles head_tile, const Map & map);
 	void setAlive(Map & map);
 	void fruit_action(Map & map);
 };
