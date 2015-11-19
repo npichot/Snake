@@ -43,9 +43,6 @@ void play(RenderWindow & window)
 {
 	bool pause = false;
 
-    Serpent serpent;
-    Tiles head_tile = serpent.getElement(0)->tile;
-
 	Menu mapMenu(window,MAP);
 
 	string pathMap = mapMenu.loadMap();
@@ -53,6 +50,14 @@ void play(RenderWindow & window)
 		return;
 	Map map = Map(pathMap, window, false);
 	map.popFruit();
+
+	Serpent serpent;
+	if (!serpent.getHead(map))
+	{
+		cout << "Erreur pas de tête trouvée sur la map" << endl;
+		return;
+	}
+	Tiles head_tile = serpent.getElement(0)->tile;
 
 	while (window.isOpen())
 	{    

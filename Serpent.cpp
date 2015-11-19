@@ -7,10 +7,6 @@ using namespace sf;
 Serpent::Serpent()
 	:alive(true)
 {
-	m_posSerpent.push_back({ 5, 4, HEAD_EAST });
-	m_posSerpent.push_back({ 5, 3, BODY_EAST });
-	m_posSerpent.push_back({ 5, 2, BODY_EAST });
-	m_posSerpent.push_back({ 5, 1, BODY_EAST });
 }
 
 Serpent::~Serpent()
@@ -25,7 +21,8 @@ void Serpent::deplacementSerpent(Serpent &serpent)
 		m_posSerpent[i] = m_posSerpent[i - 1];
 
 	//Remplace la tÍte prÈcÈdente par un ÈlÈment corps
-	m_posSerpent[1] = { m_posSerpent[0].line, m_posSerpent[0].column, convertHeadtoBody.at(m_posSerpent[0].tile) };
+	if(m_posSerpent.size()>1)
+		m_posSerpent[1] = { m_posSerpent[0].line, m_posSerpent[0].column, convertHeadtoBody.at(m_posSerpent[0].tile) };
 }
 
 void Serpent::deplacementTete(Serpent &serpent, Tiles head_tile)//Gère le déplacement de la tête
@@ -62,6 +59,18 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
 	default:
 		break;
 	}
+}
+
+bool Serpent::getHead(Map map)
+{
+	for (int i = 0; i < map.getField().size(); ++i)
+		for (int j = 0; j < map.getField()[i].size(); ++j)
+			if (map.getTile(i, j) >= 20 && map.getTile(i, j) <= 23)
+			{
+				m_posSerpent.push_back({ i,j,map.getTile(i,j) });
+				return true;
+			}
+	return false;
 }
 
 void Serpent::setAlive(Map & map)

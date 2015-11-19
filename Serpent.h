@@ -27,6 +27,7 @@ public:
 	int sizeSerpent() { return m_posSerpent.size(); };//Permet d'accŽder ˆ la taille du serpent
 	bool isAlive() const { return alive; };// Permet de récupérer l'attribut m_alive
 	void fruit_action(Map & map);
+	bool getHead(Map map);
 
 private:
 	std::vector<ElementSerpent> m_posSerpent;
