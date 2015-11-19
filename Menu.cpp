@@ -118,8 +118,6 @@ int Menu::getMenuChoice()
 	drawMenu();
 	window.display();
 	while (result == items.size())
-	window.display();
-
 	{
 		Event event;
 		while (window.pollEvent(event))// on capte les evenements
