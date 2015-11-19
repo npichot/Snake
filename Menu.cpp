@@ -69,18 +69,20 @@ Menu::~Menu()
 void Menu::drawMenu()
 {
 	window.clear(Color(175,182,55,255));
-	
+	int margin = 20;
+	int characterSize = (items.size()*(margin + 50) - margin) < (window.getSize().y - 150) ? 50 : (window.getSize().y - 150 - margin * (items.size() - 1)) / items.size();
+		
 	for (int i = 0; i < items.size(); ++i)
 	{
 		
 		Text text;
 		text.setFont(font); // choix de la police a utiliser ; font est un sf::Font
 		text.setString(items[i]);// choix de la chaine de caracteres a afficher
-		text.setCharacterSize(50); // choix de la taille des caracteres exprimee en pixels, pas en points !
+		text.setCharacterSize(characterSize); // choix de la taille des caracteres exprimee en pixels, pas en points !
 		(curseur==i) ? text.setColor(sf::Color::Red): text.setColor(sf::Color::White);// choix de la couleur du texte
 		//Centrer le texte sur la fenetre
 		FloatRect fr = text.getLocalBounds();
-		text.setPosition((window.getSize().x - fr.width) / 2, (window.getSize().y -100*items.size()+50)/2+100* i); //chaque element a une hauteur de 50 et on laisse 100 entre chaque element
+		text.setPosition((window.getSize().x - fr.width) / 2, (window.getSize().y - (margin + characterSize)*items.size() + margin) / 2 + (margin + characterSize) * i); //chaque element a une hauteur de 50 et on laisse 100 entre chaque element
 		window.draw(text);
 	}
 
