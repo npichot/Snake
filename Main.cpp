@@ -9,7 +9,7 @@ int main()
 	RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32),"Snake");
     window.setFramerateLimit(10);//Gere le nombre de FPS
 	
-	Menu menu(window);
+	Menu menu(window,MAIN);
 
 	//Lancement de la boucle principale
 	while (window.isOpen())
@@ -46,7 +46,12 @@ void play(RenderWindow & window)
     Serpent serpent;
     Tiles head_tile = serpent.getElement(0)->tile;
 
-	Map map("MapConfig/Config1.dat", window, true);
+	Menu mapMenu(window,MAP);
+
+	string pathMap = mapMenu.loadMap();
+	if (pathMap == "")
+		return;
+	Map map = Map(pathMap, window, false);
 	map.popFruit();
 
 	while (window.isOpen())
