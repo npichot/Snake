@@ -230,6 +230,7 @@ bool MainTool::isCancelClicked(int x, int y)
 
 void MainTool::writeConfig(string name, Map map)
 {
+	//Write dat file
 	ofstream fichier("MapConfig/" + name + ".dat", ios::out | ios::trunc);
 	if (fichier)
 	{
@@ -243,4 +244,15 @@ void MainTool::writeConfig(string name, Map map)
 	}
 	else
 		cout << "Erreur écriture !";
+
+	//Update list file
+	fichier=ofstream("MapConfig/list.txt", ios::out | ios::app);
+	if (fichier)
+	{
+		fichier << name << endl;
+
+		fichier.close();
+	}
+	else
+		cout << "Erreur écriture MapConfig/list.txt!";
 }

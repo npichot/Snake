@@ -2,9 +2,8 @@
 #define __MENU_H_INCLUDED__
 
 #include "SFML\Graphics.hpp"
-#include <Windows.h>
 #include <iostream>;
-#include <strsafe.h>;
+#include <fstream>
 
 enum MenuChoice
 {

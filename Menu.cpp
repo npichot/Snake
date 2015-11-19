@@ -18,33 +18,21 @@ Menu::Menu(RenderWindow & window, MenuType mt)
 		break;
 	case MAP:
 	{
-		WIN32_FIND_DATA ffd;
-		LARGE_INTEGER filesize;
-		TCHAR szDir[MAX_PATH];
-		HANDLE hFind = INVALID_HANDLE_VALUE;
-
-		// Prepare string for use with FindFile functions.  First, copy the
-		// string to a buffer, then append '\*' to the directory name.
-
-		StringCchCopy(szDir, MAX_PATH, ".\\MapConfig");
-		StringCchCat(szDir, MAX_PATH, TEXT("\\*"));
-
-		// Find the first file in the directory.
-
-		hFind = FindFirstFile(szDir, &ffd);
-		do
+		ifstream is("MapConfig/list.txt");
+		if (!is)
 		{
-			if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
-			{
-				string str = string(ffd.cFileName);
-				string extension = ".dat";
-				if (str.find(extension) != string::npos)
-				{
-					str.replace(str.find(extension), extension.length(), "");
-					items.push_back(str);
-				}
-			}
-		} while (FindNextFile(hFind, &ffd) != 0);
+			cout << "Fichier introuvable : MapConfig/list.txt" << endl;
+		}
+		string it;
+
+		//On lit les lignes une par une 
+		while (is >> it)
+		{
+			items.push_back(it);
+		}
+
+		// close the opened file.
+		is.close();
 		items.push_back("Return");
 		break;
 	}
