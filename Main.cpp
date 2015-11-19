@@ -130,10 +130,7 @@ void play(RenderWindow & window)
 		if (!serpent.isAlive() || pause)
 		{
 			Font font;
-			if (!font.loadFromFile("Police/arial.ttf"))
-			{
-				// TODO erreur...
-			}
+			font.loadFromFile("Police/arial.ttf");
 			Text additionnalText;
 			additionnalText.setFont(font);
 			if (!pause)
