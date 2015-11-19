@@ -60,6 +60,19 @@ Map::~Map()
 		textures[i]->~Texture();
 }
 
+Map::Map(Map & map, sf::RenderWindow & window, bool gridOn)
+	:Map("", window, gridOn)
+{
+	for (int i = 0; i < field.size(); ++i)
+		for (int j = 0; j < field[i].size(); ++j)
+			updateField(i, j, map.getTile(i, j));
+}
+
+Map * Map::clone(Map & map, RenderWindow & window, bool gridOn)
+{
+	return new Map(map,window,gridOn);
+}
+
 void Map::updateField(int i, int j, Tiles t)
 {
 	if (i >= 0 && i < field.size())

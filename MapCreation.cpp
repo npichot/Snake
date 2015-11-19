@@ -58,52 +58,52 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 			}
 		}
 
-			//Gestion des actions
-			if (!mouseIsClicked)
-			{
-				map = tempMap;
-			}
-			else
-			{
-				tempMap = map;
-				if (tb.getSelected() != NULL)
-					if (tb.getSelected()->execute(xMouse0, yMouse0, xMouse, yMouse, tempMap))
-					{
-						window.display();
-						continue;
-					}
-			}
+		//Gestion des actions
+		if (!mouseIsClicked)
+		{
+			map = tempMap;
+		}
+		else
+		{
+			tempMap = map;
+			if (tb.getSelected() != NULL)
+				if (tb.getSelected()->execute(xMouse0, yMouse0, xMouse, yMouse, tempMap))
+				{
+					window.display();
+					continue;
+				}
+		}
 
-			if(mouseJustClicked)
-			{
-				for (int i = 0; i < mainTools.size(); i++)
-					if (mainTools[i]->getGlobalBounds().contains(xMouse, yMouse))
+		if(mouseJustClicked)
+		{
+			for (int i = 0; i < mainTools.size(); i++)
+				if (mainTools[i]->getGlobalBounds().contains(xMouse, yMouse))
+				{
+					if (!mainTools[i]->execute(xMouse0, yMouse0, xMouse, yMouse, *tempMap.clone(tempMap,window,true)))
+						return;
+					continue;
+				}
+
+			for (int i = 0; i < drawTools.size(); i++)
+				if (drawTools[i]->getGlobalBounds().contains(xMouse, yMouse))
+				{
+					drawTools[i]->activate(!drawTools[i]->isActivated());
+					for (int j = 0; j < drawTools.size(); j++)
 					{
-						if (!mainTools[i]->execute(xMouse0, yMouse0, xMouse, yMouse, tempMap))
-							return;
-						continue;
+						if (i != j)
+							drawTools[j]->activate(false);
 					}
 
-				for (int i = 0; i < drawTools.size(); i++)
-					if (drawTools[i]->getGlobalBounds().contains(xMouse, yMouse))
+					if (drawTools[i]->isActivated())
 					{
-						drawTools[i]->activate(!drawTools[i]->isActivated());
-						for (int j = 0; j < drawTools.size(); j++)
-						{
-							if (i != j)
-								drawTools[j]->activate(false);
-						}
-
-						if (drawTools[i]->isActivated())
-						{
-							tb.setSelected(drawTools[i]);
-						}
-						else
-							tb.setSelected(NULL);
-						break;
+						tb.setSelected(drawTools[i]);
 					}
-				mouseJustClicked = false;
-			}
+					else
+						tb.setSelected(NULL);
+					break;
+				}
+			mouseJustClicked = false;
+		}
 
 		window.display();
 	}

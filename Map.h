@@ -87,6 +87,12 @@ public:
 	*/
 	Map(std::string filename, sf::RenderWindow const & window, bool gridOn);
 	~Map();
+	Map(Map & map, sf::RenderWindow & window, bool gridOn);
+	
+	/*
+	Utilisé par le constructeur par copie
+	*/
+	Map * clone(Map & map, sf::RenderWindow & window, bool gridOn);
 
 	/*
 	Methode pour modifier indirectement les elements de la map

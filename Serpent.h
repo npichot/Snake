@@ -21,7 +21,7 @@ public:
 	Serpent();
 	~Serpent();
 	bool isAlive() const { return alive; };// Permet de récupérer l'attribut m_alive
-	bool setHead(Map & map);
+	bool setHead(Map map);
 	Tiles getHead() { return m_posSerpent[0].tile; }; //Methode pour retourner l'lment i du vecteur m_posSerpent
 	void run(Map & map, Tiles head_tile);
 

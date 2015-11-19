@@ -52,7 +52,7 @@ void play(RenderWindow & window)
 	map.popFruit();
 
 	Serpent serpent;
-	if (!serpent.setHead(map))
+	if (!serpent.setHead(*map.clone(map, window, false)))
 	{
 		cout << "Erreur pas de tête trouvée sur la map" << endl;
 		return;
