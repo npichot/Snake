@@ -78,6 +78,9 @@ class Map
 private:
 	std::vector < std::vector <sf::Sprite> > field; // Le terrain ne peut pas etre modifie directement. Notamment sa taille est calculee et fixee une fois au debut.
 	sf::Texture * textures[5];
+	//Parameters of the game area
+	int width, height;
+	double marginLeft, marginTop;
 public:
 	/*
 	Initialisation de la map en fonction de la taille de l'ecran

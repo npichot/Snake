@@ -11,10 +11,10 @@ Map::Map(string filename, RenderWindow const & window, bool gridOn)
 	row_number = floor((window.getSize().y - 3 * TILE_SIZE) / TILE_SIZE);
 
 	//On initialise les parametres pour les sprites
-	int width = TILE_SIZE * column_number;
-	int height = TILE_SIZE * row_number;
-	double marginLeft = (window.getSize().x - width) / 2;
-	double marginTop = (window.getSize().y - height) / 2;
+	width = TILE_SIZE * column_number;
+	height = TILE_SIZE * row_number;
+	marginLeft = (window.getSize().x - width) / 2;
+	marginTop = (window.getSize().y - height) / 2;
 
 	//Chargement des textures
 	Texture t0;
@@ -92,11 +92,6 @@ Tiles Map::getTile(int i, int j)
 void Map::drawField(RenderWindow & window)
 {
 	//Chargement du fond
-		//On initialise les parametres
-	int width = TILE_SIZE* field[0].size();
-	int height = TILE_SIZE* field.size();
-	double marginLeft = (window.getSize().x - width) / 2;
-	double marginTop = (window.getSize().y - height) / 2;
 
 	//On construit le rectangle d'arriere plan qui permet de faire la grille dans le cas de création de map
 	RectangleShape background;
@@ -134,12 +129,6 @@ void Map::loadMapFromFile(string filename)
 
 int Map::getRowFromMouseCoordinate(int x, int y)
 {
-	//TODO code en double
-	int width = TILE_SIZE* field[0].size();
-	int height = TILE_SIZE* field.size();
-	double marginLeft = (800 - width) / 2;
-	double marginTop = (600 - height) / 2;
-
 	if (floor((y - marginTop) / TILE_SIZE) < field.size() && (y - marginTop) >= 0)
 		return floor((y - marginTop) / TILE_SIZE);
 
@@ -148,12 +137,6 @@ int Map::getRowFromMouseCoordinate(int x, int y)
 
 int Map::getColumnFromMouseCoordinate(int x, int y)
 {
-	//TODO code en double
-	int width = TILE_SIZE* field[0].size();
-	int height = TILE_SIZE* field.size();
-	double marginLeft = (800 - width) / 2;
-	double marginTop = (600 - height) / 2;
-
 	if (floor((x - marginLeft) / TILE_SIZE) < field[0].size() && (x - marginLeft) >= 0)
 		return floor((x - marginLeft) / TILE_SIZE);
 

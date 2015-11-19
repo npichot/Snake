@@ -1,6 +1,5 @@
 #include "Serpent.h"
 
-//TODO definition de la classe
 using namespace std;
 using namespace sf;
 

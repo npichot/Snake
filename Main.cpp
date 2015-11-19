@@ -120,9 +120,7 @@ void play(RenderWindow & window)
 			continue;
 
 		if (!pause)
-		{
 			serpent.run(map, head_tile);
-		}
 		
 		////////////////////
 		//dessin de la map//
