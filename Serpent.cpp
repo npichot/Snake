@@ -60,7 +60,7 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
 	}
 }
 
-bool Serpent::setHead(Map map)
+bool Serpent::setHead(Map & map)
 {
 	for (int i = 0; i < map.getField().size(); ++i)
 		for (int j = 0; j < map.getField()[i].size(); ++j)

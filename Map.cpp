@@ -56,6 +56,8 @@ Map::Map(string filename, RenderWindow const & window, bool gridOn)
 
 Map::~Map()
 {
+	for (int i = 0; i < sizeof(textures) / sizeof(Texture*); i++)
+		textures[i]->~Texture();
 }
 
 void Map::updateField(int i, int j, Tiles t)
