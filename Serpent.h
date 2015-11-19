@@ -20,19 +20,19 @@ public:
 	//Methodes
 	Serpent();
 	~Serpent();
-	void deplacementSerpent(Serpent &serpent); // Méthode qui permet de déplacer le serpent
-	void deplacementTete(Serpent &serpent, Tiles head_tile);
-	void setAlive(Map & map);
-	ElementSerpent *getElement(int i) { return &m_posSerpent[i]; }; //Methode pour retourner l'ŽlŽment i du vecteur m_posSerpent
-	int sizeSerpent() { return m_posSerpent.size(); };//Permet d'accŽder ˆ la taille du serpent
 	bool isAlive() const { return alive; };// Permet de récupérer l'attribut m_alive
-	void fruit_action(Map & map);
-	bool getHead(Map map);
+	bool setHead(Map map);
+	Tiles getHead() { return m_posSerpent[0].tile; }; //Methode pour retourner l'ŽlŽment i du vecteur m_posSerpent
+	void run(Map & map, Tiles head_tile);
 
 private:
 	std::vector<ElementSerpent> m_posSerpent;
 	bool alive;
 	ElementSerpent m_lastPosition; // Permet de garder en mémoire la dernière position de la queue du serpent, pour pouvoir allonger la queue si besoin
+	void deplacementSerpent(); // Méthode qui permet de déplacer le serpent
+	void deplacementTete(Tiles head_tile);
+	void setAlive(Map & map);
+	void fruit_action(Map & map);
 };
 
 

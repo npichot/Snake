@@ -52,12 +52,12 @@ void play(RenderWindow & window)
 	map.popFruit();
 
 	Serpent serpent;
-	if (!serpent.getHead(map))
+	if (!serpent.setHead(map))
 	{
 		cout << "Erreur pas de tête trouvée sur la map" << endl;
 		return;
 	}
-	Tiles head_tile = serpent.getElement(0)->tile;
+	Tiles head_tile = serpent.getHead();
 
 	while (window.isOpen())
 	{    
@@ -121,16 +121,7 @@ void play(RenderWindow & window)
 
 		if (!pause)
 		{
-			map.updateField(serpent.getElement(serpent.sizeSerpent() - 1)->line, serpent.getElement(serpent.sizeSerpent() - 1)->column, EMPTY);//Suppression du derniere element sur la map avant deplacement
-			serpent.deplacementSerpent(serpent);
-			serpent.deplacementTete(serpent, head_tile);
-			serpent.setAlive(map);
-            serpent.fruit_action(map);
-
-			for (int i = 0; i < serpent.sizeSerpent(); ++i)
-			{
-				map.updateField(serpent.getElement(i)->line, serpent.getElement(i)->column, serpent.getElement(i)->tile);
-			}
+			serpent.run(map, head_tile);
 		}
 		
 		////////////////////
