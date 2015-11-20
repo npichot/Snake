@@ -58,6 +58,20 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
             map.updateField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);
             m_posSerpent.pop_back();//On enlève un élément au serpent
             break;
+        case GRAPE:
+            for (int i = m_posSerpent.size()-1; i > m_posSerpent.size()/2+1; --i) {
+                map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
+                m_posSerpent.pop_back();//On enlève un élément au serpent
+            }
+            m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
+            break;
+        case LEMON:
+            m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
+            break;
+        case STRAWBERRY:
+            m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
+            break;
+        
         default:
             break;
 	}
@@ -90,9 +104,7 @@ void Serpent::run(Map & map, Tiles head_tile)
 	{
 		map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, m_posSerpent[i].tile);
 	}
-    for (int j = 0; j < map.BadFruits.size(); ++j) {
-        --map.BadFruits[j][2];
-    }
+    map.decreaseLifetimeFruits();
     map.deleteFruits();
 }
 

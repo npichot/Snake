@@ -35,6 +35,15 @@ Map::Map(string filename, RenderWindow const & window, bool gridOn)
     Texture t5;
     t5.loadFromFile("Ressources/banana.png");
     textures[5] = new Texture(t5);
+    Texture t6;
+    t6.loadFromFile("Ressources/grape.png");
+    textures[6] = new Texture(t6);
+    Texture t7;
+    t7.loadFromFile("Ressources/lemon.png");
+    textures[7] = new Texture(t7);
+    Texture t8;
+    t8.loadFromFile("Ressources/strawberry.png");
+    textures[8] = new Texture(t8);
 	
 	//Remplissage de la map
 	Sprite tile;
@@ -166,6 +175,9 @@ void Map::popFruit()
     vector<Tiles> Fruits;
     Fruits.push_back(CHERRY);
     Fruits.push_back(BANANA);
+    Fruits.push_back(GRAPE);
+    Fruits.push_back(LEMON);
+    Fruits.push_back(STRAWBERRY);
     int i(0), j(0);
 	do
 	{
@@ -180,7 +192,7 @@ void Map::popFruit()
     int k(rand()%100+1),l(0), m(0);
     vector<int> BadFruit;//On crée un vecteur avec les informations du fruit mauvais
     
-    if( k < 100)//Gère la probabilité de 20%
+    if( k < 80)//Gère la probabilité de 20%
     {
         do
         {
@@ -196,6 +208,13 @@ void Map::popFruit()
         
     }
 		
+}
+
+void Map::decreaseLifetimeFruits()
+{
+    for (int i = 0; i < BadFruits.size(); ++i) {
+        --BadFruits[i][2];
+    }
 }
 
 void Map::deleteFruits()

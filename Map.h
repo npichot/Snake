@@ -33,7 +33,10 @@ enum Tiles //differentes tuiles dessin
 	UNKNOWN,
     //Fruits
     CHERRY=40,
-    BANANA=50
+    BANANA=50,
+    GRAPE=60,
+    LEMON=70,
+    STRAWBERRY=80
     
 };
 
@@ -52,6 +55,10 @@ const std::map<std::string, Tiles> stringToEnum =
 	{"EMPTY",EMPTY},
     {"CHERRY",CHERRY},
     {"BANANA",BANANA},
+    {"GRAPE",GRAPE},
+    {"LEMON",LEMON},
+    {"STRAWBERRY",STRAWBERRY},
+    
     
 };
 
@@ -69,6 +76,10 @@ const std::map<Tiles,std::string> enumToString =
 	{ EMPTY,"EMPTY" },
     { CHERRY,"CHERRY" },
     { BANANA,"BANANA" },
+    { GRAPE,"GRAPE" },
+    { LEMON,"LEMON" },
+    { STRAWBERRY,"STRAWBERRY" },
+    
     
 };
 
@@ -84,10 +95,11 @@ class Map
 {
 private:
 	std::vector < std::vector <sf::Sprite> > field; // Le terrain ne peut pas etre modifie directement. Notamment sa taille est calculee et fixee une fois au debut.
-	sf::Texture * textures[6];
+	sf::Texture * textures[9];
 	//Parameters of the game area
 	int width, height;
 	double marginLeft, marginTop;
+    std::vector<std::vector<int>> BadFruits;
     
 public:
 	/*
@@ -144,9 +156,9 @@ public:
 	void popFruit();
     
     /*
-     Vecteur contenant les fruits amenés à disparaitre
+     Methodes pour supprimer les mauvais fruits
      */
-     std::vector<std::vector<int>> BadFruits;
+    void decreaseLifetimeFruits();
     
     void deleteFruits();
 };
