@@ -1,7 +1,7 @@
 #ifndef __MENU_H_INCLUDED__
 #define __MENU_H_INCLUDED__
 
-#include "SFML\Graphics.hpp"
+#include "SFML/Graphics.hpp"
 #include <iostream>;
 #include <fstream>
 
