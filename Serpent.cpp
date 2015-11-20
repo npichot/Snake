@@ -56,11 +56,13 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
             map.popFruit();
             break;
         case BANANA:
-            map.updateField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);
-            m_posSerpent.pop_back();//On enlève un élément au serpent
+            if (m_posSerpent.size()!=1) {
+                map.updateField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);
+                m_posSerpent.pop_back();//On enlève un élément au serpent
+            }
             break;
         case GRAPE:
-            for (int i = m_posSerpent.size()-1; i > m_posSerpent.size()/2+1; --i) {
+            for (int i = m_posSerpent.size()-1; i > 0; --i) {
                 map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
                 m_posSerpent.pop_back();//On enlève un élément au serpent
             }
