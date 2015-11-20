@@ -56,8 +56,8 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
             map.popFruit();
             break;
         case BANANA:
-            if (m_posSerpent.size()!=1) {
-                map.updateField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);
+            if (m_posSerpent.size()!=1) { //On ne retire un élément que si le serpent peut le supporter
+                map.updateField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);//On affiche EMTPY à la places du body
                 m_posSerpent.pop_back();//On enlève un élément au serpent
             }
             break;
@@ -68,7 +68,7 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
             }
             break;
         case LEMON:
-            m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
+            
             break;
         case STRAWBERRY:
             m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
