@@ -48,6 +48,7 @@ void Serpent::deplacementTete(Tiles head_tile, const Map & map)//Gère le déplace
 void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fonction du fruit mangé
 {
 	Tiles fruit;
+    m_lastPosition = m_posSerpent[m_posSerpent.size()-1];
 	fruit = map.getTile(m_posSerpent[0].line, m_posSerpent[0].column);
 	switch (fruit) {
         case CHERRY:
@@ -63,7 +64,6 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
                 map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
                 m_posSerpent.pop_back();//On enlève un élément au serpent
             }
-            m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
             break;
         case LEMON:
             m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent

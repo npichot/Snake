@@ -91,6 +91,15 @@ const std::map<Tiles, Tiles> convertHeadtoBody =
     {HEAD_WEST, BODY_WEST}
 };
 
+const std::map<Tiles, Tiles> convertBodytoHead =
+{
+    {BODY_EAST, HEAD_WEST},
+    {BODY_SOUTH, HEAD_NORTH},
+    {BODY_WEST, HEAD_EAST},
+    {BODY_NORTH, HEAD_SOUTH}
+};
+
+
 class Map
 {
 private:
