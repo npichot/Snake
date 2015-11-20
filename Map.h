@@ -142,6 +142,13 @@ public:
 	Methode pour faire apparaitre un fruit aleatoirement
 	*/
 	void popFruit();
+    
+    /*
+     Vecteur contenant les fruits amens ˆ disparaitre
+     */
+     std::vector<std::vector<int>> BadFruits;
+    
+    void deleteFruits();
 };
 
 #endif

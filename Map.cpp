@@ -175,9 +175,12 @@ void Map::popFruit()
 	} while (getTile(i, j) != EMPTY);
     updateField(i, j, CHERRY);
     
-    int k(rand()%100+1),l(0), m(0);
+    //Faire apparaitre un fruit mauvais random avec une probabilité de 20%
     
-    if( k < 20)
+    int k(rand()%100+1),l(0), m(0);
+    vector<int> BadFruit;//On crée un vecteur avec les informations du fruit mauvais
+    
+    if( k < 100)//Gère la probabilité de 20%
     {
         do
         {
@@ -186,7 +189,21 @@ void Map::popFruit()
         } while (getTile(l, m) != EMPTY);
         int n = rand() % (Fruits.size()-1)+1;
         updateField(l, m, Fruits[n]);
+        BadFruit.push_back(l);//On stock la ligne du fruit qui est amené à disparaitre
+        BadFruit.push_back(m);//On stock la colonne du fruit amené à disparaitre
+        BadFruit.push_back(50);//Nombre de cycles pendant lequel le fruit sera visible
+        BadFruits.push_back(BadFruit);
+        
     }
 		
+}
+
+void Map::deleteFruits()
+{
+    for (int i = 0; i < BadFruits.size(); ++i) {
+        if (BadFruits[i][2] == 0)
+            updateField(BadFruits[i][0], BadFruits[i][1], EMPTY);
+    }
+    
 }
 

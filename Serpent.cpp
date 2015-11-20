@@ -90,6 +90,10 @@ void Serpent::run(Map & map, Tiles head_tile)
 	{
 		map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, m_posSerpent[i].tile);
 	}
+    for (int j = 0; j < map.BadFruits.size(); ++j) {
+        --map.BadFruits[j][2];
+    }
+    map.deleteFruits();
 }
 
 void Serpent::setAlive(Map & map)
