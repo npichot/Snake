@@ -3,15 +3,20 @@
 
 #include "SFML/Graphics.hpp"
 #include <iostream>;
-#include <fstream>
+#ifdef _WIN32
+#include <Windows.h>
+#include <strsafe.h>;
+#else
+#include<dirent.h>
+#endif
 
 enum MenuChoice
 {
-	PLAY=0,
-	CREATION=1,
-	HOWTO=2,
-	QUIT=3,
-	NONE=4,
+	PLAY = 0,
+	CREATION = 1,
+	HOWTO = 2,
+	QUIT = 3,
+	NONE = 4,
 };
 
 enum MenuType
@@ -29,7 +34,7 @@ public:
 	Menu(sf::RenderWindow & window, MenuType mt);
 	~Menu();
 	/*
-	Retourne le choix de l'utilisateur dans le menu 
+	Retourne le choix de l'utilisateur dans le menu
 	*/
 	int getMenuChoice();
 	std::string loadMap();
