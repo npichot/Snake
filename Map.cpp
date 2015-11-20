@@ -161,7 +161,7 @@ int Map::getColumnFromMouseCoordinate(int x, int y)
 	return -1;//Row not found
 }
 
-void Map::popFruit(int iTete, int jTete)
+void Map::popFruit()
 {
     vector<Tiles> Fruits;
     Fruits.push_back(CHERRY);
@@ -170,9 +170,9 @@ void Map::popFruit(int iTete, int jTete)
 	do
 	{
 		srand(time(NULL)); //Initialisation du timer
-		i = rand() % (field.size() - 3) + 1; // Le fruit apparait a l'interieur de la map
+		i = rand() % (field.size() - 3) + 1;
 		j = rand() % (field[0].size() - 3) + 1;
-	} while (getTile(i, j) != EMPTY && (i!=iTete && j!=jTete));
+	} while (getTile(i, j) != EMPTY);
     updateField(i, j, CHERRY);
     
     //Faire apparaitre un fruit mauvais random avec une probabilité de 20%
@@ -186,8 +186,7 @@ void Map::popFruit(int iTete, int jTete)
         {
             l = rand() % (field.size() - 3) + 1;
             m = rand() % (field[0].size() - 3) + 1;
-        } while (getTile(l, m) != EMPTY && (i != iTete && j != jTete)); 
-		// Le fruit apparait hors d'un ÈlÈment de la map, et ailleurs que dans la future position de la tete ‡ updater
+        } while (getTile(l, m) != EMPTY);
         int n = rand() % (Fruits.size()-1)+1;
         updateField(l, m, Fruits[n]);
         BadFruit.push_back(l);//On stock la ligne du fruit qui est amené à disparaitre
