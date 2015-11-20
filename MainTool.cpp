@@ -225,15 +225,4 @@ void MainTool::writeConfig(string name, Map map)
 	}
 	else
 		cout << "Erreur écriture !";
-
-	//Update list file
-	fichier=ofstream("MapConfig/list.txt", ios::out | ios::app);
-	if (fichier)
-	{
-		fichier << name << endl;
-
-		fichier.close();
-	}
-	else
-		cout << "Erreur écriture MapConfig/list.txt!";
 }

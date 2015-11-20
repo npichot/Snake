@@ -49,7 +49,7 @@ Menu::Menu(RenderWindow & window, MenuType mt)
 #else
 		DIR *pDIR;
 		struct dirent *entry;
-		if (pDIR = opendir("./data/item")) {
+		if (pDIR = opendir("./MapConfig")) {
 			while (entry = readdir(pDIR)) {
 				if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)
 				{
