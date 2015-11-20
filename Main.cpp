@@ -6,7 +6,8 @@ using namespace sf;
 int main()
 {
 	// Chargement de la fenetre
-	RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32),"Snake");
+	RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32),"Snake",Style::Fullscreen);
+	//RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Snake", Style::None);//For debug purpose
     window.setFramerateLimit(10);//Gere le nombre de FPS
 	
 	Menu menu(window,MAIN);
