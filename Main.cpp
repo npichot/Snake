@@ -49,7 +49,7 @@ void play(RenderWindow & window)
 	if (pathMap == "")
 		return;
 	Map map = Map(pathMap, window, false);
-	map.popFruit();
+	map.popFruit(0,0);
 
 	Serpent serpent;
 	if (!serpent.setHead(*map.clone(map, window, false)))

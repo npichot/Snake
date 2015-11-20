@@ -141,7 +141,7 @@ public:
 	/*
 	Methode pour faire apparaitre un fruit aleatoirement
 	*/
-	void popFruit();
+	void popFruit(int iTete, int jTete);
     
     /*
      Vecteur contenant les fruits amens ˆ disparaitre
