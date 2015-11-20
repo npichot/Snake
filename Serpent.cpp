@@ -14,9 +14,8 @@ Serpent::~Serpent()
 
 void Serpent::deplacementSerpent()
 {
-	m_lastPosition = m_posSerpent[m_posSerpent.size() - 1]; // Pour sauvegarder la derniËre position de la queue
-
-	for (int i = m_posSerpent.size() - 1; i >= 2; --i)
+    m_lastPosition = m_posSerpent[m_posSerpent.size() - 1]; // Pour sauvegarder la derniËre position de la queue
+    for (int i = m_posSerpent.size() - 1; i >= 2; --i)
 		m_posSerpent[i] = m_posSerpent[i - 1];
 
 	//Remplace la tÍte prÈcÈdente par un ÈlÈment corps
@@ -51,18 +50,23 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
 	Tiles fruit;
 	fruit = map.getTile(m_posSerpent[0].line, m_posSerpent[0].column);
 	switch (fruit) {
-	case FRUIT:
-		m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
-		map.popFruit();
-		break;
-	default:
-		break;
+        case CHERRY:
+            m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
+            map.popFruit();
+            break;
+        case BANANA:
+            map.updateField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);
+            m_posSerpent.pop_back();//On enlève un élément au serpent
+            break;
+        default:
+            break;
 	}
 }
 
 bool Serpent::setHead(Map map)
 {
-	for (int i = 0; i < map.getField().size(); ++i)
+	
+    for (int i = 0; i < map.getField().size(); ++i)
 		for (int j = 0; j < map.getField()[i].size(); ++j)
 			if (map.getTile(i, j) >= 20 && map.getTile(i, j) <= 23)
 			{
@@ -70,6 +74,8 @@ bool Serpent::setHead(Map map)
 				return true;
 			}
 	return false;
+
+
 }
 
 void Serpent::run(Map & map, Tiles head_tile)

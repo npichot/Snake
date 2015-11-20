@@ -27,18 +27,21 @@ Map::Map(string filename, RenderWindow const & window, bool gridOn)
 	t2.loadFromFile("Ressources/head.png");
 	textures[2] = new Texture(t2);
 	Texture t3;
-	t3.loadFromFile("Ressources/cherry.png");
+	t3.loadFromFile("Ressources/grass.png");
 	textures[3] = new Texture(t3);
-	Texture t4;
-	t4.loadFromFile("Ressources/grass.png");
-	textures[4] = new Texture(t4);
+    Texture t4;
+    t4.loadFromFile("Ressources/cherry.png");
+    textures[4] = new Texture(t4);
+    Texture t5;
+    t5.loadFromFile("Ressources/banana.png");
+    textures[5] = new Texture(t5);
 	
 	//Remplissage de la map
 	Sprite tile;
 	if (gridOn)
 		tile.setScale(0.95, 0.95);
 	tile.setOrigin(TILE_SIZE / 2, TILE_SIZE / 2);
-	tile.setTexture(*textures[4]);
+	tile.setTexture(*textures[3]);
 	for (int i = 0; i < row_number; ++i)
 	{
 		vector<Sprite> row;
@@ -160,14 +163,30 @@ int Map::getColumnFromMouseCoordinate(int x, int y)
 
 void Map::popFruit()
 {
-	int i(0), j(0);
+    vector<Tiles> Fruits;
+    Fruits.push_back(CHERRY);
+    Fruits.push_back(BANANA);
+    int i(0), j(0);
 	do
 	{
 		srand(time(NULL)); //Initialisation du timer
 		i = rand() % (field.size() - 3) + 1;
 		j = rand() % (field[0].size() - 3) + 1;
 	} while (getTile(i, j) != EMPTY);
-	updateField(i, j, FRUIT);
+    updateField(i, j, CHERRY);
+    
+    int k(rand()%100+1),l(0), m(0);
+    
+    if( k < 20)
+    {
+        do
+        {
+            l = rand() % (field.size() - 3) + 1;
+            m = rand() % (field[0].size() - 3) + 1;
+        } while (getTile(l, m) != EMPTY);
+        int n = rand() % (Fruits.size()-1)+1;
+        updateField(l, m, Fruits[n]);
+    }
 		
 }
 
