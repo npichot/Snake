@@ -49,7 +49,7 @@ void play(RenderWindow & window)
 	if (pathMap == "")
 		return;
 	Map map = Map(pathMap, window, false);
-	map.popFruit();
+	
 
 	Serpent serpent;
 	if (!serpent.setHead(*map.clone(map, window, false)))
@@ -58,6 +58,7 @@ void play(RenderWindow & window)
 		return;
 	}
 	Tiles head_tile = serpent.getHead();
+    map.popFruit();
 
 	while (window.isOpen())
 	{    

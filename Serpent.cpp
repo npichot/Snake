@@ -100,13 +100,14 @@ void Serpent::run(Map & map, Tiles head_tile)
 	deplacementSerpent();
 	deplacementTete(head_tile, map);
 	setAlive(map);
+    fruit_action(map);
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
 	{
 		map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, m_posSerpent[i].tile);
 	}
 	
-	fruit_action(map);
+	
     map.decreaseLifetimeFruits();
     map.deleteFruits();
 }
