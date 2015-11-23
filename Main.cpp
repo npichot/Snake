@@ -1,7 +1,11 @@
 #include "Main.h"
 #include <iostream>
+#include <fstream>
 using namespace std;
 using namespace sf;
+
+
+int highScore(0);
 
 int main()
 {
@@ -10,6 +14,17 @@ int main()
     window.setFramerateLimit(10);//Gere le nombre de FPS
 	
 	Menu menu(window,MAIN);
+
+	//Ouverture du fichier de highscore
+	highScore = 0;
+	ifstream lectureScore("Highscore.txt");  //Ouverture d'un fichier en lecture
+
+	if (lectureScore) // Si le fichier a bien été ouvert, et qu'il existe donc
+	{
+		lectureScore >> highScore;
+	}
+	lectureScore.close();
+
 
 	//Lancement de la boucle principale
 	while (window.isOpen())
@@ -41,6 +56,7 @@ int main()
 
 void play(RenderWindow & window)
 {
+	int score(0); // On initialise le score
 	bool pause = false;
 
 	Menu mapMenu(window,MAP);
@@ -148,4 +164,14 @@ void play(RenderWindow & window)
 		window.display();
 	}
 	
+	if (score > highScore)
+	{
+		ofstream ecritureScore("Highscore.txt", ofstream::trunc);  //Ouverture du fichier, et suppression de la ligne existante
+
+		if (ecritureScore) // Si le fichier a bien été ouvert, et qu'il existe donc
+		{
+			ecritureScore << score; // Le score actuel devient le nouveau highscore
+		}
+		ecritureScore.close();
+	}
 }
