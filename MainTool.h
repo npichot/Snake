@@ -5,6 +5,7 @@ class MainTool :
 {
 private:
 	sf::Font font;
+	std::string checkMap(Map & map);
 public:
 	MainTool(sf::Texture t, std::string s);
 	~MainTool();
