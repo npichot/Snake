@@ -49,6 +49,7 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
 {
 	Tiles fruit;
     m_lastPosition = m_posSerpent[m_posSerpent.size()-1];
+    int size_init = m_posSerpent.size();
 	fruit = map.getTile(m_posSerpent[0].line, m_posSerpent[0].column);
 	switch (fruit) {
         case CHERRY:
@@ -68,7 +69,10 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
             }
             break;
         case LEMON:
-            
+            for (int i= size_init-1; i > (size_init-1)/2; --i) {
+                map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
+                m_posSerpent.pop_back();//On enlève un élément au serpent
+            }
             break;
         case STRAWBERRY:
             m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
