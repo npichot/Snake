@@ -4,9 +4,6 @@
 using namespace std;
 using namespace sf;
 
-
-int highScore(0);
-
 int main()
 {
 	// Chargement de la fenetre
@@ -16,10 +13,10 @@ int main()
 	Menu menu(window,MAIN);
 
 	//Ouverture du fichier de highscore
-	highScore = 0;
+	int highScore = 0;
 	ifstream lectureScore("Highscore.txt");  //Ouverture d'un fichier en lecture
 
-	if (lectureScore) // Si le fichier a bien �t� ouvert, et qu'il existe donc
+	if (lectureScore) // Si le fichier a bien été ouvert, et qu'il existe donc
 	{
 		lectureScore >> highScore;
 	}
@@ -34,7 +31,7 @@ int main()
 		{
 		case PLAY:
 		{
-			play(window);
+			play(window, highscore);
 			break;
 		}
 		case CREATION:
@@ -54,7 +51,7 @@ int main()
 	return 0;
 }
 
-void play(RenderWindow & window)
+void play(RenderWindow & window, int highscore)
 {
 	int score(0); // On initialise le score
 	bool pause = false;
@@ -70,7 +67,7 @@ void play(RenderWindow & window)
 	Serpent serpent;
 	if (!serpent.setHead(*map.clone(map, window, false)))
 	{
-		cout << "Erreur pas de tête trouvée sur la map" << endl;
+		cout << "Erreur pas de tÃªte trouvÃ©e sur la map" << endl;
 		return;
 	}
 	Tiles head_tile = serpent.getHead();
@@ -126,7 +123,7 @@ void play(RenderWindow & window)
 				default:
 					break;
 				}
-				break;// Autoriser qu'une prise de touche � la fois
+				break;// Autoriser qu'une prise de touche à la fois
 			}
         }
 
@@ -168,7 +165,7 @@ void play(RenderWindow & window)
 	{
 		ofstream ecritureScore("Highscore.txt", ofstream::trunc);  //Ouverture du fichier, et suppression de la ligne existante
 
-		if (ecritureScore) // Si le fichier a bien �t� ouvert, et qu'il existe donc
+		if (ecritureScore) // Si le fichier a bien été ouvert, et qu'il existe donc
 		{
 			ecritureScore << score; // Le score actuel devient le nouveau highscore
 		}
