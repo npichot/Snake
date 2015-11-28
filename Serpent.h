@@ -5,8 +5,8 @@
 #include <vector>
 #include "Menu.h"
 
-
-typedef struct ElementSerpent
+typedef struct ElementSerpent ElementSerpent
+struct ElementSerpent
 {
 	int line;
 	int column;
@@ -20,16 +20,16 @@ public:
 	//Methodes
 	Serpent();
 	~Serpent();
-	bool isAlive() const { return alive; };// Permet de rÈcupÈrer l'attribut m_alive
+	bool isAlive() const { return alive; };// Permet de r√©cup√©rer l'attribut m_alive
 	bool setHead(Map map);
-	Tiles getHead() { return m_posSerpent[0].tile; }; //Methode pour retourner l'élément i du vecteur m_posSerpent
+	Tiles getHead() { return m_posSerpent[0].tile; }; //Methode pour retourner l'≈Ωl≈Ωment i du vecteur m_posSerpent
 	void run(Map & map, Tiles head_tile);
 
 private:
 	std::vector<ElementSerpent> m_posSerpent;
 	bool alive;
-	ElementSerpent m_lastPosition; // Permet de garder en mÈmoire la derniËre position de la queue du serpent, pour pouvoir allonger la queue si besoin
-	void deplacementSerpent(); // MÈthode qui permet de dÈplacer le serpent
+	ElementSerpent m_lastPosition; // Permet de garder en m√©moire la derni√®re position de la queue du serpent, pour pouvoir allonger la queue si besoin
+	void deplacementSerpent(); // M√©thode qui permet de d√©placer le serpent
 	void deplacementTete(Tiles head_tile, const Map & map);
 	void setAlive(Map & map);
 	void fruit_action(Map & map);
