@@ -68,11 +68,19 @@ void play(RenderWindow & window)
 	
 
 	Serpent serpent;
-	if (!serpent.setHead(*map.clone(map, window, false)))
+	if (!serpent.setHead(*map.clone(map, window, false), false))
 	{
-		cout << "Erreur pas de tête trouvée sur la map" << endl;
+		cout << "Erreur pas de tete trouvee sur la map" << endl;
 		return;
 	}
+
+	Serpent serpentBot;
+	if (!serpentBot.setHead(*map.clone(map, window, false), true))
+	{
+		cout << "Impossible de placer le bot" << endl;
+		return;
+	}
+
 	Tiles head_tile = serpent.getHead();
     map.popFruit();
 

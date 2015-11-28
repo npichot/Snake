@@ -83,19 +83,36 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
 	}
 }
 
-bool Serpent::setHead(Map map)
+Tiles Serpent::calculateNextHeadMove(Map & map)
 {
-	
-    for (int i = 0; i < map.getField().size(); ++i)
-		for (int j = 0; j < map.getField()[i].size(); ++j)
-			if (map.getTile(i, j) >= 20 && map.getTile(i, j) <= 23)
-			{
-				m_posSerpent.push_back({ i,j,map.getTile(i,j) });
-				return true;
-			}
+	return Tiles();
+}
+
+bool Serpent::setHead(Map map, bool bot)
+{
+	if (!bot)
+	{
+		for (int i = 0; i < map.getField().size(); ++i)
+			for (int j = 0; j < map.getField()[i].size(); ++j)
+				if (map.getTile(i, j) >= 20 && map.getTile(i, j) <= 23)
+				{
+					m_posSerpent.push_back({ i,j,map.getTile(i,j) });
+					return true;
+				}
+	}
+	else
+	{
+		int i(0), j(0);
+		do
+		{
+			srand(time(NULL)); //Initialisation du timer
+			i = rand() % (map.getField().size() - 3) + 1;
+			j = rand() % (map.getField()[0].size() - 3) + 1;
+		} while (map.getTile(i, j) != EMPTY);
+		m_posSerpent.push_back({ i,j,HEAD_EAST });
+		return true;
+	}
 	return false;
-
-
 }
 
 void Serpent::run(Map & map, Tiles head_tile)
@@ -114,6 +131,21 @@ void Serpent::run(Map & map, Tiles head_tile)
 	
     map.decreaseLifetimeFruits();
     map.deleteFruits();
+}
+
+void Serpent::runBot(Map & map)
+{
+	map.updateField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
+	deplacementSerpent();
+	Tiles head_tile = calculateNextHeadMove(map);
+	deplacementTete(head_tile, map);
+	setAlive(map);
+	fruit_action(map);
+
+	for (int i = 0; i < m_posSerpent.size(); ++i)
+	{
+		map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, m_posSerpent[i].tile);
+	}
 }
 
 void Serpent::setAlive(Map & map)
