@@ -5,7 +5,7 @@
 #include <vector>
 #include "Menu.h"
 
-typedef struct ElementSerpent ElementSerpent
+typedef struct ElementSerpent ElementSerpent;
 struct ElementSerpent
 {
 	int line;
