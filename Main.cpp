@@ -65,6 +65,8 @@ void play(RenderWindow & window)
 	if (pathMap == "")
 		return;
 	Map map = Map(pathMap, window, false);
+	map.popFruit();
+
 	Map mapCopy = *map.clone(map, window, false);
 
 	Serpent serpent;
@@ -75,8 +77,7 @@ void play(RenderWindow & window)
 	}
 
 	Tiles head_tile = serpent.getHead();
-	map.popFruit();
-
+	
 	Serpent serpentBot;
 	if (!serpentBot.setHead(mapCopy, true))
 	{

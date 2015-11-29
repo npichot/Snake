@@ -85,7 +85,7 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
 
 Tiles Serpent::calculateNextHeadMove(Map & map)
 {
-	int scores[3] = { 0,0,0 };
+	vector<pair<int, int>> scores;
 	pair<int, int> futureTileCoord[3];
 	switch (getHead())
 	{
@@ -113,47 +113,33 @@ Tiles Serpent::calculateNextHeadMove(Map & map)
 		break;
 	}
 
-	for (int i = 0; i < map.getField().size(); ++i)
+	for (int i = 0; i < 3; i++)
 	{
-		for (int j = 0; j < map.getField()[i].size(); ++j)
-			switch (map.getTile(i, j))
-			{
-			case BODY_NORTH:
-			case BODY_EAST:
-			case BODY_SOUTH:
-			case BODY_WEST:
-			case HEAD_NORTH:
-			case HEAD_EAST:
-			case HEAD_SOUTH:
-			case HEAD_WEST:
-			case TREE:
-				scores[0] += 50 / (max(1,abs(i - futureTileCoord[0].first) + abs(j - futureTileCoord[0].second)));
-				scores[1] += 50 / (max(1,abs(i - futureTileCoord[1].first) + abs(j - futureTileCoord[1].second)));
-				scores[2] += 50 / (max(1, abs(i - futureTileCoord[2].first) + abs(j - futureTileCoord[2].second)));
-			case CHERRY:
-			case STRAWBERRY:
-				scores[0] -= 50 / (max(1, abs(i - futureTileCoord[0].first) + abs(j - futureTileCoord[0].second)));
-				scores[1] -= 50 / (max(1, abs(i - futureTileCoord[1].first) + abs(j - futureTileCoord[1].second)));
-				scores[2] -= 50 / (max(1, abs(i - futureTileCoord[2].first) + abs(j - futureTileCoord[2].second)));
-			case BANANA:
-			case GRAPE:
-			case LEMON:
-				scores[0] += 50 / (max(1, abs(i - futureTileCoord[0].first) + abs(j - futureTileCoord[0].second)));
-				scores[1] += 50 / (max(1, abs(i - futureTileCoord[1].first) + abs(j - futureTileCoord[1].second)));
-				scores[2] += 50 / (max(1, abs(i - futureTileCoord[2].first) + abs(j - futureTileCoord[2].second)));
-			default:
-				break;
-			}
+		if (map.getTile(futureTileCoord[i].first, futureTileCoord[i].second) == 30 || map.getTile(futureTileCoord[i].first, futureTileCoord[i].second) == 40)
+			scores.push_back(pair<int, int>(abs(futureTileCoord[i].first - map.getCherry().first) + abs(futureTileCoord[i].second - map.getCherry().second), i - 1));
 	}
 
-	int best = 0;
-	for (int h = 1; h < 3; h++)
+	if (scores.size() == 0)//On choisit alÈatoirement une direction
+		return Tiles(20 + (getHead() - 20 + (scores[(rand() % 3)].second + 4)) % 4);
+	else
 	{
-		if (scores[h] < scores[best])
-			best = h;
+		sort(scores.begin(), scores.end());
+		if (scores[0].second == 0)
+			return getHead();//PrioritÈ ‡ la mÍme direction qu'avant
+
+		int h = 1;
+		while (h < scores.size() && scores[h].first == scores[h - 1].second)
+		{
+			if (scores[h].second == 0)
+				return getHead();//PrioritÈ ‡ la mÍme direction qu'avant
+			h++;
+		}
+			
+		return Tiles(20 + (getHead() - 20 + (scores[(rand() % h)].second + 4)) % 4);//Sinon on tire au sort parmi les premiers ex aequo restants
 	}
 
-	return Tiles(20+(getHead()-20+(best-1+4))%4);
+
+	return Tiles();
 }
 
 bool Serpent::setHead(Map map, bool bot)

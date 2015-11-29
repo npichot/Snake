@@ -109,6 +109,11 @@ private:
 	int width, height;
 	double marginLeft, marginTop;
     std::vector<std::vector<int>> BadFruits;
+	std::pair<int, int> cherry;
+	/*
+	Setter pour cherry
+	*/
+	void setCherry(int i, int j) { cherry = std::pair<int, int>(i, j); };
     
 public:
 	/*
@@ -157,7 +162,7 @@ public:
 	/*
 	Methode pour renvoyer une copie du field
 	*/
-	std::vector<std::vector<sf::Sprite>> getField() const { return field; }
+	std::vector<std::vector<sf::Sprite>> getField() const { return field; };
 	
 	/*
 	Methode pour faire apparaitre un fruit aleatoirement
@@ -168,6 +173,11 @@ public:
      Methodes pour supprimer les mauvais fruits
      */
     void decreaseLifetimeFruits();
+
+	/*
+	Getter pour cherry
+	*/
+	std::pair<int, int> getCherry() { return cherry; };
     
     void deleteFruits();
 };

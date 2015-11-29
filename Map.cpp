@@ -186,6 +186,7 @@ void Map::popFruit()
 		j = rand() % (field[0].size() - 3) + 1;
 	} while (getTile(i, j) != EMPTY);
     updateField(i, j, CHERRY);
+	setCherry(i, j);
     
     //Faire apparaitre un fruit mauvais random avec une probabilité de 20%
     
