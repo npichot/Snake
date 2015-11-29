@@ -65,13 +65,13 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
         case GRAPE:
             for (int i = m_posSerpent.size()-1; i > 0; --i) {
                 map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
-                m_posSerpent.pop_back();//On enlève un élément au serpent
+                m_posSerpent.pop_back();//On enlève tout saauf la tete
             }
             break;
         case LEMON:
             for (int i= size_init-1; i > (size_init-1)/2; --i) {
                 map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
-                m_posSerpent.pop_back();//On enlève un élément au serpent
+                m_posSerpent.pop_back();//On enlève la moitiÈ
             }
             break;
         case STRAWBERRY:
@@ -85,7 +85,75 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
 
 Tiles Serpent::calculateNextHeadMove(Map & map)
 {
-	return Tiles();
+	int scores[3] = { 0,0,0 };
+	pair<int, int> futureTileCoord[3];
+	switch (getHead())
+	{
+	case HEAD_EAST:
+		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line-1, m_posSerpent[0].column);
+		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column + 1);
+		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line + 1, m_posSerpent[0].column);
+		break;
+	case HEAD_SOUTH:
+		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column + 1);
+		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line + 1, m_posSerpent[0].column);
+		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column - 1);
+		break;
+	case HEAD_WEST:
+		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line + 1, m_posSerpent[0].column);
+		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column - 1);
+		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line - 1, m_posSerpent[0].column);
+		break;
+	case HEAD_NORTH:
+		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column - 1);
+		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line - 1, m_posSerpent[0].column);
+		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column + 1);
+		break;
+	default:
+		break;
+	}
+
+	for (int i = 0; i < map.getField().size(); ++i)
+	{
+		for (int j = 0; j < map.getField()[i].size(); ++j)
+			switch (map.getTile(i, j))
+			{
+			case BODY_NORTH:
+			case BODY_EAST:
+			case BODY_SOUTH:
+			case BODY_WEST:
+			case HEAD_NORTH:
+			case HEAD_EAST:
+			case HEAD_SOUTH:
+			case HEAD_WEST:
+			case TREE:
+				scores[0] += 50 / (max(1,abs(i - futureTileCoord[0].first) + abs(j - futureTileCoord[0].second)));
+				scores[1] += 50 / (max(1,abs(i - futureTileCoord[1].first) + abs(j - futureTileCoord[1].second)));
+				scores[2] += 50 / (max(1, abs(i - futureTileCoord[2].first) + abs(j - futureTileCoord[2].second)));
+			case CHERRY:
+			case STRAWBERRY:
+				scores[0] -= 50 / (max(1, abs(i - futureTileCoord[0].first) + abs(j - futureTileCoord[0].second)));
+				scores[1] -= 50 / (max(1, abs(i - futureTileCoord[1].first) + abs(j - futureTileCoord[1].second)));
+				scores[2] -= 50 / (max(1, abs(i - futureTileCoord[2].first) + abs(j - futureTileCoord[2].second)));
+			case BANANA:
+			case GRAPE:
+			case LEMON:
+				scores[0] += 50 / (max(1, abs(i - futureTileCoord[0].first) + abs(j - futureTileCoord[0].second)));
+				scores[1] += 50 / (max(1, abs(i - futureTileCoord[1].first) + abs(j - futureTileCoord[1].second)));
+				scores[2] += 50 / (max(1, abs(i - futureTileCoord[2].first) + abs(j - futureTileCoord[2].second)));
+			default:
+				break;
+			}
+	}
+
+	int best = 0;
+	for (int h = 1; h < 3; h++)
+	{
+		if (scores[h] < scores[best])
+			best = h;
+	}
+
+	return Tiles(20+(getHead()-20+(best-1+4))%4);
 }
 
 bool Serpent::setHead(Map map, bool bot)
@@ -156,6 +224,10 @@ void Serpent::setAlive(Map & map)
 	case BODY_EAST:
 	case BODY_SOUTH:
 	case BODY_WEST:
+	case HEAD_NORTH:
+	case HEAD_EAST:
+	case HEAD_SOUTH:
+	case HEAD_WEST:
 	case TREE:
 		alive = false;
 		break;
