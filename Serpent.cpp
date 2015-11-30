@@ -90,54 +90,54 @@ Tiles Serpent::calculateNextHeadMove(Map & map)
 	switch (getHead())
 	{
 	case HEAD_EAST:
-		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column + 1);
-		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line + 1, m_posSerpent[0].column);
-		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line - 1, m_posSerpent[0].column);
-		break;
-	case HEAD_SOUTH:
-		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line + 1, m_posSerpent[0].column);
-		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column - 1);
-		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column + 1);
-		break;
-	case HEAD_WEST:
-		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column - 1);
-		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line - 1, m_posSerpent[0].column);
-		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line + 1, m_posSerpent[0].column);
-		break;
-	case HEAD_NORTH:
 		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line - 1, m_posSerpent[0].column);
 		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column + 1);
+		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line + 1, m_posSerpent[0].column);
+		break;
+	case HEAD_SOUTH:
+		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column + 1);
+		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line + 1, m_posSerpent[0].column);
 		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column - 1);
+		break;
+	case HEAD_WEST:
+		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line + 1, m_posSerpent[0].column);
+		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column - 1);
+		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line - 1, m_posSerpent[0].column);
+		break;
+	case HEAD_NORTH:
+		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column - 1);
+		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line - 1, m_posSerpent[0].column);
+		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column + 1);
 		break;
 	default:
 		break;
 	}
 
-	for (int i = 0; i < 3; i++)
-	{
-		if (map.getTile(futureTileCoord[i].first, futureTileCoord[i].second) >= 30)
-			scores.push_back(pair<int, int>(abs(futureTileCoord[i].first - map.getCherry().first) + abs(futureTileCoord[i].second - map.getCherry().second), i == 2 ? -1 : i));
-	}
-
-	if (scores.size() == 0)//On choisit aléatoirement une direction
-		return Tiles(20 + (getHead() - 20 + (scores[(rand() % 3)].second + 4)) % 4);
+	int direction;
+	//On recherche si le fruit n'est pas dans la direction -1 ou 1
+	if (map.getCherry().first == futureTileCoord[0].first && map.getCherry().first == futureTileCoord[2].first) //meme ligne
+		direction = abs(map.getCherry().first - futureTileCoord[0].first) < abs(map.getCherry().first - futureTileCoord[2].first) ? -1 : 1;
+	else if (map.getCherry().second == futureTileCoord[0].second && map.getCherry().second == futureTileCoord[2].second) //meme colonne
+		direction = abs(map.getCherry().first - futureTileCoord[0].first) < abs(map.getCherry().first - futureTileCoord[2].first) ? -1 : 1;
+	else if (map.getCherry().first == futureTileCoord[1].first || map.getCherry().second == futureTileCoord[1].second)
+		direction = 0;//Si on fonce vers la cerise on continue
 	else
-	{
-		sort(scores.begin(), scores.end());
-		scores[0].first = 3 * (2 * scores[scores.size() - 1].first - scores[0].first);
-		for (int i = 1; i < scores.size(); i++)
-			scores[i].first =  (2 * scores[scores.size() - 1].first - scores[i].first) + scores[i - 1].first;
+		direction = rand() % 100 < 80 ? 0 : -1; //On privilégie à 80% la direction tout droit et à 20% -1
+	
+	printf("%d\n", direction);
 
-		int h = rand()% scores[scores.size()-1].first;
-		int l = 0;
-		while (l<scores.size() && h > scores[l].first)
-			l++;
-			
-		return Tiles(20 + (getHead() - 20 + (scores[l].second + 4)) % 4);//Sinon on tire au sort parmi les premiers ex aequo restants
+	for (int h = 0; h < 3; h++)
+	{
+		printf("%d %d\n", direction, map.getTile(futureTileCoord[direction + 1].first, futureTileCoord[direction + 1].second));
+		if (map.getTile(futureTileCoord[direction + 1].first, futureTileCoord[direction + 1].second) >= 30)
+			return Tiles(20 + (getHead() - 20 + (direction + 4)) % 4);
+		direction++;
+		direction = (direction + 1) % 3 - 1;//on décale d'une position
 	}
 
-
-	return Tiles();
+	//Si aucun chemin n'est possible on tire au sort
+	printf("bye\n");
+	return Tiles(20 + (getHead() - 20 + (rand() % -1 + 4)) % 4);
 }
 
 bool Serpent::setHead(Map map, bool bot)
@@ -172,8 +172,8 @@ void Serpent::run(Map & map, Tiles head_tile)
 	map.updateField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
 	deplacementSerpent();
 	deplacementTete(head_tile, map);
-	setAlive(map);
-    fruit_action(map);
+	fruit_action(map);
+	setAlive(map, false);
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
 	{
@@ -191,8 +191,8 @@ void Serpent::runBot(Map & map)
 	deplacementSerpent();
 	Tiles head_tile = calculateNextHeadMove(map);
 	deplacementTete(head_tile, map);
-	setAlive(map);
 	fruit_action(map);
+	setAlive(map, true);
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
 	{
@@ -200,7 +200,7 @@ void Serpent::runBot(Map & map)
 	}
 }
 
-void Serpent::setAlive(Map & map)
+void Serpent::setAlive(Map & map, bool bot)
 {
 	switch (map.getTile(m_posSerpent[0].line, m_posSerpent[0].column))
 	{
@@ -213,6 +213,12 @@ void Serpent::setAlive(Map & map)
 	case HEAD_SOUTH:
 	case HEAD_WEST:
 	case TREE:
+		if (bot)
+		{
+			for (int i = 1; i < m_posSerpent.size(); ++i)
+				map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);//On enlève le bot de la map
+			m_posSerpent.clear();//on le tue
+		}
 		alive = false;
 		break;
 	default:

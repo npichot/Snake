@@ -149,7 +149,8 @@ void play(RenderWindow & window)
 		if (!pause)
 		{
 			serpent.run(map, head_tile);
-			serpentBot.runBot(map);
+			if(serpentBot.isAlive())
+				serpentBot.runBot(map);
 		}
 		
 		////////////////////
