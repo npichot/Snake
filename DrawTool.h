@@ -18,4 +18,4 @@ public:
 	void activate(bool b);
 };
 
-#endif __DRAWTOOL_H__
+#endif // !__DRAWTOOL_H__

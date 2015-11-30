@@ -14,7 +14,6 @@ Serpent::~Serpent()
 
 void Serpent::deplacementSerpent()
 {
-    //m_lastPosition = m_posSerpent[m_posSerpent.size() - 1]; // Pour sauvegarder la dernière position de la queue
     for (int i = m_posSerpent.size() - 1; i >= 2; --i)
 		m_posSerpent[i] = m_posSerpent[i - 1];
 
@@ -51,7 +50,6 @@ void Serpent::fruit_action(Map & map)//On dŽfinit l'action sur le serpent en fon
     m_lastPosition = m_posSerpent[m_posSerpent.size()-1];
     int size_init = m_posSerpent.size();
 	fruit = map.getTile(m_posSerpent[0].line, m_posSerpent[0].column);
-    ElementSerpent element_int = m_posSerpent[0];
 	switch (fruit) {
         case CHERRY:
             m_posSerpent.push_back(m_lastPosition);// On rajoute un élément Serpent à la dernière position de la queue pour allonger le Serpent

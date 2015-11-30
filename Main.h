@@ -13,4 +13,4 @@ const unsigned int WINDOW_HEIGHT = 720;
 
 void play(sf::RenderWindow & window);
 
-#endif
+#endif // !__MAIN_H__

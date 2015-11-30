@@ -20,4 +20,4 @@ public:
 	void setSelected(DrawTool * t) { selected = t; };
 };
 
-#endif __TOOLBAR_H__
+#endif //__TOOLBAR_H__
