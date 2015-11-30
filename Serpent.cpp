@@ -90,24 +90,24 @@ Tiles Serpent::calculateNextHeadMove(Map & map)
 	switch (getHead())
 	{
 	case HEAD_EAST:
-		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line-1, m_posSerpent[0].column);
-		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column + 1);
-		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line + 1, m_posSerpent[0].column);
-		break;
-	case HEAD_SOUTH:
 		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column + 1);
 		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line + 1, m_posSerpent[0].column);
-		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column - 1);
-		break;
-	case HEAD_WEST:
-		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line + 1, m_posSerpent[0].column);
-		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column - 1);
 		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line - 1, m_posSerpent[0].column);
 		break;
-	case HEAD_NORTH:
+	case HEAD_SOUTH:
+		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line + 1, m_posSerpent[0].column);
+		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column - 1);
+		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column + 1);
+		break;
+	case HEAD_WEST:
 		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column - 1);
 		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line - 1, m_posSerpent[0].column);
-		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column + 1);
+		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line + 1, m_posSerpent[0].column);
+		break;
+	case HEAD_NORTH:
+		futureTileCoord[0] = pair<int, int>(m_posSerpent[0].line - 1, m_posSerpent[0].column);
+		futureTileCoord[1] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column + 1);
+		futureTileCoord[2] = pair<int, int>(m_posSerpent[0].line, m_posSerpent[0].column - 1);
 		break;
 	default:
 		break;
@@ -115,8 +115,8 @@ Tiles Serpent::calculateNextHeadMove(Map & map)
 
 	for (int i = 0; i < 3; i++)
 	{
-		if (map.getTile(futureTileCoord[i].first, futureTileCoord[i].second) == 30 || map.getTile(futureTileCoord[i].first, futureTileCoord[i].second) == 40)
-			scores.push_back(pair<int, int>(abs(futureTileCoord[i].first - map.getCherry().first) + abs(futureTileCoord[i].second - map.getCherry().second), i - 1));
+		if (map.getTile(futureTileCoord[i].first, futureTileCoord[i].second) >= 30)
+			scores.push_back(pair<int, int>(abs(futureTileCoord[i].first - map.getCherry().first) + abs(futureTileCoord[i].second - map.getCherry().second), i == 2 ? -1 : i));
 	}
 
 	if (scores.size() == 0)//On choisit aléatoirement une direction
@@ -124,18 +124,16 @@ Tiles Serpent::calculateNextHeadMove(Map & map)
 	else
 	{
 		sort(scores.begin(), scores.end());
-		if (scores[0].second == 0)
-			return getHead();//Priorité à la même direction qu'avant
+		scores[0].first = 3 * (2 * scores[scores.size() - 1].first - scores[0].first);
+		for (int i = 1; i < scores.size(); i++)
+			scores[i].first =  (2 * scores[scores.size() - 1].first - scores[i].first) + scores[i - 1].first;
 
-		int h = 1;
-		while (h < scores.size() && scores[h].first == scores[h - 1].second)
-		{
-			if (scores[h].second == 0)
-				return getHead();//Priorité à la même direction qu'avant
-			h++;
-		}
+		int h = rand()% scores[scores.size()-1].first;
+		int l = 0;
+		while (l<scores.size() && h > scores[l].first)
+			l++;
 			
-		return Tiles(20 + (getHead() - 20 + (scores[(rand() % h)].second + 4)) % 4);//Sinon on tire au sort parmi les premiers ex aequo restants
+		return Tiles(20 + (getHead() - 20 + (scores[l].second + 4)) % 4);//Sinon on tire au sort parmi les premiers ex aequo restants
 	}
 
 
