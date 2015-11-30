@@ -18,12 +18,13 @@ class Serpent
 {
 public:
 	//Methodes
-	Serpent();
+	Serpent(bool alive);
 	~Serpent();
 	bool isAlive() const { return alive; };// Permet de récupérer l'attribut m_alive
 	bool setHead(Map map, bool bot);
 	Tiles getHead() { return m_posSerpent[0].tile; }; //Methode pour retourner l'ŽlŽment i du vecteur m_posSerpent
-	void run(Map & map, Tiles head_tile);
+	void run(Map & map, Tiles head_tile, Serpent & serpentBot, Map copie);//Permet d'initialiser le bot
+	bool run(Map & map, Tiles head_tile);
 	void runBot(Map & map);
 
 private:
@@ -33,7 +34,7 @@ private:
 	void deplacementSerpent(); // Méthode qui permet de déplacer le serpent
 	void deplacementTete(Tiles head_tile, const Map & map);
 	void setAlive(Map & map, bool bot);
-	void fruit_action(Map & map);
+	bool fruit_action(Map & map);
 	Tiles calculateNextHeadMove(Map & map);
 };
 

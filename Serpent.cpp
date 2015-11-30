@@ -3,8 +3,8 @@
 using namespace std;
 using namespace sf;
 
-Serpent::Serpent()
-	:alive(true)
+Serpent::Serpent(bool alive)
+	:alive(alive)
 {
 }
 
@@ -45,7 +45,7 @@ void Serpent::deplacementTete(Tiles head_tile, const Map & map)//Gre le dŽplace
 
 }
 
-void Serpent::fruit_action(Map & map)//On dŽfinit l'action sur le serpent en fonction du fruit mangŽ
+bool Serpent::fruit_action(Map & map)//On dŽfinit l'action sur le serpent en fonction du fruit mangŽ
 {
 	Tiles fruit;
     m_lastPosition = m_posSerpent[m_posSerpent.size()-1];
@@ -55,7 +55,7 @@ void Serpent::fruit_action(Map & map)//On dŽfinit l'action sur le serpent en fon
         case CHERRY:
             m_posSerpent.push_back(m_lastPosition);// On rajoute un élément Serpent à la dernière position de la queue pour allonger le Serpent
             map.popFruit();
-            break;
+			return true;
         case BANANA:
             if (m_posSerpent.size()!=1) { //On ne retire un ŽlŽment que si le serpent peut le supporter
                 map.updateField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);//On affiche EMTPY ˆ la places du body
@@ -81,6 +81,7 @@ void Serpent::fruit_action(Map & map)//On dŽfinit l'action sur le serpent en fon
         default:
             break;
 	}
+	return false;
 }
 
 Tiles Serpent::calculateNextHeadMove(Map & map)
@@ -154,35 +155,57 @@ bool Serpent::setHead(Map map, bool bot)
 	}
 	else
 	{
-		int i(0), j(0);
-		do
+		if (m_posSerpent.size()>0 && map.getTile(m_posSerpent[0].line, m_posSerpent[0].column) != EMPTY)//On regarde si la valeur préchargé est valide
+			return true;
+		else
 		{
-			srand(time(NULL)); //Initialisation du timer
-			i = rand() % (map.getField().size() - 3) + 1;
-			j = rand() % (map.getField()[0].size() - 3) + 1;
-		} while (map.getTile(i, j) != EMPTY);
-		m_posSerpent.push_back({ i,j,HEAD_EAST });
-		return true;
+			m_posSerpent.clear();
+			int i(0), j(0);
+			do
+			{
+				srand(time(NULL)); //Initialisation du timer
+				i = rand() % (map.getField().size() - 3) + 1;
+				j = rand() % (map.getField()[0].size() - 3) + 1;
+			} while (map.getTile(i, j) != EMPTY);
+			m_posSerpent.push_back({ i,j,HEAD_EAST });
+			return true;
+		}
 	}
 	return false;
 }
 
-void Serpent::run(Map & map, Tiles head_tile)
+void Serpent::run(Map & map, Tiles head_tile, Serpent & serpentBot, Map copie)
+{
+	if(run(map, head_tile))
+		if (rand() % 100 > 80) //20% de chance que la cerise qu'on vient de manger entraine l'apparition du bot
+		{
+			copie.updateField(map.getCherry().first, map.getCherry().second, CHERRY);
+			if (!serpentBot.setHead(copie, true))
+			{
+				cout << "Impossible de placer le bot" << endl;
+				return;
+			}
+			else
+				serpentBot.setAlive(map, true);
+		}
+}
+
+bool Serpent::run(Map & map, Tiles head_tile)
 {
 	map.updateField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
 	deplacementSerpent();
 	deplacementTete(head_tile, map);
-	fruit_action(map);
+	bool cherryEaten = fruit_action(map);
 	setAlive(map, false);
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
 	{
 		map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, m_posSerpent[i].tile);
 	}
-	
-	
-    map.decreaseLifetimeFruits();
-    map.deleteFruits();
+
+	map.decreaseLifetimeFruits();
+	map.deleteFruits();
+	return cherryEaten;
 }
 
 void Serpent::runBot(Map & map)
@@ -215,13 +238,17 @@ void Serpent::setAlive(Map & map, bool bot)
 	case TREE:
 		if (bot)
 		{
-			for (int i = 1; i < m_posSerpent.size(); ++i)
-				map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);//On enlève le bot de la map
-			m_posSerpent.clear();//on le tue
+			m_posSerpent[0] = m_posSerpent[m_posSerpent.size() - 1];//On précharge une valeur intiale de la tête pour le prochain bot
+			for (int i = m_posSerpent.size() - 1; i = 1; i--)
+			{
+				map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);//On enlève le corps du bot
+				m_posSerpent.pop_back();
+			}
 		}
 		alive = false;
 		break;
 	default:
+		alive = true;
 		break;
 	}
 }
