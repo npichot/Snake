@@ -68,10 +68,12 @@ void Serpent::fruit_action(Map & map, Tiles & head_tile)//On dŽfinit l'action su
             }
             break;
         case LEMON:
-            reverse(m_posSerpent.begin(), m_posSerpent.end());
-            m_posSerpent[0].tile = convertTailtoHead.at(m_posSerpent[0].tile);
-            m_posSerpent[m_posSerpent.size()-1].tile = convertHeadtoTail.at(m_posSerpent[m_posSerpent.size()-1].tile);
-			head_tile = getHead();
+            if (m_posSerpent.size()>1) {
+                reverse(m_posSerpent.begin(), m_posSerpent.end());
+                m_posSerpent[0].tile = convertTailtoHead.at(m_posSerpent[0].tile);
+                m_posSerpent[m_posSerpent.size()-1].tile = convertHeadtoTail.at(m_posSerpent[m_posSerpent.size()-1].tile);
+                head_tile = getHead();
+            }
             break;
         case STRAWBERRY:
             reverse_input = !reverse_input;
