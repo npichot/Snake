@@ -44,7 +44,7 @@ void Serpent::deplacementTete(Tiles head_tile, const Map & map)//Gère le déplace
 
 }
 
-void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fonction du fruit mangé
+void Serpent::fruit_action(Map & map, Tiles & head_tile)//On définit l'action sur le serpent en fonction du fruit mangé
 {
 	Tiles fruit;
     m_lastPosition = m_posSerpent[m_posSerpent.size()-1];
@@ -64,20 +64,14 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
         case GRAPE:
             for (int i = m_posSerpent.size()-1; i > 0; --i) {
                 map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
-                m_posSerpent.pop_back();//On enlève un élément au serpent
+                m_posSerpent.pop_back();//On enlève un element au serpent
             }
             break;
         case LEMON:
-            for (int i= size_init-1; i > (size_init-1)/2; --i) {
-                map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
-                m_posSerpent.pop_back();//On enlève un élément au serpent
-            }
-            /*reverse(m_posSerpent.begin(), m_posSerpent.end());
+            reverse(m_posSerpent.begin(), m_posSerpent.end());
             m_posSerpent[0].tile = convertTailtoHead.at(m_posSerpent[0].tile);
-            for (int i(1); i < m_posSerpent.size()-1; ++i) {
-                m_posSerpent[i].tile= swapBody.at(m_posSerpent[i].tile);
-            }
-            m_posSerpent[m_posSerpent.size()-1].tile = convertHeadtoTail.at(m_posSerpent[m_posSerpent.size()-1].tile);*/
+            m_posSerpent[m_posSerpent.size()-1].tile = convertHeadtoTail.at(m_posSerpent[m_posSerpent.size()-1].tile);
+			head_tile = getHead();
             break;
         case STRAWBERRY:
             reverse_input = !reverse_input;
@@ -102,13 +96,13 @@ bool Serpent::setHead(Map map)
 
 }
 
-void Serpent::run(Map & map, Tiles head_tile)
+void Serpent::run(Map & map, Tiles & head_tile)
 {
 	map.updateField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
 	deplacementSerpent();
 	deplacementTete(head_tile, map);
 	setAlive(map);
-    fruit_action(map);
+    fruit_action(map, head_tile);
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
 	{
