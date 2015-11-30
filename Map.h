@@ -91,7 +91,7 @@ const std::map<Tiles, Tiles> convertHeadtoBody =
     {HEAD_WEST, BODY_WEST}
 };
 
-const std::map<Tiles, Tiles> convertBodytoHead =
+const std::map<Tiles, Tiles> convertTailtoHead =
 {
     {BODY_EAST, HEAD_WEST},
     {BODY_SOUTH, HEAD_NORTH},
@@ -99,6 +99,21 @@ const std::map<Tiles, Tiles> convertBodytoHead =
     {BODY_NORTH, HEAD_SOUTH}
 };
 
+const std::map<Tiles, Tiles> convertHeadtoTail =
+{
+    {HEAD_EAST, BODY_WEST},
+    {HEAD_SOUTH, BODY_NORTH},
+    {HEAD_WEST, BODY_EAST},
+    {HEAD_NORTH, BODY_SOUTH}
+};
+
+const std::map<Tiles, Tiles> swapBody =
+{
+    {BODY_EAST, BODY_WEST},
+    {BODY_SOUTH, BODY_NORTH},
+    {BODY_WEST, BODY_EAST},
+    {BODY_NORTH, BODY_SOUTH}
+};
 
 class Map
 {

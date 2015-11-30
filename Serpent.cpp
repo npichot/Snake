@@ -14,7 +14,7 @@ Serpent::~Serpent()
 
 void Serpent::deplacementSerpent()
 {
-    m_lastPosition = m_posSerpent[m_posSerpent.size() - 1]; // Pour sauvegarder la derniËre position de la queue
+    //m_lastPosition = m_posSerpent[m_posSerpent.size() - 1]; // Pour sauvegarder la derniËre position de la queue
     for (int i = m_posSerpent.size() - 1; i >= 2; --i)
 		m_posSerpent[i] = m_posSerpent[i - 1];
 
@@ -51,6 +51,7 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
     m_lastPosition = m_posSerpent[m_posSerpent.size()-1];
     int size_init = m_posSerpent.size();
 	fruit = map.getTile(m_posSerpent[0].line, m_posSerpent[0].column);
+    ElementSerpent element_int = m_posSerpent[0];
 	switch (fruit) {
         case CHERRY:
             m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
@@ -73,6 +74,15 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
                 map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
                 m_posSerpent.pop_back();//On enlève un élément au serpent
             }
+            /*reverse(m_posSerpent.begin(), m_posSerpent.end());
+            m_posSerpent[0].tile = convertTailtoHead.at(m_posSerpent[0].tile);
+            map.updateField(m_posSerpent[0].line, m_posSerpent[0].column, m_posSerpent[0].tile);
+            for (int i(1); i < m_posSerpent.size()-1; ++i) {
+                m_posSerpent[i].tile= swapBody.at(m_posSerpent[i].tile);
+                map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, m_posSerpent[i].tile);
+            }
+            m_posSerpent[m_posSerpent.size()-1].tile = convertHeadtoTail.at(m_posSerpent[m_posSerpent.size()-1].tile);
+            map.updateField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, m_posSerpent[m_posSerpent.size()-1].tile);*/
             break;
         case STRAWBERRY:
             reverse_input = !reverse_input;

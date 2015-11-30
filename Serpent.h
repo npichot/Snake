@@ -4,6 +4,7 @@
 #include "Map.h"
 #include <vector>
 #include "Menu.h"
+#include <algorithm>
 
 typedef struct ElementSerpent ElementSerpent;
 struct ElementSerpent
