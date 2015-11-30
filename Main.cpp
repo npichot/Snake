@@ -84,47 +84,45 @@ void play(RenderWindow & window)
         Event event;
         while (window.pollEvent(event)) 
 		{
-			if (event.type == Event::KeyReleased)
-			{
-				switch (event.key.code)
-				{
-				case Keyboard::Up:
-					if (head_tile != HEAD_SOUTH && !pause)
-					{
-						head_tile = HEAD_NORTH;
-					}
-					break;
-				case Keyboard::Right:
-					if (head_tile != HEAD_WEST && !pause)
-					{
-						head_tile = HEAD_EAST;
-					}
-					break;
-				case Keyboard::Left:
-					if (head_tile != HEAD_EAST && !pause)
-					{
-						head_tile = HEAD_WEST;
-					}
-					break;
-				case Keyboard::Down:
-					if (head_tile != HEAD_NORTH && !pause)
-					{
-						head_tile = HEAD_SOUTH;
-					}
-					break;
-
-				case Keyboard::Escape:
-					window.close();
-					break;
-				case Keyboard::Return:
-					if (!serpent.isAlive())
-						return;
-					break;
-				case Keyboard::Space:
-					pause = !pause;
-					break;
-				default:
-					break;
+			if (event.type == Event::KeyReleased){
+				switch (event.key.code){
+                    case Keyboard::Up:
+                        if (head_tile != HEAD_SOUTH && !pause && !serpent.isreverse())
+                            head_tile = HEAD_NORTH;
+                        else if (head_tile != HEAD_NORTH  && !pause && serpent.isreverse())
+                            head_tile = HEAD_SOUTH;
+                        break;
+                    case Keyboard::Right:
+                        if (head_tile != HEAD_WEST && !pause && !serpent.isreverse())
+                            head_tile = HEAD_EAST;
+                        else if (head_tile != HEAD_EAST  && !pause && serpent.isreverse())
+                            head_tile = HEAD_WEST;
+                        break;
+                    case Keyboard::Left:
+                        if (head_tile != HEAD_EAST && !pause && !serpent.isreverse())
+                            head_tile = HEAD_WEST;
+                        else if (head_tile != HEAD_WEST  && !pause && serpent.isreverse())
+                            head_tile = HEAD_EAST;
+                        break;
+                    case Keyboard::Down:
+                        if (head_tile != HEAD_NORTH && !pause && !serpent.isreverse())
+                            head_tile = HEAD_SOUTH;
+                        else if (head_tile != HEAD_SOUTH  && !pause && serpent.isreverse())
+                            head_tile = HEAD_NORTH;
+                        break;
+                    case Keyboard::Escape:
+                        window.close();
+                        break;
+                    case Keyboard::Return:
+                        if (!serpent.isAlive())
+                            return;
+                        break;
+                    case Keyboard::Space:
+                        pause = !pause;
+                        break;
+                    default:
+                        break;
+				
 				}
 				break;// Autoriser qu'une prise de touche à la fois
 			}

@@ -4,7 +4,7 @@ using namespace std;
 using namespace sf;
 
 Serpent::Serpent()
-	:alive(true)
+	:alive(true), reverse_input(false)
 {
 }
 
@@ -75,9 +75,8 @@ void Serpent::fruit_action(Map & map)//On dŽfinit l'action sur le serpent en fon
             }
             break;
         case STRAWBERRY:
-            m_posSerpent.push_back(m_lastPosition);// On rajoute un élément Serpent à la dernière position de la queue pour allonger le Serpent
+            reverse_input = !reverse_input;
             break;
-        
         default:
             break;
 	}
