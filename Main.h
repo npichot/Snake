@@ -12,5 +12,6 @@ const unsigned int WINDOW_WIDTH = 1280;
 const unsigned int WINDOW_HEIGHT = 720;
 
 void play(sf::RenderWindow & window);
+void displayHowTo(sf::RenderWindow & window);
 
 #endif // !__MAIN_H__

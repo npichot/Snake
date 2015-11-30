@@ -74,13 +74,10 @@ void Serpent::fruit_action(Map & map)//On définit l'action sur le serpent en fon
             }
             /*reverse(m_posSerpent.begin(), m_posSerpent.end());
             m_posSerpent[0].tile = convertTailtoHead.at(m_posSerpent[0].tile);
-            map.updateField(m_posSerpent[0].line, m_posSerpent[0].column, m_posSerpent[0].tile);
             for (int i(1); i < m_posSerpent.size()-1; ++i) {
                 m_posSerpent[i].tile= swapBody.at(m_posSerpent[i].tile);
-                map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, m_posSerpent[i].tile);
             }
-            m_posSerpent[m_posSerpent.size()-1].tile = convertHeadtoTail.at(m_posSerpent[m_posSerpent.size()-1].tile);
-            map.updateField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, m_posSerpent[m_posSerpent.size()-1].tile);*/
+            m_posSerpent[m_posSerpent.size()-1].tile = convertHeadtoTail.at(m_posSerpent[m_posSerpent.size()-1].tile);*/
             break;
         case STRAWBERRY:
             reverse_input = !reverse_input;

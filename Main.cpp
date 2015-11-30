@@ -11,7 +11,7 @@ int main()
 {
 	// Chargement de la fenetre
     RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Snake", Style::None);//For debug purpose
-    window.setFramerateLimit(10);//Gere le nombre de FPS
+    window.setFramerateLimit(300);//Gere le nombre de FPS
 	
 	Menu menu(window,MAIN);
 
@@ -37,6 +37,9 @@ int main()
 			play(window);
 			break;
 		}
+        case HOWTO:
+            displayHowTo(window);
+            break;
 		case CREATION:
 		{
 			MapCreation mc;
@@ -172,4 +175,27 @@ void play(RenderWindow & window)
 		}
 		ecritureScore.close();
 	}
+}
+
+void displayHowTo(RenderWindow & window)
+{
+    Texture image;
+    image.loadFromFile("Ressources/howtoplay.png");
+    Sprite s;
+    s.setTexture(image);
+    s.setPosition(0, 0);
+    while (window.isOpen()) {
+        window.clear();
+        window.draw(s);
+        window.display();
+        Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == Event::KeyPressed){
+                play(window);
+                return;
+            }
+        }
+    }
+    
 }
