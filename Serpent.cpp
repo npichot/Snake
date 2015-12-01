@@ -176,7 +176,9 @@ bool Serpent::setHead(Map map, bool bot)
 
 void Serpent::run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie)
 {
-	if(run(map, head_tile))
+	if (run(map, head_tile))
+	{
+		srand(time(NULL));
 		if (rand() % 100 > 80) //20% de chance que la cerise qu'on vient de manger entraine l'apparition du bot
 		{
 			copie.updateGameField(map.getCherry().first, map.getCherry().second, CHERRY);
@@ -188,6 +190,7 @@ void Serpent::run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie)
 			else
 				serpentBot.setAlive(map, true);
 		}
+	}
 }
 
 bool Serpent::run(Map & map, Tiles & head_tile)
