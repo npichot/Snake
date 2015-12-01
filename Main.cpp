@@ -61,6 +61,7 @@ void play(RenderWindow & window)
 {
 	int score(0); // On initialise le score
 	bool pause = false;
+	bool robotOn = false;
 
 	Menu mapMenu(window,MAP);
 
@@ -68,16 +69,23 @@ void play(RenderWindow & window)
 	if (pathMap == "")
 		return;
 	Map map = Map(pathMap, window, false);
-	
+	map.popFruit();
+	Map copie = *map.clone(map, window, false);
 
-	Serpent serpent;
-	if (!serpent.setHead(*map.clone(map, window, false)))
+	Serpent serpent(true);
+	if (!serpent.setHead(copie, false))
 	{
-		cout << "Erreur pas de tête trouvée sur la map" << endl;
+		cout << "Erreur pas de tete trouvee sur la map" << endl;
 		return;
 	}
+
 	Tiles head_tile = serpent.getHead();
-    map.popFruit();
+	Serpent serpentBot(false);
+	if (!serpentBot.setHead(copie, true))
+	{
+		cout << "Impossible de placer le bot" << endl;
+		return;
+	}
 
 	while (window.isOpen())
 	{    
@@ -138,7 +146,17 @@ void play(RenderWindow & window)
 			continue;
 
 		if (!pause)
-			serpent.run(map, head_tile);
+		{
+			if(!robotOn)
+				serpent.run(map, head_tile,serpentBot, *map.clone(map, window, false));
+			else
+			{
+				serpent.run(map, head_tile);
+				serpentBot.runBot(map);
+			}
+
+			robotOn = serpentBot.isAlive();
+		}
 		
 		////////////////////
 		//dessin de la map//

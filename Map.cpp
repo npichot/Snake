@@ -68,8 +68,6 @@ Map::Map(string filename, RenderWindow const & window, bool gridOn)
 
 Map::~Map()
 {
-	for (int i = 0; i < sizeof(textures) / sizeof(Texture*); i++)
-		textures[i]->~Texture();
 }
 
 Map::Map(Map & map, sf::RenderWindow & window, bool gridOn)
@@ -186,6 +184,7 @@ void Map::popFruit()
 		j = rand() % (field[0].size() - 3) + 1;
 	} while (getTile(i, j) != EMPTY);
     updateField(i, j, CHERRY);
+	setCherry(i, j);
     
     //Faire apparaitre un fruit mauvais random avec une probabilité de 20%
     
