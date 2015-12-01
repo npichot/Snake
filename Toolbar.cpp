@@ -41,14 +41,14 @@ void Toolbar::drawBar(RenderWindow & window)
 {
 	int width = TILE_SIZE*(drawTools.size()+ mainTools.size()) + 40 + 5 * (drawTools.size() - 1);
 
-	//build framework
+	//On construit le cadre
 	RectangleShape framework;
 	framework.setPosition((window.getSize().x - width) / 2, 0);
 	framework.setSize(Vector2f(width, TILE_SIZE+10));
 	framework.setFillColor(Color(140,140,140,255));
 	window.draw(framework);
 
-	//Add tools
+	//On ajoute les outils à la barre
 	for (int i = 0; i < drawTools.size()+mainTools.size();i++)
 	{
 		if (i < drawTools.size())

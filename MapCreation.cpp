@@ -35,7 +35,7 @@ void MapCreation::executeInterface(RenderWindow & window, Map & map)
 		tb.drawBar(window);
 
 		Event event;
-		while (window.pollEvent(event))// on capte les evenements
+		while (window.pollEvent(event))
 		{
 			//Gestion des inputs
 			if (event.type == Event::MouseMoved)
