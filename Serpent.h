@@ -14,7 +14,6 @@ struct ElementSerpent
 	Tiles tile;
 };
 
-//Classe permettant de gerer le serpent en temps reel.
 class Serpent
 {
 public:
@@ -25,15 +24,15 @@ public:
 	bool setHead(Map map, bool bot);
 	Tiles getHead() { return m_posSerpent[0].tile; }; //Methode pour retourner l'ŽlŽment i du vecteur m_posSerpent
     bool isreverse() const { return reverse_input; }; //Permet de récupérer l'attribut reverse_input
-	void run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie);//Permet d'initialiser le bot
+	void run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie);
 	bool run(Map & map, Tiles & head_tile);
 	void runBot(Map & map);
 
 private:
 	std::vector<ElementSerpent> m_posSerpent;
 	bool alive;
-	ElementSerpent m_lastPosition; // Permet de garder en mémoire la dernière position de la queue du serpent, pour pouvoir allonger la queue si besoin
-	void deplacementSerpent(); // Méthode qui permet de déplacer le serpent
+	ElementSerpent m_lastPosition; 
+	void deplacementSerpent();
 	void deplacementTete(Tiles head_tile, const Map & map);
 	void setAlive(Map & map, bool bot);
 	bool fruit_action(Map & map, Tiles & head_tile);

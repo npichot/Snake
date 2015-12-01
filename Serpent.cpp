@@ -3,6 +3,12 @@
 using namespace std;
 using namespace sf;
 
+
+/*
+ La classe serpent permet de gerer des objets serpents (le notre ou un bot).
+ Elle regroupe toutes les fonctions utiles au deplacement du serpent, ainsi que la gestion des evenements qui peuvent arriver au serpent (fruits).
+Au debut, le serpent est vivant et les inputs claviers sont dans le sens naturel.
+ */
 Serpent::Serpent(bool alive)
 	:alive(alive), reverse_input(false)
 {
@@ -12,10 +18,11 @@ Serpent::~Serpent()
 {
 }
 
-//Gestion du deplacement du corps du serpent
+/*
+ Cette fonction permet de déplacer le serpent : chaque element du corps prend la place de l'element precedent.
+ */
 void Serpent::deplacementSerpent()
 {
-    //Chaque element du corps remplace l'element precedent
     for (int i = m_posSerpent.size() - 1; i >= 2; --i)
 		m_posSerpent[i] = m_posSerpent[i - 1];
 
@@ -24,7 +31,10 @@ void Serpent::deplacementSerpent()
 		m_posSerpent[1] = { m_posSerpent[0].line, m_posSerpent[0].column, Tiles(m_posSerpent[0].tile-10) };
 }
 
-//Gestion du deplacement de la tete
+/*
+ Cette fonction permet de gerer le deplacement de la tête, en fonction de son orientation.
+ C'est elle qui permet en fait au serpent de se deplacer, les autres elements du corps etant recopies dans la fonction deplacementSerpent.
+ */
 void Serpent::deplacementTete(Tiles head_tile, const Map & map)
 {
 	switch (head_tile)
@@ -47,12 +57,16 @@ void Serpent::deplacementTete(Tiles head_tile, const Map & map)
 
 }
 
-//Gestion des differents fruits manges
+/*
+ Cette fonction permet de gerer les actions des differents fruits que peut manger le serpent.
+ La description de l'action de chaque fruit est presente dans les commentaires de la fonction.
+ En fait, la cerise est le seul fruit "bon", les autres sont des fruits "mauvais" qui disparaissent après 30 tours de boucle.
+ */
 bool Serpent::fruit_action(Map & map, Tiles & head_tile)
 {
 	Tiles fruit;
     m_lastPosition = m_posSerpent[m_posSerpent.size()-1];
-	fruit = map.getTile(m_posSerpent[0].line, m_posSerpent[0].column);
+	fruit = map.getTile(m_posSerpent[0].line, m_posSerpent[0].column);//On get le fruit sur lequel la tête est située
 	switch (fruit) {
         case CHERRY://Agrandit le serpent
             m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
@@ -72,13 +86,13 @@ bool Serpent::fruit_action(Map & map, Tiles & head_tile)
             break;
         case LEMON://Change l'orientation du serpent
             if (m_posSerpent.size()>1) {
-                reverse(m_posSerpent.begin(), m_posSerpent.end());
-				m_posSerpent[0].tile = Tiles(((m_posSerpent[0].tile - 10) + 2) % 4 + 20);
-				m_posSerpent[m_posSerpent.size() - 1].tile = Tiles(((m_posSerpent[m_posSerpent.size() - 1].tile - 20) + 2) % 4 + 10);
+                reverse(m_posSerpent.begin(), m_posSerpent.end());//On echange tous les elements du serpent.
+				m_posSerpent[0].tile = Tiles(((m_posSerpent[0].tile - 10) + 2) % 4 + 20);//On change la queue en tête
+				m_posSerpent[m_posSerpent.size() - 1].tile = Tiles(((m_posSerpent[m_posSerpent.size() - 1].tile - 20) + 2) % 4 + 10);//On change la tête en queue
                 head_tile = getHead();
             }
             break;
-        case STRAWBERRY://Echange les inputs
+        case STRAWBERRY://Echange les inputs, gere dans le main.
             reverse_input = !reverse_input;
             break;
         default:
@@ -87,7 +101,9 @@ bool Serpent::fruit_action(Map & map, Tiles & head_tile)
 	return false;
 }
 
-//Gestion de la position de la nouvelle tête du bot
+/*
+ Cette fonction permet de gerer la position de la nouvelle tete du bot.
+ */
 Tiles Serpent::calculateNextHeadMove(Map & map)
 {
 	vector<pair<int, int>> scores;
@@ -145,7 +161,9 @@ Tiles Serpent::calculateNextHeadMove(Map & map)
 	return Tiles(20 + (getHead() - 20 + (rand() % -1 + 4)) % 4);
 }
 
-//Definition de la tete
+/*
+ Cette fonction permet la definition de la tete sur la map
+ */
 bool Serpent::setHead(Map map, bool bot)
 {
 	if (!bot)
@@ -179,7 +197,10 @@ bool Serpent::setHead(Map map, bool bot)
 	return false;
 }
 
-
+/*
+Cette fonction permet d'initialiser l'apparition du bot.
+Il apparaitra avec une chance de 20% apres qu'une cerise est mangee.
+ */
 void Serpent::run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie)
 {
 	if (run(map, head_tile))
@@ -199,25 +220,29 @@ void Serpent::run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie)
 	}
 }
 
-//Definition les differentes actions par tour
+/*
+ Cette fonction permet de synthetiser toutes les fonctions necessaires a faire par tour
+ */
 bool Serpent::run(Map & map, Tiles & head_tile)
 {
 	map.updateGameField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
-	deplacementSerpent();
-	deplacementTete(head_tile, map);
+	deplacementSerpent();//On deplace le corps du serpent
+	deplacementTete(head_tile, map);//On deplace la tete du serpent
 	setAlive(map, false);
-	bool cherryEaten = fruit_action(map, head_tile);
+	bool cherryEaten = fruit_action(map, head_tile);//On verifie si une cerise a ete mangee
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
 	{
 		map.updateGameField(m_posSerpent[i].line, m_posSerpent[i].column, m_posSerpent[i].tile);//On update les tiles de la map
 	}
 
-	map.decreaseLifetimeFruits();
+	map.decreaseLifetimeFruits();//On decremente la duree de vie restante des fruits mauvais.
 	return cherryEaten;
 }
 
-//Definition des differentes actions du bot par tour
+/*
+ Definition des differentes actions du bot par tour
+ */
 void Serpent::runBot(Map & map)
 {
 	map.updateGameField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
@@ -233,7 +258,9 @@ void Serpent::runBot(Map & map)
 	}
 }
 
-//Gestion des collisions avec les elements du decor
+/*
+ Cette fonction permet la gestion des collisions du serpent avec l'environnement.
+ */
 void Serpent::setAlive(Map & map, bool bot)
 {
 	switch (map.getTile(m_posSerpent[0].line, m_posSerpent[0].column))
