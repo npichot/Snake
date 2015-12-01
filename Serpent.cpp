@@ -12,8 +12,10 @@ Serpent::~Serpent()
 {
 }
 
+//Gestion du deplacement du corps du serpent
 void Serpent::deplacementSerpent()
 {
+    //Chaque element du corps remplace l'element precedent
     for (int i = m_posSerpent.size() - 1; i >= 2; --i)
 		m_posSerpent[i] = m_posSerpent[i - 1];
 
@@ -22,7 +24,8 @@ void Serpent::deplacementSerpent()
 		m_posSerpent[1] = { m_posSerpent[0].line, m_posSerpent[0].column, Tiles(m_posSerpent[0].tile-10) };
 }
 
-void Serpent::deplacementTete(Tiles head_tile, const Map & map)//Gère le déplacement de la tête
+//Gestion du deplacement de la tete
+void Serpent::deplacementTete(Tiles head_tile, const Map & map)
 {
 	switch (head_tile)
     {
@@ -44,30 +47,30 @@ void Serpent::deplacementTete(Tiles head_tile, const Map & map)//Gère le déplace
 
 }
 
-bool Serpent::fruit_action(Map & map, Tiles & head_tile)//On définit l'action sur le serpent en fonction du fruit mange
+//Gestion des differents fruits manges
+bool Serpent::fruit_action(Map & map, Tiles & head_tile)
 {
 	Tiles fruit;
     m_lastPosition = m_posSerpent[m_posSerpent.size()-1];
-    int size_init = m_posSerpent.size();
 	fruit = map.getTile(m_posSerpent[0].line, m_posSerpent[0].column);
 	switch (fruit) {
-        case CHERRY:
+        case CHERRY://Agrandit le serpent
             m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
             map.popFruit();
 			return true;
-        case BANANA:
+        case BANANA://Reduit le serpent d'une unite
             if (m_posSerpent.size()!=1) { //On ne retire un élément que si le serpent peut le supporter
                 map.updateGameField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);//On affiche EMTPY à la places du body
                 m_posSerpent.pop_back();//On enlève un élément au serpent
             }
             break;
-        case GRAPE:
+        case GRAPE://Reduit le serpent a la tête
             for (int i = m_posSerpent.size()-1; i > 0; --i) {
                 map.updateGameField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
-                m_posSerpent.pop_back();//On enlève tout saauf la tete
+                m_posSerpent.pop_back();
             }
             break;
-        case LEMON:
+        case LEMON://Change l'orientation du serpent
             if (m_posSerpent.size()>1) {
                 reverse(m_posSerpent.begin(), m_posSerpent.end());
 				m_posSerpent[0].tile = Tiles(((m_posSerpent[0].tile - 10) + 2) % 4 + 20);
@@ -75,7 +78,7 @@ bool Serpent::fruit_action(Map & map, Tiles & head_tile)//On définit l'action su
                 head_tile = getHead();
             }
             break;
-        case STRAWBERRY:
+        case STRAWBERRY://Echange les inputs
             reverse_input = !reverse_input;
             break;
         default:
@@ -84,6 +87,7 @@ bool Serpent::fruit_action(Map & map, Tiles & head_tile)//On définit l'action su
 	return false;
 }
 
+//Gestion de la position de la nouvelle tête du bot
 Tiles Serpent::calculateNextHeadMove(Map & map)
 {
 	vector<pair<int, int>> scores;
@@ -141,6 +145,7 @@ Tiles Serpent::calculateNextHeadMove(Map & map)
 	return Tiles(20 + (getHead() - 20 + (rand() % -1 + 4)) % 4);
 }
 
+//Definition de la tete
 bool Serpent::setHead(Map map, bool bot)
 {
 	if (!bot)
@@ -174,6 +179,7 @@ bool Serpent::setHead(Map map, bool bot)
 	return false;
 }
 
+
 void Serpent::run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie)
 {
 	if (run(map, head_tile))
@@ -193,6 +199,7 @@ void Serpent::run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie)
 	}
 }
 
+//Definition les differentes actions par tour
 bool Serpent::run(Map & map, Tiles & head_tile)
 {
 	map.updateGameField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
@@ -203,13 +210,14 @@ bool Serpent::run(Map & map, Tiles & head_tile)
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
 	{
-		map.updateGameField(m_posSerpent[i].line, m_posSerpent[i].column, m_posSerpent[i].tile);
+		map.updateGameField(m_posSerpent[i].line, m_posSerpent[i].column, m_posSerpent[i].tile);//On update les tiles de la map
 	}
 
 	map.decreaseLifetimeFruits();
 	return cherryEaten;
 }
 
+//Definition des differentes actions du bot par tour
 void Serpent::runBot(Map & map)
 {
 	map.updateGameField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
@@ -225,6 +233,7 @@ void Serpent::runBot(Map & map)
 	}
 }
 
+//Gestion des collisions avec les elements du decor
 void Serpent::setAlive(Map & map, bool bot)
 {
 	switch (map.getTile(m_posSerpent[0].line, m_posSerpent[0].column))
