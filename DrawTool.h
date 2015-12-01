@@ -12,7 +12,6 @@ private:
 public:
 	DrawTool(sf::Texture t, std::string s, bool b, Tiles tile);
 	~DrawTool();
-	Tiles getTile() { return t; };
 	bool isActivated() { return activated; };
 	bool execute(int x0, int y0, int x, int y, Map & map) override;
 	void activate(bool b);
