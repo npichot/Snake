@@ -3,6 +3,9 @@
 using namespace std;
 using namespace sf;
 
+/*
+Ce constructeur permet d'ajouter à la Toolbar les différents Tools.
+*/
 Toolbar::Toolbar()
 	:selected(NULL)
 {
@@ -27,11 +30,13 @@ Toolbar::Toolbar()
 	mainTools.push_back(new MainTool(texture, "Quit"));
 }
 
-
 Toolbar::~Toolbar()
 {
 }
 
+/*
+Cette fonction est en charge de dessiner la Toolbar dans la fenêtre window.
+*/
 void Toolbar::drawBar(RenderWindow & window)
 {
 	int width = TILE_SIZE*(drawTools.size()+ mainTools.size()) + 40 + 5 * (drawTools.size() - 1);
