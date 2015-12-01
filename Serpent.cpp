@@ -70,8 +70,8 @@ bool Serpent::fruit_action(Map & map, Tiles & head_tile)//On dŽfinit l'action su
         case LEMON:
             if (m_posSerpent.size()>1) {
                 reverse(m_posSerpent.begin(), m_posSerpent.end());
-                m_posSerpent[0].tile = convertTailtoHead.at(m_posSerpent[0].tile);
-                m_posSerpent[m_posSerpent.size()-1].tile = convertHeadtoTail.at(m_posSerpent[m_posSerpent.size()-1].tile);
+				m_posSerpent[0].tile = Tiles(((m_posSerpent[0].tile - 10) + 2) % 4 + 20);
+				m_posSerpent[m_posSerpent.size() - 1].tile = Tiles(((m_posSerpent[m_posSerpent.size() - 1].tile - 20) + 2) % 4 + 10);
                 head_tile = getHead();
             }
             break;
