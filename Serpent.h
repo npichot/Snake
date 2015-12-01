@@ -26,7 +26,7 @@ public:
 	Tiles getHead() { return m_posSerpent[0].tile; }; //Methode pour retourner l'ŽlŽment i du vecteur m_posSerpent
     bool isreverse() const { return reverse_input; }; //Permet de récupérer l'attribut reverse_input
 	void run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie);//Permet d'initialiser le bot
-	bool run(Map & map, Tiles head_tile);
+	bool run(Map & map, Tiles & head_tile);
 	void runBot(Map & map);
 
 private:

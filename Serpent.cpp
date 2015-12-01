@@ -174,7 +174,7 @@ bool Serpent::setHead(Map map, bool bot)
 	return false;
 }
 
-void Serpent::run(Map & map, Tiles head_tile, Serpent & serpentBot, Map copie)
+void Serpent::run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie)
 {
 	if(run(map, head_tile))
 		if (rand() % 100 > 80) //20% de chance que la cerise qu'on vient de manger entraine l'apparition du bot
@@ -195,8 +195,8 @@ bool Serpent::run(Map & map, Tiles & head_tile)
 	map.updateField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
 	deplacementSerpent();
 	deplacementTete(head_tile, map);
-	bool cherryEaten = fruit_action(map, head_tile);
 	setAlive(map, false);
+	bool cherryEaten = fruit_action(map, head_tile);
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
 	{
@@ -214,7 +214,7 @@ void Serpent::runBot(Map & map)
 	deplacementSerpent();
 	Tiles head_tile = calculateNextHeadMove(map);
 	deplacementTete(head_tile, map);
-	fruit_action(map);
+	fruit_action(map, head_tile);
 	setAlive(map, true);
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
