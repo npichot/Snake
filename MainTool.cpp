@@ -319,7 +319,7 @@ void MainTool::writeConfig(string name, Map map)
 		for (int i = 0; i < map.getField().size(); ++i)
 			for (int j = 0; j < map.getField()[i].size(); ++j)
 			{
-				fichier << i << " " << j << " " << enumToString.at(map.getTile(i, j)) << endl;
+				fichier << i << " " << j << " " << map.getTile(i, j) << endl;
 			}
 
 		fichier.close();

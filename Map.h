@@ -6,16 +6,14 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <math.h>
-#include <stdio.h>      /* printf, scanf, puts, NULL */
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
-
-
+#include <stdio.h>      
+#include <stdlib.h>     
+#include <time.h>       
 
 //Chaque element de la map est represente par un carre de 32*32
 const int TILE_SIZE = 32;
 
-enum Tiles //differentes tuiles dessin
+enum Tiles //differentes tuiles du dessin
 {
 	//Element Fixes
 	TREE=0,
@@ -37,58 +35,6 @@ enum Tiles //differentes tuiles dessin
     GRAPE=60,
     LEMON=70,
     STRAWBERRY=80
-    
-};
-
-//Definition d'une map pour convertir un string en enum
-const std::map<std::string, Tiles> stringToEnum = 
-{ 
-	{"TREE",TREE},
-	{"BODY_NORTH",BODY_NORTH},
-	{"BODY_SOUTH",BODY_SOUTH},
-	{"BODY_EAST",BODY_EAST},
-	{"BODY_WEST",BODY_WEST},
-	{"HEAD_NORTH",HEAD_NORTH},
-	{"HEAD_SOUTH",HEAD_SOUTH},
-	{"HEAD_EAST",HEAD_EAST},
-	{"HEAD_WEST",HEAD_WEST},
-	{"EMPTY",EMPTY},
-    {"CHERRY",CHERRY},
-    {"BANANA",BANANA},
-    {"GRAPE",GRAPE},
-    {"LEMON",LEMON},
-    {"STRAWBERRY",STRAWBERRY},
-    
-    
-};
-
-const std::map<Tiles,std::string> enumToString =
-{
-	{ TREE,"TREE" },
-	{ BODY_NORTH,"BODY_NORTH" },
-	{ BODY_SOUTH,"BODY_SOUTH" },
-	{ BODY_EAST,"BODY_EAST" },
-	{ BODY_WEST,"BODY_WEST" },
-	{ HEAD_NORTH,"HEAD_NORTH" },
-	{ HEAD_SOUTH,"HEAD_SOUTH" },
-	{ HEAD_EAST,"HEAD_EAST" },
-	{ HEAD_WEST,"HEAD_WEST" },
-	{ EMPTY,"EMPTY" },
-    { CHERRY,"CHERRY" },
-    { BANANA,"BANANA" },
-    { GRAPE,"GRAPE" },
-    { LEMON,"LEMON" },
-    { STRAWBERRY,"STRAWBERRY" },
-    
-    
-};
-
-const std::map<Tiles, Tiles> convertHeadtoBody =
-{
-    {HEAD_EAST, BODY_EAST},
-    {HEAD_NORTH, BODY_NORTH},
-    {HEAD_SOUTH, BODY_SOUTH},
-    {HEAD_WEST, BODY_WEST}
 };
 
 class Map

@@ -19,7 +19,7 @@ void Serpent::deplacementSerpent()
 
 	//Remplace la tÍte prÈcÈdente par un ÈlÈment corps
 	if(m_posSerpent.size()>1)
-		m_posSerpent[1] = { m_posSerpent[0].line, m_posSerpent[0].column, convertHeadtoBody.at(m_posSerpent[0].tile) };
+		m_posSerpent[1] = { m_posSerpent[0].line, m_posSerpent[0].column, Tiles(m_posSerpent[0].tile-10) };
 }
 
 void Serpent::deplacementTete(Tiles head_tile, const Map & map)//Gère le déplacement de la tête

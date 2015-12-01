@@ -139,13 +139,12 @@ void Map::loadMapFromFile(string filename)
 		{
 			printf("Fichier introuvable");
 		}
-		int i, j;
-		string tile;
+		int i, j, tile;
 
 		//On lit les lignes une par une 
 		while (is >> i>> j>> tile)
 		{
-			updateField(i, j, stringToEnum.at(tile));//On met a jour la map
+			updateField(i, j, Tiles(tile));//On met a jour la map
 		}
 
 		// close the opened file.
