@@ -3,6 +3,27 @@
 using namespace std;
 using namespace sf;
 
+/*
+Le constructeur initialise les attributs.
+*/
+MainTool::MainTool(sf::Texture t, std::string s)
+	:Tool(t, s)
+{
+	!font.loadFromFile("Police/arial.ttf");
+}
+
+MainTool::~MainTool()
+{
+}
+
+/*
+Cette fonction permet de verifier que la map definie par l'utilisateur
+est cohérente et est "jouable".
+On commence par verifier qu'il y a une et une seule tete sur la map.
+Ensuite, on verifie qu'il y a des espaces vides dans lequel le serpent peut evoluer.
+Enfin on verifie que le serpent a acces à tous les espaces vides. On utilise
+une technique de parcours de graphe formee par les cases vides.
+*/
 string MainTool::checkMap(Map & map)
 {
 	vector<pair<int, int>> freeSpace;
@@ -17,17 +38,17 @@ string MainTool::checkMap(Map & map)
 		for (int j = 0; j < map.getGameField()[0].size(); j++)
 		{
 			init.push_back(false);
-				if (map.getTile(i, j) == EMPTY)
-					freeSpace.push_back(pair<int, int>(i, j));
-				else if (map.getTile(i, j) >= 20 && map.getTile(i, j) <= 23)
-				{
-					if (headFound)
-						return "Vous ne devez placer qu'une seule tête !";
+			if (map.getTile(i, j) == EMPTY)
+				freeSpace.push_back(pair<int, int>(i, j));
+			else if (map.getTile(i, j) >= 20 && map.getTile(i, j) <= 23)
+			{
+				if (headFound)
+					return "Vous ne devez placer qu'une seule tête !";
 
-					headFound = true;
-					freeSpace.push_back(pair<int, int>(i, j));
-					stack.push_back(pair<int, int>(i, j));
-				}
+				headFound = true;
+				freeSpace.push_back(pair<int, int>(i, j));
+				stack.push_back(pair<int, int>(i, j));
+			}
 		}
 		mapMask.push_back(init);
 	}
@@ -41,7 +62,7 @@ string MainTool::checkMap(Map & map)
 	//Parcours du graphe à partir de la tête pour voir si tout les espaces sont accessibles.
 	while (stack.size()>0)
 	{
-		int i = stack[stack.size()-1].first, j = stack[stack.size()-1].second;
+		int i = stack[stack.size() - 1].first, j = stack[stack.size() - 1].second;
 		stack.pop_back();
 
 		if (mapMask[i][j])
@@ -54,7 +75,7 @@ string MainTool::checkMap(Map & map)
 			if (!mapMask[i - 1][j] && map.getTile(i - 1, j) == EMPTY)
 				stack.push_back(pair<int, int>(i - 1, j));
 
-		if (i < map.getGameField().size()-1)
+		if (i < map.getGameField().size() - 1)
 			if (!mapMask[i + 1][j] && map.getTile(i + 1, j) == EMPTY)
 				stack.push_back(pair<int, int>(i + 1, j));
 
@@ -73,16 +94,9 @@ string MainTool::checkMap(Map & map)
 	return "OK";
 }
 
-MainTool::MainTool(sf::Texture t, std::string s)
-	:Tool(t, s)
-{
-	!font.loadFromFile("Police/arial.ttf");
-}
-
-MainTool::~MainTool()
-{
-}
-
+/*
+Cette fonction lance le traitement associé à l'outils
+*/
 bool MainTool::execute(int x0, int y0, int x, int y, Map & map)
 {
 	if (getName() == "Save")
@@ -92,6 +106,12 @@ bool MainTool::execute(int x0, int y0, int x, int y, Map & map)
 	return true;
 }
 
+/*
+Cette fonction permet de sauvegarder la map créée par l'utilisateur.
+La map est d'abord vérifiée. En cas d'échec une boit de dialogue 
+avertit l'utilisateur. Sinon une boite de dialogue est ouverte 
+pour choisir un nom et sauvegarder.
+*/
 void MainTool::saveMap(Map map)
 {
 	string check = checkMap(map);
@@ -203,6 +223,9 @@ void MainTool::saveMap(Map map)
 	}
 }
 
+/*
+Construit une boite de dialogue pour la sauvegarde.
+*/
 void MainTool::buildTheWindow(sf::RenderWindow & window)
 {
 	Text title;
@@ -258,6 +281,10 @@ void MainTool::buildTheWindow(sf::RenderWindow & window)
 	window.draw(cancel);
 }
 
+/*
+Determine si le bouton de la boite de dialogue selectionné par le clic
+de la souris est celui de sauvegarde.
+*/
 bool MainTool::isSaveClicked(int x, int y)
 {
 	Text ok;
@@ -284,6 +311,10 @@ bool MainTool::isSaveClicked(int x, int y)
 		return false;
 }
 
+/*
+Determine si le bouton de la boite de dialogue selectionné par le clic
+de la souris est celui d'annulation.
+*/
 bool MainTool::isCancelClicked(int x, int y)
 {
 	Text ok;
@@ -310,6 +341,10 @@ bool MainTool::isCancelClicked(int x, int y)
 		return false;
 }
 
+/*
+Ecrit la configuration de la map crée par l'utilisateur dans un nouveau fichier
+ou un fichier existant en l'ecrasant.
+*/
 void MainTool::writeConfig(string name, Map map)
 {
 	//Write dat file
