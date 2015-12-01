@@ -219,35 +219,45 @@ Avec une probilite de 20%, on place egalement un fruit aux effets negatifs.
 */
 void Map::popFruit()
 {
-	//Apparition cerise
-    int i(0), j(0);
-	do
+	vector<pair<int, int>> freeSpace;
+	for (int i = 0; i < gameField.size(); i++)
 	{
-		srand(time(NULL)); 
-		i = rand() % (gameField.size() - 3) + 1;
-		j = rand() % (gameField[0].size() - 3) + 1;
-	} while (getTile(i, j) != EMPTY);
-    updateGameField(i, j, CHERRY);
-	setCherry(i, j);
+		for (int j = 0; j < gameField[0].size(); j++)
+		{
+			if (getTile(i,j) == EMPTY)
+				freeSpace.push_back(pair<int, int>(i, j));
+		}
+	}
+
+	//Apparition cerise
+	if (freeSpace.size() == 0)
+		return;
+	srand(time(NULL)); 
+	int h = rand() % freeSpace.size();
+	pair<int, int> coord = freeSpace[h];
+	freeSpace.erase(freeSpace.begin() + h);
+    updateGameField(coord.first, coord.second, CHERRY);
+	setCherry(coord.first, coord.second);
     
 	//Apparition eventuelle d'un autre fruit
+	if (freeSpace.size() == 0)
+		return;
+
 	vector<Tiles> Fruits;
 	Fruits.push_back(BANANA);
 	Fruits.push_back(GRAPE);
 	Fruits.push_back(LEMON);
 	Fruits.push_back(STRAWBERRY);
-	int k(rand() % 100 + 1), l(0), m(0);
+	int k = rand() % 100 + 1;
+	int n = rand() % (Fruits.size());
     
     if( k < 80)
     {
-        do
-        {
-            l = rand() % (gameField.size() - 3) + 1;
-            m = rand() % (gameField[0].size() - 3) + 1;
-        } while (getTile(l, m) != EMPTY);
-        int n = rand() % (Fruits.size());
-        updateGameField(l, m, Fruits[n]);
-		badFruits.push_back({ l, m, 50 });
+		srand(time(NULL));
+		h = rand() % freeSpace.size();
+		coord = freeSpace[h];
+		updateGameField(coord.first, coord.second, Fruits[n]);
+		badFruits.push_back({ coord.first, coord.second, 50 });
     }
 		
 }
