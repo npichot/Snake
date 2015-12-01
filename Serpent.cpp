@@ -214,8 +214,8 @@ void Serpent::runBot(Map & map)
 	deplacementSerpent();
 	Tiles head_tile = calculateNextHeadMove(map);
 	deplacementTete(head_tile, map);
-	fruit_action(map, head_tile);
 	setAlive(map, true);
+	fruit_action(map, head_tile);
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
 	{
