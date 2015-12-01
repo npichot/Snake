@@ -27,16 +27,16 @@ void Serpent::deplacementTete(Tiles head_tile, const Map & map)//Gère le déplace
 	switch (head_tile)
     {
 	case HEAD_NORTH:
-		m_posSerpent[0] = { (m_posSerpent[0].line - 1) < 0 ? (int)map.getField().size() - 1 : (m_posSerpent[0].line - 1) , m_posSerpent[0].column, HEAD_NORTH };
+		m_posSerpent[0] = { (m_posSerpent[0].line - 1) < 0 ? (int)map.getGameField().size() - 1 : (m_posSerpent[0].line - 1) , m_posSerpent[0].column, HEAD_NORTH };
             break;
 	case HEAD_EAST:
-		m_posSerpent[0] = { m_posSerpent[0].line, (m_posSerpent[0].column + 1) > (int)map.getField()[0].size() - 1 ? 0 : (m_posSerpent[0].column + 1) ,  HEAD_EAST };
+		m_posSerpent[0] = { m_posSerpent[0].line, (m_posSerpent[0].column + 1) > (int)map.getGameField()[0].size() - 1 ? 0 : (m_posSerpent[0].column + 1) ,  HEAD_EAST };
             break;
 	case HEAD_SOUTH:
-		m_posSerpent[0] = { (m_posSerpent[0].line + 1) > (int)map.getField().size()-1 ? 0 : (m_posSerpent[0].line + 1) , m_posSerpent[0].column, HEAD_SOUTH };
+		m_posSerpent[0] = { (m_posSerpent[0].line + 1) > (int)map.getGameField().size()-1 ? 0 : (m_posSerpent[0].line + 1) , m_posSerpent[0].column, HEAD_SOUTH };
             break;
 	case HEAD_WEST:
-		m_posSerpent[0] = { m_posSerpent[0].line, (m_posSerpent[0].column - 1) < 0 ? (int)map.getField()[0].size() - 1 : (m_posSerpent[0].column - 1) , HEAD_WEST };
+		m_posSerpent[0] = { m_posSerpent[0].line, (m_posSerpent[0].column - 1) < 0 ? (int)map.getGameField()[0].size() - 1 : (m_posSerpent[0].column - 1) , HEAD_WEST };
 		break;
 	default:
             break;
@@ -57,13 +57,13 @@ bool Serpent::fruit_action(Map & map, Tiles & head_tile)//On définit l'action su
 			return true;
         case BANANA:
             if (m_posSerpent.size()!=1) { //On ne retire un élément que si le serpent peut le supporter
-                map.updateField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);//On affiche EMTPY à la places du body
+                map.updateGameField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);//On affiche EMTPY à la places du body
                 m_posSerpent.pop_back();//On enlève un élément au serpent
             }
             break;
         case GRAPE:
             for (int i = m_posSerpent.size()-1; i > 0; --i) {
-                map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
+                map.updateGameField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
                 m_posSerpent.pop_back();//On enlève tout saauf la tete
             }
             break;
@@ -145,8 +145,8 @@ bool Serpent::setHead(Map map, bool bot)
 {
 	if (!bot)
 	{
-		for (int i = 0; i < map.getField().size(); ++i)
-			for (int j = 0; j < map.getField()[i].size(); ++j)
+		for (int i = 0; i < map.getGameField().size(); ++i)
+			for (int j = 0; j < map.getGameField()[i].size(); ++j)
 				if (map.getTile(i, j) >= 20 && map.getTile(i, j) <= 23)
 				{
 					m_posSerpent.push_back({ i,j,map.getTile(i,j) });
@@ -164,8 +164,8 @@ bool Serpent::setHead(Map map, bool bot)
 			do
 			{
 				srand(time(NULL)); //Initialisation du timer
-				i = rand() % (map.getField().size() - 3) + 1;
-				j = rand() % (map.getField()[0].size() - 3) + 1;
+				i = rand() % (map.getGameField().size() - 3) + 1;
+				j = rand() % (map.getGameField()[0].size() - 3) + 1;
 			} while (map.getTile(i, j) != EMPTY);
 			m_posSerpent.push_back({ i,j,HEAD_EAST });
 			return true;
@@ -179,7 +179,7 @@ void Serpent::run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie)
 	if(run(map, head_tile))
 		if (rand() % 100 > 80) //20% de chance que la cerise qu'on vient de manger entraine l'apparition du bot
 		{
-			copie.updateField(map.getCherry().first, map.getCherry().second, CHERRY);
+			copie.updateGameField(map.getCherry().first, map.getCherry().second, CHERRY);
 			if (!serpentBot.setHead(copie, true))
 			{
 				cout << "Impossible de placer le bot" << endl;
@@ -192,7 +192,7 @@ void Serpent::run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie)
 
 bool Serpent::run(Map & map, Tiles & head_tile)
 {
-	map.updateField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
+	map.updateGameField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
 	deplacementSerpent();
 	deplacementTete(head_tile, map);
 	setAlive(map, false);
@@ -200,17 +200,16 @@ bool Serpent::run(Map & map, Tiles & head_tile)
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
 	{
-		map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, m_posSerpent[i].tile);
+		map.updateGameField(m_posSerpent[i].line, m_posSerpent[i].column, m_posSerpent[i].tile);
 	}
 
 	map.decreaseLifetimeFruits();
-	map.deleteFruits();
 	return cherryEaten;
 }
 
 void Serpent::runBot(Map & map)
 {
-	map.updateField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
+	map.updateGameField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
 	deplacementSerpent();
 	Tiles head_tile = calculateNextHeadMove(map);
 	deplacementTete(head_tile, map);
@@ -219,7 +218,7 @@ void Serpent::runBot(Map & map)
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
 	{
-		map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, m_posSerpent[i].tile);
+		map.updateGameField(m_posSerpent[i].line, m_posSerpent[i].column, m_posSerpent[i].tile);
 	}
 }
 
@@ -241,7 +240,7 @@ void Serpent::setAlive(Map & map, bool bot)
 			m_posSerpent[0] = m_posSerpent[m_posSerpent.size() - 1];//On prÈcharge une valeur intiale de la tÍte pour le prochain bot
 			for (int i = m_posSerpent.size() - 1; i = 1; i--)
 			{
-				map.updateField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);//On enlËve le corps du bot
+				map.updateGameField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);//On enlËve le corps du bot
 				m_posSerpent.pop_back();
 			}
 		}

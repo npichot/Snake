@@ -29,13 +29,13 @@ bool DrawTool::execute(int xMouse0, int yMouse0, int xMouse, int yMouse, Map & m
 			for (int i = min(row0, row); i <= max(row0, row); i++)
 				for (int j = min(column0, column); j <= max(column0, column); j++)
 				{
-					map.updateField(i, j, getTile());
+					map.updateGameField(i, j, getTile());
 				}
 			return true;
 		}
 		else
 		{
-			map.updateField(row0, column0, getTile());
+			map.updateGameField(row0, column0, getTile());
 			return true;
 		}
 

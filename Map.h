@@ -40,83 +40,35 @@ enum Tiles //differentes tuiles du dessin
 class Map
 {
 private:
-	std::vector < std::vector <sf::Sprite> > field; // Le terrain ne peut pas etre modifie directement. Notamment sa taille est calculee et fixee une fois au debut.
+	//Attributs
+	std::vector<std::vector<sf::Sprite> > gameField; 
 	sf::Texture * textures[9];
-	//Parameters of the game area
-	int width, height;
-	double marginLeft, marginTop;
-    std::vector<std::vector<int>> BadFruits;
+	int fieldWidth, fieldHeight;
+	double fieldMarginLeft, fieldMarginTop;
+    std::vector<std::vector<int>> badFruits;
 	std::pair<int, int> cherry;
-	/*
-	Setter pour cherry
-	*/
+
+	//Methodes
 	void setCherry(int i, int j) { cherry = std::pair<int, int>(i, j); };
+	void loadMapFromFile(std::string filename);
     
 public:
-	/*
-	Initialisation de la map en fonction de la taille de l'ecran
-	*/
 	Map(std::string filename, sf::RenderWindow const & window, bool gridOn);
+	Map(Map & map, sf::RenderWindow & window, bool gridOn);//Constructeur par copie
 	~Map();
-	Map(Map & map, sf::RenderWindow & window, bool gridOn);
-	
-	/*
-	Utilisé par le constructeur par copie
-	*/
 	Map * clone(Map & map, sf::RenderWindow & window, bool gridOn);
 
-	/*
-	Methode pour modifier indirectement les elements de la map
-	On modifie l'element a la position (i,j) par la Tile t
-	*/
-	void updateField(int i, int j, Tiles t);
-
-	/*
-	Recuperer la tile a l'emplacement (i, j)
-	*/
+	void updateGameField(int i, int j, Tiles t);
+	std::vector<std::vector<sf::Sprite>> getGameField() const { return gameField; };
 	Tiles getTile(int i, int j);
-
-	/*
-	Methode pour dessiner la map dans la fenetre
-	*/
 	void drawField(sf::RenderWindow & window);
-
-	/*
-	Methode pour intitialiser la map a partir d'un fichier
-	*/
-	void loadMapFromFile(std::string filename);
-
-	/*
-	Methode pour la ligne potentielle correspondant à une position de la souris
-	*/
+	
 	int getRowFromMouseCoordinate(int x, int y);
-
-	/*
-	Methode pour la colonne potentielle correspondant à une position de la souris
-	*/
 	int getColumnFromMouseCoordinate(int x, int y);
 
-	/*
-	Methode pour renvoyer une copie du field
-	*/
-	std::vector<std::vector<sf::Sprite>> getField() const { return field; };
-	
-	/*
-	Methode pour faire apparaitre un fruit aleatoirement
-	*/
 	void popFruit();
-    
-    /*
-     Methodes pour supprimer les mauvais fruits
-     */
     void decreaseLifetimeFruits();
-
-	/*
-	Getter pour cherry
-	*/
 	std::pair<int, int> getCherry() { return cherry; };
-    
-    void deleteFruits();
 };
 
 #endif

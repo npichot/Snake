@@ -11,10 +11,10 @@ string MainTool::checkMap(Map & map)
 	vector<pair<int, int>> stack;
 	int countProofedTiles = 0;
 
-	for (int i = 0; i < map.getField().size(); i++)
+	for (int i = 0; i < map.getGameField().size(); i++)
 	{
 		vector<bool> init;
-		for (int j = 0; j < map.getField()[0].size(); j++)
+		for (int j = 0; j < map.getGameField()[0].size(); j++)
 		{
 			init.push_back(false);
 				if (map.getTile(i, j) == EMPTY)
@@ -54,7 +54,7 @@ string MainTool::checkMap(Map & map)
 			if (!mapMask[i - 1][j] && map.getTile(i - 1, j) == EMPTY)
 				stack.push_back(pair<int, int>(i - 1, j));
 
-		if (i < map.getField().size()-1)
+		if (i < map.getGameField().size()-1)
 			if (!mapMask[i + 1][j] && map.getTile(i + 1, j) == EMPTY)
 				stack.push_back(pair<int, int>(i + 1, j));
 
@@ -62,7 +62,7 @@ string MainTool::checkMap(Map & map)
 			if (!mapMask[i][j - 1] && map.getTile(i, j - 1) == EMPTY)
 				stack.push_back(pair<int, int>(i, j - 1));
 
-		if (j < map.getField()[0].size() - 1)
+		if (j < map.getGameField()[0].size() - 1)
 			if (!mapMask[i][j + 1] && map.getTile(i, j + 1) == EMPTY)
 				stack.push_back(pair<int, int>(i, j + 1));
 	}
@@ -316,8 +316,8 @@ void MainTool::writeConfig(string name, Map map)
 	ofstream fichier("MapConfig/" + name + ".dat", ios::out | ios::trunc);
 	if (fichier)
 	{
-		for (int i = 0; i < map.getField().size(); ++i)
-			for (int j = 0; j < map.getField()[i].size(); ++j)
+		for (int i = 0; i < map.getGameField().size(); ++i)
+			for (int j = 0; j < map.getGameField()[i].size(); ++j)
 			{
 				fichier << i << " " << j << " " << map.getTile(i, j) << endl;
 			}

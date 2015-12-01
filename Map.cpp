@@ -3,7 +3,13 @@
 using namespace sf;
 using namespace std;
 
-// La map prend la forme d'une matrice où chaque element symbolise un element du decor
+/*
+Le constructeur de la map permet de definir le terrain (gameField) avec tous ses paramètres.
+On définit ainsi sa taille par rapport à la fenêtre. Ensuite les textures qui vont servir à 
+l'affichage sont chargées. Enfin on remplit le terrain avec des elements vides par defaut.
+Ce remplissage est ensuite eventuellement ecrase par le chargement d'un fichier de configuration
+de terrain.
+*/
 Map::Map(string filename, RenderWindow const & window, bool gridOn)
 {
 	int row_number, column_number;//Parametre de la map, nombre 
@@ -11,10 +17,10 @@ Map::Map(string filename, RenderWindow const & window, bool gridOn)
 	row_number = floor((window.getSize().y - 3 * TILE_SIZE) / TILE_SIZE);
 
 	//On initialise les parametres pour les sprites
-	width = TILE_SIZE * column_number;
-	height = TILE_SIZE * row_number;
-	marginLeft = (window.getSize().x - width) / 2;
-	marginTop = (window.getSize().y - height) / 2;
+	fieldWidth = TILE_SIZE * column_number;
+	fieldHeight = TILE_SIZE * row_number;
+	fieldMarginLeft = (window.getSize().x - fieldWidth) / 2;
+	fieldMarginTop = (window.getSize().y - fieldHeight) / 2;
 
 	//Chargement des textures
 	Texture t0;
@@ -56,54 +62,98 @@ Map::Map(string filename, RenderWindow const & window, bool gridOn)
 		vector<Sprite> row;
 		for (int j = 0; j < column_number; ++j)
 		{
-			tile.setPosition(marginLeft + j * TILE_SIZE + TILE_SIZE / 2, marginTop + i * TILE_SIZE + TILE_SIZE / 2);
+			tile.setPosition(fieldMarginLeft + j * TILE_SIZE + TILE_SIZE / 2, fieldMarginTop + i * TILE_SIZE + TILE_SIZE / 2);
 			row.push_back(tile);
 		}
-		field.push_back(row);
+		gameField.push_back(row);
 	}
 
 	if (!filename.empty())
 		loadMapFromFile(filename);
 }
 
+/*
+Ce constructeur est le constructeur par copie. Lorsqu'un copie d'une map est 
+effectuée on lui affecte des nouveaux pointeurs pour les textures pour éviter
+que celles-ci ne sont détruites à la destruction de la copie.
+Cette fonction est uniquement appelé par la fonction clone.
+*/
+Map::Map(Map & map, sf::RenderWindow & window, bool gridOn)
+	:Map("", window, gridOn)
+{
+	for (int i = 0; i < gameField.size(); ++i)
+		for (int j = 0; j < gameField[i].size(); ++j)
+			updateGameField(i, j, map.getTile(i, j));
+}
+
 Map::~Map()
 {
 }
 
-Map::Map(Map & map, sf::RenderWindow & window, bool gridOn)
-	:Map("", window, gridOn)
-{
-	for (int i = 0; i < field.size(); ++i)
-		for (int j = 0; j < field[i].size(); ++j)
-			updateField(i, j, map.getTile(i, j));
-}
-
+/*
+La fonction clone permet de renvoyer un pointeur vers une copie de la map
+passée en paramètre.
+*/
 Map * Map::clone(Map & map, RenderWindow & window, bool gridOn)
 {
 	return new Map(map,window,gridOn);
 }
 
-void Map::updateField(int i, int j, Tiles t)
+/*
+Cette fonction est utilisée par le constructeur pour remplir une map
+à partir d'un fichier de configuration placé dans le dossier MapConfig.
+Dans ce fichier chaque ligne represente une tile de la map. Les lignes 
+sont définies sur le format suivant line_number column_number tile_number
+*/
+void Map::loadMapFromFile(string filename)
 {
-	if (i >= 0 && i < field.size())
-		if (j >= 0 && j < field[0].size())
+	//on essaye d'ouvrir le fichier en lecture
+	ifstream is(filename);
+	if (!is)
+	{
+		printf("Fichier introuvable");
+	}
+	int i, j, tile;
+
+	//On lit les lignes une par une 
+	while (is >> i >> j >> tile)
+	{
+		updateGameField(i, j, Tiles(tile));//On met a jour la map
+	}
+
+	// close the opened file.
+	is.close();
+}
+
+/*
+La fonction suivante met à jour une element du gameField de coordonnées
+i et j avec la tile t.
+*/
+void Map::updateGameField(int i, int j, Tiles t)
+{
+	if (i >= 0 && i < gameField.size())
+		if (j >= 0 && j < gameField[0].size())
 		{
-			field[i][j].setTexture(*textures[(int)floor(t / 10)]);
-			field[i][j].setRotation((t - ((int)floor(t / 10)) * 10)*90);
+			gameField[i][j].setTexture(*textures[(int)floor(t / 10)]);
+			gameField[i][j].setRotation((t - ((int)floor(t / 10)) * 10)*90);
 			return;
 		}
 	printf("Error 1 : Can't update the tile because the coordinates are outside the field");
 }
 
+/*
+Cette fonction permet de recuperer le type de tile qui se trouve 
+aux coordonnees i et j du gameField.
+*/
 Tiles Map::getTile(int i, int j)
 {
-	if (i >= 0 && i < field.size())
+	if (i >= 0 && i < gameField.size())
 	{
-		if (j >= 0 && j < field[0].size())
+		if (j >= 0 && j < gameField[0].size())
 		{
 			for (int h = 0; h < sizeof(textures)/sizeof(Texture*); h++)
-				if (field[i][j].getTexture() == textures[h])
-					return static_cast<Tiles>(h * 10 + (int)floor(field[i][j].getRotation() / 90));
+				if (gameField[i][j].getTexture() == textures[h])
+					return static_cast<Tiles>(h * 10 + (int)floor(gameField[i][j].getRotation() / 90));
 		}
 			
 	}
@@ -114,113 +164,104 @@ Tiles Map::getTile(int i, int j)
 	}
 }
 
+/*
+Cette fonction permet de creer le rendu de la map dans la fenêtre passée
+en paramètres. Tout les elements du gameField sont dessines dans la fenêtre.
+*/
 void Map::drawField(RenderWindow & window)
 {
 	//Chargement du fond
 
 	//On construit le rectangle d'arriere plan qui permet de faire la grille dans le cas de création de map
 	RectangleShape background;
-	background.setPosition(marginLeft, marginTop);
-	background.setSize(Vector2f(width, height));
+	background.setPosition(fieldMarginLeft, fieldMarginTop);
+	background.setSize(Vector2f(fieldWidth, fieldHeight));
 	background.setFillColor(Color::Blue);
 	window.draw(background);
 
 	//On affiche les tiles du terrain
-	for (int i = 0; i < field.size();++i)
-		for (int j = 0; j < field[i].size(); ++j)
-			window.draw(field[i][j]);
+	for (int i = 0; i < gameField.size();++i)
+		for (int j = 0; j < gameField[i].size(); ++j)
+			window.draw(gameField[i][j]);
 }
 
-void Map::loadMapFromFile(string filename)
-{		
-		//on essaye d'ouvrir le fichier en lecture
-		ifstream is(filename);
-		if (!is)
-		{
-			printf("Fichier introuvable");
-		}
-		int i, j, tile;
-
-		//On lit les lignes une par une 
-		while (is >> i>> j>> tile)
-		{
-			updateField(i, j, Tiles(tile));//On met a jour la map
-		}
-
-		// close the opened file.
-		is.close();
-}
-
+/*
+Cette fonction prend en entree la position (x,y) de la souris sur la fenetre.
+Si cette position correspond à une case du gameField, la fonction renvoie la 
+ligne associée à cette case.
+*/
 int Map::getRowFromMouseCoordinate(int x, int y)
 {
-	if (floor((y - marginTop) / TILE_SIZE) < field.size() && (y - marginTop) >= 0)
-		return floor((y - marginTop) / TILE_SIZE);
+	if (floor((y - fieldMarginTop) / TILE_SIZE) < gameField.size() && (y - fieldMarginTop) >= 0)
+		return floor((y - fieldMarginTop) / TILE_SIZE);
 
 	return -1;//Row not found
 }
 
+/*
+Cette fonction prend en entree la position (x,y) de la souris sur la fenetre.
+Si cette position correspond à une case du gameField, la fonction renvoie la
+colonne associée à cette case.
+*/
 int Map::getColumnFromMouseCoordinate(int x, int y)
 {
-	if (floor((x - marginLeft) / TILE_SIZE) < field[0].size() && (x - marginLeft) >= 0)
-		return floor((x - marginLeft) / TILE_SIZE);
+	if (floor((x - fieldMarginLeft) / TILE_SIZE) < gameField[0].size() && (x - fieldMarginLeft) >= 0)
+		return floor((x - fieldMarginLeft) / TILE_SIZE);
 
 	return -1;//Row not found
 }
 
+/*
+Cette fonction fait apparaitre les fruits sur le gameField dans des endroits
+vides. 
+A chaque fois que cette fonction est appelee une cerise est placee sur le terrain.
+Avec une probilite de 20%, on place egalement un fruit aux effets negatifs.
+*/
 void Map::popFruit()
 {
-    vector<Tiles> Fruits;
-    Fruits.push_back(CHERRY);
-    Fruits.push_back(BANANA);
-    Fruits.push_back(GRAPE);
-    Fruits.push_back(LEMON);
-    Fruits.push_back(STRAWBERRY);
+	//Apparition cerise
     int i(0), j(0);
 	do
 	{
-		srand(time(NULL)); //Initialisation du timer
-		i = rand() % (field.size() - 3) + 1;
-		j = rand() % (field[0].size() - 3) + 1;
+		srand(time(NULL)); 
+		i = rand() % (gameField.size() - 3) + 1;
+		j = rand() % (gameField[0].size() - 3) + 1;
 	} while (getTile(i, j) != EMPTY);
-    updateField(i, j, CHERRY);
+    updateGameField(i, j, CHERRY);
 	setCherry(i, j);
     
-    //Faire apparaitre un fruit mauvais random avec une probabilitŽ de 20%
+	//Apparition eventuelle d'un autre fruit
+	vector<Tiles> Fruits;
+	Fruits.push_back(BANANA);
+	Fruits.push_back(GRAPE);
+	Fruits.push_back(LEMON);
+	Fruits.push_back(STRAWBERRY);
+	int k(rand() % 100 + 1), l(0), m(0);
     
-    int k(rand()%100+1),l(0), m(0);
-    vector<int> BadFruit;//On crŽe un vecteur avec les informations du fruit mauvais
-    
-    if( k < 80)//Gre la probabilitŽ de 20%
+    if( k < 80)
     {
         do
         {
-            l = rand() % (field.size() - 3) + 1;
-            m = rand() % (field[0].size() - 3) + 1;
+            l = rand() % (gameField.size() - 3) + 1;
+            m = rand() % (gameField[0].size() - 3) + 1;
         } while (getTile(l, m) != EMPTY);
-        int n = rand() % (Fruits.size()-1)+1;
-        updateField(l, m, Fruits[n]);
-        BadFruit.push_back(l);//On stock la ligne du fruit qui est amenŽ ˆ disparaitre
-        BadFruit.push_back(m);//On stock la colonne du fruit amenŽ ˆ disparaitre
-        BadFruit.push_back(50);//Nombre de cycles pendant lequel le fruit sera visible
-        BadFruits.push_back(BadFruit);
-        
+        int n = rand() % (Fruits.size());
+        updateGameField(l, m, Fruits[n]);
+		badFruits.push_back({ l, m, 50 });
     }
 		
 }
 
+/*
+Cette fonction gere la duree d'affichage des fruits negatifs sur le terrain
+en les reduisant de 1 a chaque tour de la boucle du jeu.
+*/
 void Map::decreaseLifetimeFruits()
 {
-    for (int i = 0; i < BadFruits.size(); ++i) {
-        --BadFruits[i][2];
+    for (int i = 0; i < badFruits.size(); ++i) 
+	{
+        --badFruits[i][2];
+		if (badFruits[i][2] == 0)
+			updateGameField(badFruits[i][0], badFruits[i][1], EMPTY);
     }
 }
-
-void Map::deleteFruits()
-{
-    for (int i = 0; i < BadFruits.size(); ++i) {
-        if (BadFruits[i][2] == 0)
-            updateField(BadFruits[i][0], BadFruits[i][1], EMPTY);
-    }
-    
-}
-
