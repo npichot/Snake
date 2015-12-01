@@ -3,7 +3,11 @@
 using namespace std;
 using namespace sf;
 
-
+/*
+Initialisation du menu avec le remplissage de items en fonctions du type de menu.
+Pour le menu map, on récupère les fichiers dans le dossiers MapConfig.
+L'implementation varie en fonction de l'OS (Windows ou Mac).
+*/
 Menu::Menu(RenderWindow & window, MenuType mt)
 	:window(window), menuType(mt)
 {
@@ -87,6 +91,9 @@ Menu::~Menu()
 {
 }
 
+/*
+Dessine le menu dans la fenêtre
+*/
 void Menu::drawMenu()
 {
 	window.clear(Color(175, 182, 55, 255));
@@ -133,6 +140,9 @@ void Menu::drawMenu()
 
 }
 
+/*
+Retourne le choix de l'utilisateur dans le menu
+*/
 int Menu::getMenuChoice()
 {
 	int result = items.size();
@@ -157,6 +167,10 @@ int Menu::getMenuChoice()
 	return result;
 }
 
+/*
+Renvoie le nom du fichier associé à la map sélectionné dans le menu 
+de type MAP
+*/
 string Menu::loadMap()
 {
 	int choice = getMenuChoice();

@@ -3,11 +3,12 @@
 
 #include "SFML/Graphics.hpp"
 #include <iostream>;
+
 #ifdef _WIN32
-#include <Windows.h>
-#include <strsafe.h>;
+	#include <Windows.h>
+	#include <strsafe.h>;
 #else
-#include<dirent.h>
+	#include<dirent.h>
 #endif
 
 enum MenuChoice
@@ -28,26 +29,18 @@ enum MenuType
 class Menu
 {
 public:
-	/*
-	Initialisation du menu avec le remplissage de items
-	*/
 	Menu(sf::RenderWindow & window, MenuType mt);
 	~Menu();
-	/*
-	Retourne le choix de l'utilisateur dans le menu
-	*/
 	int getMenuChoice();
 	std::string loadMap();
+
 private:
-	sf::RenderWindow & window; // reference sur la fenetre active dans laquelle le menu est dessine
-	std::vector<std::string> items; // Liste des elements du menu
-	int curseur;// determine l'element du menu qui est selectionner
-	sf::Font font; //Police du menu
+	sf::RenderWindow & window; 
+	std::vector<std::string> items;
+	int curseur;
+	sf::Font font;
 	MenuType menuType;
 
-	/*
-	Dessine le menu
-	*/
 	void drawMenu();
 };
 
