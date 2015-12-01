@@ -7,6 +7,11 @@ using namespace sf;
 
 int highScore(0);
 
+/*
+Fonction principale du programme qui definit la fenêtre et 
+lance le menu principale.
+A partir du choix de l'utilisateur dans le menu, diverses action sont lancées
+*/
 int main()
 {
 	// Chargement de la fenetre
@@ -17,9 +22,9 @@ int main()
 
 	//Ouverture du fichier de highscore
 	highScore = 0;
-	ifstream lectureScore("Highscore.txt");  //Ouverture d'un fichier en lecture
+	ifstream lectureScore("Highscore.txt"); 
 
-	if (lectureScore) // Si le fichier a bien été ouvert, et qu'il existe donc
+	if (lectureScore) 
 	{
 		lectureScore >> highScore;
 	}
@@ -57,9 +62,19 @@ int main()
 	return 0;
 }
 
+/*
+Cette fonction est au centre du jeu et permet de jouer au snake.
+Les différents éléments du jeu comme le serpent et son affichage
+sont manipulés dans cette fonction.
+Après une initialisation, on rentre dans une boucle de jeu découpé en trois étapes :
+- Acquisition des commandes
+- Traitement
+- Affichage
+Enfin on sauve le higscore
+*/
 void play(RenderWindow & window)
 {
-	int score(0); // On initialise le score
+	int score(0); 
 	bool pause = false;
 	bool robotOn = false;
 
@@ -142,7 +157,7 @@ void play(RenderWindow & window)
 		//////////////
 		//Traitement//
 		//////////////
-		if (!serpent.isAlive())//On attend le retour au menu par enter
+		if (!serpent.isAlive())
 			continue;
 
 		if (!pause)
@@ -185,16 +200,19 @@ void play(RenderWindow & window)
 	
 	if (score > highScore)
 	{
-		ofstream ecritureScore("Highscore.txt", ofstream::trunc);  //Ouverture du fichier, et suppression de la ligne existante
+		ofstream ecritureScore("Highscore.txt", ofstream::trunc); 
 
-		if (ecritureScore) // Si le fichier a bien été ouvert, et qu'il existe donc
+		if (ecritureScore) 
 		{
-			ecritureScore << score; // Le score actuel devient le nouveau highscore
+			ecritureScore << score; 
 		}
 		ecritureScore.close();
 	}
 }
 
+/*
+Fonction qui permet d'afficher les instructions du jeu.
+*/
 void displayHowTo(RenderWindow & window)
 {
     Texture image;
@@ -215,5 +233,4 @@ void displayHowTo(RenderWindow & window)
             }
         }
     }
-    
 }
