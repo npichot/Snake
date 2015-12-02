@@ -30,7 +30,6 @@ int main()
 	}
 	lectureScore.close();
 
-
 	//Lancement de la boucle principale
 	while (window.isOpen())
 	{
@@ -160,6 +159,7 @@ void play(RenderWindow & window)
 		if (!serpent.isAlive())
 			continue;
 
+        score = serpent.getScore();
 		if (!pause)
 		{
 			if(!robotOn)
@@ -200,7 +200,7 @@ void play(RenderWindow & window)
 	
 	if (score > highScore)
 	{
-		ofstream ecritureScore("Highscore.txt", ofstream::trunc); 
+		ofstream ecritureScore("Ressources/Highscore.txt", ofstream::trunc);
 
 		if (ecritureScore) 
 		{

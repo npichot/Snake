@@ -10,7 +10,7 @@ using namespace sf;
 Au debut, les inputs claviers sont dans le sens naturel.
  */
 Serpent::Serpent(bool alive)
-	:alive(alive), reverse_input(false)
+	:alive(alive), reverse_input(false), m_Score(0)
 {
 }
 
@@ -61,6 +61,7 @@ void Serpent::deplacementTete(Tiles head_tile, const Map & map)
  Cette fonction permet de gerer les actions des differents fruits que peut manger le serpent.
  La description de l'action de chaque fruit est presente dans les commentaires de la fonction.
  En fait, la cerise est le seul fruit "bon", les autres sont des fruits "mauvais" qui disparaissent apres 50 tours de boucle.
+ Le score varie en fonction du fruit mangŽ
  */
 bool Serpent::fruit_action(Map & map, Tiles & head_tile)
 {
@@ -71,18 +72,21 @@ bool Serpent::fruit_action(Map & map, Tiles & head_tile)
         case CHERRY://Agrandit le serpent
             m_posSerpent.push_back(m_lastPosition);// On rajoute un élément Serpent à la dernière position de la queue pour allonger le Serpent
             map.popFruit();
+            m_Score += 1;
 			return true;
         case BANANA://Reduit le serpent d'une unite
             if (m_posSerpent.size()!=1) { 
                 map.updateGameField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);
                 m_posSerpent.pop_back();
             }
+            m_Score += 2;
             break;
         case GRAPE://Reduit le serpent a la tete
             for (int i = m_posSerpent.size()-1; i > 0; --i) {
                 map.updateGameField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
                 m_posSerpent.pop_back();
             }
+            m_Score += 1;
             break;
         case LEMON://Change l'orientation du serpent
             if (m_posSerpent.size()>1) {
@@ -91,9 +95,11 @@ bool Serpent::fruit_action(Map & map, Tiles & head_tile)
 				m_posSerpent[m_posSerpent.size() - 1].tile = Tiles(((m_posSerpent[m_posSerpent.size() - 1].tile - 20) + 2) % 4 + 10);
                 head_tile = getHead();
             }
+            m_Score += 1;
             break;
         case STRAWBERRY://Echange les inputs, gere dans le main.
             reverse_input = !reverse_input;
+            m_Score += 1;
             break;
         default:
             break;
@@ -289,4 +295,12 @@ void Serpent::setAlive(Map & map, bool bot)
 		alive = true;
 		break;
 	}
+}
+
+/*
+ Cette fonction permet d'obtenir le score du joueur
+ */
+int Serpent::getScore() const
+{
+    return m_Score;
 }

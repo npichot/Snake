@@ -27,6 +27,7 @@ public:
 	void run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie);
 	bool run(Map & map, Tiles & head_tile);
 	void runBot(Map & map);
+    int getScore() const;
 
 private:
 	std::vector<ElementSerpent> m_posSerpent;
@@ -38,6 +39,7 @@ private:
 	bool fruit_action(Map & map, Tiles & head_tile);
     bool reverse_input;
 	Tiles calculateNextHeadMove(Map & map);
+    int m_Score;
 };
 
 
