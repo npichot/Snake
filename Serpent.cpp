@@ -7,7 +7,7 @@ using namespace sf;
 /*
  La classe serpent permet de gerer des objets serpents (le notre ou un bot).
  Elle regroupe toutes les fonctions utiles au deplacement du serpent, ainsi que la gestion des evenements qui peuvent arriver au serpent (fruits).
-Au debut, le serpent est vivant et les inputs claviers sont dans le sens naturel.
+Au debut, les inputs claviers sont dans le sens naturel.
  */
 Serpent::Serpent(bool alive)
 	:alive(alive), reverse_input(false)
@@ -19,7 +19,7 @@ Serpent::~Serpent()
 }
 
 /*
- Cette fonction permet de dŽplacer le serpent : chaque element du corps prend la place de l'element precedent.
+ Cette fonction permet de deplacer le serpent : chaque element du corps prend la place de l'element precedent.
  */
 void Serpent::deplacementSerpent()
 {
@@ -32,7 +32,7 @@ void Serpent::deplacementSerpent()
 }
 
 /*
- Cette fonction permet de gerer le deplacement de la tte, en fonction de son orientation.
+ Cette fonction permet de gerer le deplacement de la tete, en fonction de son orientation.
  C'est elle qui permet en fait au serpent de se deplacer, les autres elements du corps etant recopies dans la fonction deplacementSerpent.
  */
 void Serpent::deplacementTete(Tiles head_tile, const Map & map)
@@ -60,25 +60,25 @@ void Serpent::deplacementTete(Tiles head_tile, const Map & map)
 /*
  Cette fonction permet de gerer les actions des differents fruits que peut manger le serpent.
  La description de l'action de chaque fruit est presente dans les commentaires de la fonction.
- En fait, la cerise est le seul fruit "bon", les autres sont des fruits "mauvais" qui disparaissent aprs 30 tours de boucle.
+ En fait, la cerise est le seul fruit "bon", les autres sont des fruits "mauvais" qui disparaissent apres 50 tours de boucle.
  */
 bool Serpent::fruit_action(Map & map, Tiles & head_tile)
 {
 	Tiles fruit;
     m_lastPosition = m_posSerpent[m_posSerpent.size()-1];
-	fruit = map.getTile(m_posSerpent[0].line, m_posSerpent[0].column);//On get le fruit sur lequel la tte est situŽe
+	fruit = map.getTile(m_posSerpent[0].line, m_posSerpent[0].column);//On recupere le fruit sur lequel la tete est situee
 	switch (fruit) {
         case CHERRY://Agrandit le serpent
             m_posSerpent.push_back(m_lastPosition);// On rajoute un élément Serpent à la dernière position de la queue pour allonger le Serpent
             map.popFruit();
 			return true;
         case BANANA://Reduit le serpent d'une unite
-            if (m_posSerpent.size()!=1) { //On ne retire un ŽlŽment que si le serpent peut le supporter
-                map.updateGameField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);//On affiche EMTPY ˆ la places du body
-                m_posSerpent.pop_back();//On enlve un ŽlŽment au serpent
+            if (m_posSerpent.size()!=1) { 
+                map.updateGameField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);
+                m_posSerpent.pop_back();
             }
             break;
-        case GRAPE://Reduit le serpent a la tte
+        case GRAPE://Reduit le serpent a la tete
             for (int i = m_posSerpent.size()-1; i > 0; --i) {
                 map.updateGameField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
                 m_posSerpent.pop_back();
@@ -86,9 +86,9 @@ bool Serpent::fruit_action(Map & map, Tiles & head_tile)
             break;
         case LEMON://Change l'orientation du serpent
             if (m_posSerpent.size()>1) {
-                reverse(m_posSerpent.begin(), m_posSerpent.end());//On echange tous les elements du serpent.
-				m_posSerpent[0].tile = Tiles(((m_posSerpent[0].tile - 10) + 2) % 4 + 20);//On change la queue en tte
-				m_posSerpent[m_posSerpent.size() - 1].tile = Tiles(((m_posSerpent[m_posSerpent.size() - 1].tile - 20) + 2) % 4 + 10);//On change la tte en queue
+                reverse(m_posSerpent.begin(), m_posSerpent.end());
+				m_posSerpent[0].tile = Tiles(((m_posSerpent[0].tile - 10) + 2) % 4 + 20);
+				m_posSerpent[m_posSerpent.size() - 1].tile = Tiles(((m_posSerpent[m_posSerpent.size() - 1].tile - 20) + 2) % 4 + 10);
                 head_tile = getHead();
             }
             break;
@@ -186,7 +186,7 @@ bool Serpent::setHead(Map map, bool bot)
 			int i(0), j(0);
 			do
 			{
-				srand(time(NULL)); //Initialisation du timer
+				srand(time(NULL)); 
 				i = rand() % (map.getGameField().size() - 3) + 1;
 				j = rand() % (map.getGameField()[0].size() - 3) + 1;
 			} while (map.getTile(i, j) != EMPTY);
@@ -206,7 +206,7 @@ void Serpent::run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie)
 	if (run(map, head_tile))
 	{
 		srand(time(NULL));
-		if (rand() % 100 > 80) //20% de chance que la cerise qu'on vient de manger entraine l'apparition du bot
+		if (rand() % 100 > 80) 
 		{
 			copie.updateGameField(map.getCherry().first, map.getCherry().second, CHERRY);
 			if (!serpentBot.setHead(copie, true))
@@ -245,7 +245,7 @@ bool Serpent::run(Map & map, Tiles & head_tile)
  */
 void Serpent::runBot(Map & map)
 {
-	map.updateGameField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
+	map.updateGameField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);
 	deplacementSerpent();
 	Tiles head_tile = calculateNextHeadMove(map);
 	deplacementTete(head_tile, map);
