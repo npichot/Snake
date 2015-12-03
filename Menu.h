@@ -3,6 +3,7 @@
 
 #include "SFML/Graphics.hpp"
 #include <iostream>;
+#include "Highscore.h"
 
 #ifdef _WIN32
 	#include <Windows.h>
@@ -16,14 +17,16 @@ enum MenuChoice
 	PLAY = 0,
 	CREATION = 1,
 	HOWTO = 2,
-	QUIT = 3,
-	NONE = 4,
+	HS = 3,
+	QUIT = 4,
+	NONE = 5,
 };
 
 enum MenuType
 {
 	MAIN,
 	MAP,
+	HIGHSCORE,
 };
 
 class Menu

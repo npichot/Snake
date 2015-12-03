@@ -11,6 +11,10 @@ L'implementation varie en fonction de l'OS (Windows ou Mac).
 Menu::Menu(RenderWindow & window, MenuType mt)
 	:window(window), menuType(mt)
 {
+	//on initialise le curseur
+	curseur = 0;
+
+
 	//Chargement des items
 	switch (mt)
 	{
@@ -18,6 +22,7 @@ Menu::Menu(RenderWindow & window, MenuType mt)
 		items.push_back("Play");
 		items.push_back("Create Map");
 		items.push_back("How to play");
+		items.push_back("Highscores");
 		items.push_back("Quit");
 		break;
 	case MAP:
@@ -73,6 +78,17 @@ Menu::Menu(RenderWindow & window, MenuType mt)
 		items.push_back("Return");
 		break;
 	}
+	case HIGHSCORE:
+	{
+		Highscore hs;
+		for (pair<string, int> p : hs.getScores())
+		{
+			items.push_back(p.first + " : " + to_string(p.second));
+		}
+		items.push_back("Return");
+		curseur = items.size() - 1;
+		break;
+	}
 	default:
 		break;
 	}
@@ -83,8 +99,7 @@ Menu::Menu(RenderWindow & window, MenuType mt)
 		// TODO erreur...
 	}
 
-	//on initialise le curseur
-	curseur = 0;
+	
 }
 
 Menu::~Menu()
@@ -156,9 +171,9 @@ int Menu::getMenuChoice()
 			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Return)
 				result = curseur;
 			else if (event.type == Event::KeyPressed && event.key.code == Keyboard::Up)
-				(curseur == 0) ? curseur = items.size() - 1 : curseur--;
+				(menuType == HIGHSCORE) ? curseur = items.size() - 1 : (curseur == 0) ? curseur = items.size() - 1 : curseur--;
 			else if (event.type == Event::KeyPressed && event.key.code == Keyboard::Down)
-				(curseur == items.size() - 1) ? curseur = 0 : curseur++;
+				(menuType == HIGHSCORE) ? curseur = items.size() - 1 : (curseur == items.size() - 1) ? curseur = 0 : curseur++;
 
 			drawMenu();
 			window.display();

@@ -4,9 +4,6 @@
 using namespace std;
 using namespace sf;
 
-
-int highScore(0);
-
 /*
 Fonction principale du programme qui definit la fenêtre et 
 lance le menu principale.
@@ -14,26 +11,19 @@ A partir du choix de l'utilisateur dans le menu, diverses action sont lancées
 */
 int main()
 {
-    ////////////
-    ////Tests///
-    Test test;
-    test.runTests();
-    
+	////////////
+	////Tests///
+	Test test;
+	test.runTests();
+
 	// Chargement de la fenetre
     RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Snake", Style::None);//For debug purpose
     window.setFramerateLimit(10);//Gere le nombre de FPS
 	
 	Menu menu(window,MAIN);
 
-	//Ouverture du fichier de highscore
-	highScore = 0;
-	ifstream lectureScore("Highscore.txt"); 
-
-	if (lectureScore) 
-	{
-		lectureScore >> highScore;
-	}
-	lectureScore.close();
+	//Initialisation du Highscore
+	Highscore hs;
 
 	//Lancement de la boucle principale
 	while (window.isOpen())
@@ -43,17 +33,25 @@ int main()
 		{
 		case PLAY:
 		{
-			play(window);
+			play(window, hs);
 			break;
 		}
         case HOWTO:
-            displayHowTo(window);
-            break;
+		{
+			displayHowTo(window, hs);
+			break;
+		}
 		case CREATION:
 		{
 			MapCreation mc;
 			Map emptyMap("", window, true);
 			mc.executeInterface(window,emptyMap);
+			break;
+		}
+		case HS:
+		{
+			Menu highscoreMenu(window, HIGHSCORE);
+			highscoreMenu.getMenuChoice();
 			break;
 		}
 		case QUIT:
@@ -63,8 +61,6 @@ int main()
 			break;
 		}
 	}
-    
-    
 	return 0;
 }
 
@@ -78,7 +74,7 @@ Après une initialisation, on rentre dans une boucle de jeu découpé en trois étap
 - Affichage
 Enfin on sauve le higscore
 */
-void play(RenderWindow & window)
+void play(RenderWindow & window, Highscore & hs)
 {
 	int score(0); 
 	bool pause = false;
@@ -159,23 +155,27 @@ void play(RenderWindow & window)
 				break;// Autoriser qu'une prise de touche à la fois
 			}
         }
+
 		//////////////
 		//Traitement//
 		//////////////
 		if (!serpent.isAlive())
 			continue;
 
-        score = serpent.getScore();
 		if (!pause)
 		{
-			if(!robotOn)
-				serpent.run(map, head_tile,serpentBot, *map.clone(map, window, false));
+			Tiles t;
+			if (!robotOn)
+			{
+				t = serpent.run(map, head_tile, serpentBot, *map.clone(map, window, false));
+				hs.updateScore(t, serpent.isreverse(), robotOn);
+			}
 			else
 			{
-				serpent.run(map, head_tile);
+				t = serpent.run(map, head_tile);
+				hs.updateScore(t, serpent.isreverse(), robotOn);
 				serpentBot.runBot(map);
 			}
-
 			robotOn = serpentBot.isAlive();
 		}
 		
@@ -184,6 +184,7 @@ void play(RenderWindow & window)
 		////////////////////
 		window.clear();
 		map.drawField(window);
+		hs.showCurrentScore(window);
 		if (!serpent.isAlive() || pause)
 		{
 			Font font;
@@ -202,24 +203,20 @@ void play(RenderWindow & window)
 			window.draw(additionnalText);
 		}
 		window.display();
-	}
-	if (score > highScore)
-	{
-		ofstream ecritureScore("Ressources/Highscore.txt", ofstream::trunc);
 
-		if (ecritureScore) 
+		if (!serpent.isAlive())
 		{
-			ecritureScore << score; 
+			hs.askForName(window);
+			hs.reset();
 		}
-		ecritureScore.close();
 	}
-    
+	
 }
 
 /*
 Fonction qui permet d'afficher les instructions du jeu.
 */
-void displayHowTo(RenderWindow & window)
+void displayHowTo(RenderWindow & window, Highscore & hs)
 {
     Texture image;
     image.loadFromFile("Ressources/howtoplay.png");
@@ -234,7 +231,7 @@ void displayHowTo(RenderWindow & window)
         while (window.pollEvent(event))
         {
             if (event.type == Event::KeyPressed){
-                play(window);
+                play(window,hs);
                 return;
             }
         }

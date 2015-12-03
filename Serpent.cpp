@@ -1,4 +1,5 @@
 #include "Serpent.h"
+
 using namespace std;
 using namespace sf;
 
@@ -9,7 +10,7 @@ using namespace sf;
 Au debut, les inputs claviers sont dans le sens naturel.
  */
 Serpent::Serpent(bool alive)
-	:alive(alive), reverse_input(false), m_Score(0)
+	:alive(alive), reverse_input(false)
 {
 }
 
@@ -59,10 +60,10 @@ void Serpent::deplacementTete(Tiles head_tile, const Map & map)
 /*
  Cette fonction permet de gerer les actions des differents fruits que peut manger le serpent.
  La description de l'action de chaque fruit est presente dans les commentaires de la fonction.
- En fait, la cerise est le seul fruit "bon", les autres sont des fruits "mauvais" qui disparaissent aprs 50 tours de boucle.
+ En fait, la cerise est le seul fruit "bon", les autres sont des fruits "mauvais" qui disparaissent apres 50 tours de boucle.
  Le score varie en fonction du fruit mangŽ
  */
-bool Serpent::fruit_action(Map & map, Tiles & head_tile)
+Tiles Serpent::fruit_action(Map & map, Tiles & head_tile)
 {
 	Tiles fruit;
     m_lastPosition = m_posSerpent[m_posSerpent.size()-1];
@@ -71,21 +72,17 @@ bool Serpent::fruit_action(Map & map, Tiles & head_tile)
         case CHERRY://Agrandit le serpent
             m_posSerpent.push_back(m_lastPosition);// On rajoute un élément Serpent à la dernière position de la queue pour allonger le Serpent
             map.popFruit();
-            m_Score += 1;
-			return true;
         case BANANA://Reduit le serpent d'une unite
             if (m_posSerpent.size()!=1) { 
                 map.updateGameField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);
                 m_posSerpent.pop_back();
             }
-            m_Score += 2;
             break;
         case GRAPE://Reduit le serpent a la tete
             for (int i = m_posSerpent.size()-1; i > 0; --i) {
                 map.updateGameField(m_posSerpent[i].line, m_posSerpent[i].column, EMPTY);
                 m_posSerpent.pop_back();
             }
-            m_Score += 1;
             break;
         case LEMON://Change l'orientation du serpent
             if (m_posSerpent.size()>1) {
@@ -94,17 +91,15 @@ bool Serpent::fruit_action(Map & map, Tiles & head_tile)
 				m_posSerpent[m_posSerpent.size() - 1].tile = Tiles(((m_posSerpent[m_posSerpent.size() - 1].tile - 20) + 2) % 4 + 10);
                 head_tile = getHead();
             }
-            m_Score += 1;
             break;
         case STRAWBERRY://Echange les inputs, gere dans le main.
             reverse_input = !reverse_input;
-            m_Score += 1;
             break;
         default:
             break;
 	}
-    
-	return false;
+
+	return fruit;
 }
 
 /*
@@ -207,9 +202,10 @@ bool Serpent::setHead(Map map, bool bot)
 Cette fonction permet d'initialiser l'apparition du bot.
 Il apparaitra avec une chance de 20% apres qu'une cerise est mangee.
  */
-void Serpent::run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie)
+Tiles Serpent::run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie)
 {
-	if (run(map, head_tile))
+	Tiles t = run(map, head_tile);
+	if (t==CHERRY)
 	{
 		srand(time(NULL));
 		if (rand() % 100 > 80) 
@@ -218,24 +214,25 @@ void Serpent::run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie)
 			if (!serpentBot.setHead(copie, true))
 			{
 				cout << "Impossible de placer le bot" << endl;
-				return;
+				return t;
 			}
 			else
 				serpentBot.setAlive(map, true);
 		}
 	}
+	return t;
 }
 
 /*
  Cette fonction permet de synthetiser toutes les fonctions necessaires a faire par tour
  */
-bool Serpent::run(Map & map, Tiles & head_tile)
+Tiles Serpent::run(Map & map, Tiles & head_tile)
 {
 	map.updateGameField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
 	deplacementSerpent();//On deplace le corps du serpent
 	deplacementTete(head_tile, map);//On deplace la tete du serpent
 	setAlive(map, false);
-	bool cherryEaten = fruit_action(map, head_tile);//On verifie si une cerise a ete mangee
+	Tiles cherryEaten = fruit_action(map, head_tile);//On verifie si une cerise a ete mangee
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
 	{
@@ -297,13 +294,6 @@ void Serpent::setAlive(Map & map, bool bot)
 	}
 }
 
-/*
- Cette fonction permet d'obtenir le score du joueur
- */
-int Serpent::getScore() const
-{
-    return m_Score;
-}
 
 /*
  Cette fonction permet d'obtenir la taille du serpent
@@ -317,3 +307,5 @@ int Serpent::getSize()
 {
     return m_posSerpent.size();
 }
+
+

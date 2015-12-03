@@ -6,7 +6,6 @@
 #include "Menu.h"
 #include <algorithm>
 
-
 typedef struct ElementSerpent ElementSerpent;
 struct ElementSerpent
 {
@@ -23,15 +22,14 @@ public:
 	~Serpent();
 	bool isAlive() const { return alive; };// Permet de récupérer l'attribut m_alive
 	bool setHead(Map map, bool bot);
-	Tiles getHead() { return m_posSerpent[0].tile; }; //Methode pour retourner l'ŽlŽment i du vecteur m_posSerpent
+	Tiles  getHead() { return m_posSerpent[0].tile; }; //Methode pour retourner l'ŽlŽment i du vecteur m_posSerpent
     bool isreverse() const { return reverse_input; }; //Permet de récupérer l'attribut reverse_input
-	void run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie);
-	bool run(Map & map, Tiles & head_tile);
+	Tiles run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie);
+	Tiles run(Map & map, Tiles & head_tile);
 	void runBot(Map & map);
-    int getScore() const;
-    std::vector<ElementSerpent> getSnake();
-    bool fruit_action(Map & map, Tiles & head_tile);
-    int getSize();
+	std::vector<ElementSerpent> getSnake();
+	Tiles fruit_action(Map & map, Tiles & head_tile);
+	int getSize();
 
 private:
 	std::vector<ElementSerpent> m_posSerpent;
@@ -42,7 +40,6 @@ private:
 	void setAlive(Map & map, bool bot);
     bool reverse_input;
 	Tiles calculateNextHeadMove(Map & map);
-    int m_Score;
 };
 
 
