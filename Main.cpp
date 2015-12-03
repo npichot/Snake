@@ -14,6 +14,11 @@ A partir du choix de l'utilisateur dans le menu, diverses action sont lancées
 */
 int main()
 {
+    ////////////
+    ////Tests///
+    Test test;
+    test.runTests();
+    
 	// Chargement de la fenetre
     RenderWindow window(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32), "Snake", Style::None);//For debug purpose
     window.setFramerateLimit(10);//Gere le nombre de FPS
@@ -58,6 +63,8 @@ int main()
 			break;
 		}
 	}
+    
+    
 	return 0;
 }
 
@@ -152,7 +159,6 @@ void play(RenderWindow & window)
 				break;// Autoriser qu'une prise de touche à la fois
 			}
         }
-
 		//////////////
 		//Traitement//
 		//////////////
@@ -197,7 +203,6 @@ void play(RenderWindow & window)
 		}
 		window.display();
 	}
-	
 	if (score > highScore)
 	{
 		ofstream ecritureScore("Ressources/Highscore.txt", ofstream::trunc);
@@ -208,6 +213,7 @@ void play(RenderWindow & window)
 		}
 		ecritureScore.close();
 	}
+    
 }
 
 /*

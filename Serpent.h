@@ -6,6 +6,7 @@
 #include "Menu.h"
 #include <algorithm>
 
+
 typedef struct ElementSerpent ElementSerpent;
 struct ElementSerpent
 {
@@ -28,6 +29,9 @@ public:
 	bool run(Map & map, Tiles & head_tile);
 	void runBot(Map & map);
     int getScore() const;
+    std::vector<ElementSerpent> getSnake();
+    bool fruit_action(Map & map, Tiles & head_tile);
+    int getSize();
 
 private:
 	std::vector<ElementSerpent> m_posSerpent;
@@ -36,7 +40,6 @@ private:
 	void deplacementSerpent();
 	void deplacementTete(Tiles head_tile, const Map & map);
 	void setAlive(Map & map, bool bot);
-	bool fruit_action(Map & map, Tiles & head_tile);
     bool reverse_input;
 	Tiles calculateNextHeadMove(Map & map);
     int m_Score;

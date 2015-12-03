@@ -1,5 +1,4 @@
 #include "Serpent.h"
-
 using namespace std;
 using namespace sf;
 
@@ -60,7 +59,7 @@ void Serpent::deplacementTete(Tiles head_tile, const Map & map)
 /*
  Cette fonction permet de gerer les actions des differents fruits que peut manger le serpent.
  La description de l'action de chaque fruit est presente dans les commentaires de la fonction.
- En fait, la cerise est le seul fruit "bon", les autres sont des fruits "mauvais" qui disparaissent apreès 50 tours de boucle.
+ En fait, la cerise est le seul fruit "bon", les autres sont des fruits "mauvais" qui disparaissent après 50 tours de boucle.
  Le score varie en fonction du fruit mangé
  */
 bool Serpent::fruit_action(Map & map, Tiles & head_tile)
@@ -104,6 +103,7 @@ bool Serpent::fruit_action(Map & map, Tiles & head_tile)
         default:
             break;
 	}
+    
 	return false;
 }
 
@@ -303,4 +303,17 @@ void Serpent::setAlive(Map & map, bool bot)
 int Serpent::getScore() const
 {
     return m_Score;
+}
+
+/*
+ Cette fonction permet d'obtenir la taille du serpent
+ */
+vector<ElementSerpent> Serpent::getSnake()
+{
+    return m_posSerpent;
+}
+
+int Serpent::getSize()
+{
+    return m_posSerpent.size();
 }

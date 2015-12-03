@@ -6,6 +6,7 @@
 #include "Menu.h"
 #include "Serpent.h"
 #include "MapCreation.h"
+#include "Test.h"
 
 // Definition de la fenetre
 const unsigned int WINDOW_WIDTH = 1280;
