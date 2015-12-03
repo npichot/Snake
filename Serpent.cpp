@@ -66,12 +66,12 @@ void Serpent::deplacementTete(Tiles head_tile, const Map & map)
 Tiles Serpent::fruit_action(Map & map, Tiles & head_tile)
 {
 	Tiles fruit;
-    m_lastPosition = m_posSerpent[m_posSerpent.size()-1];
 	fruit = map.getTile(m_posSerpent[0].line, m_posSerpent[0].column);//On recupere le fruit sur lequel la têete est situee
 	switch (fruit) {
         case CHERRY://Agrandit le serpent
             m_posSerpent.push_back(m_lastPosition);// On rajoute un ÈlÈment Serpent ‡ la derniËre position de la queue pour allonger le Serpent
             map.popFruit();
+			break;
         case BANANA://Reduit le serpent d'une unite
             if (m_posSerpent.size()!=1) { 
                 map.updateGameField(m_posSerpent[m_posSerpent.size()-1].line, m_posSerpent[m_posSerpent.size()-1].column, EMPTY);
@@ -229,10 +229,11 @@ Tiles Serpent::run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie
 Tiles Serpent::run(Map & map, Tiles & head_tile)
 {
 	map.updateGameField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);//Suppression du derniere element sur la map avant deplacement
+	m_lastPosition = m_posSerpent[m_posSerpent.size()-1];
 	deplacementSerpent();//On deplace le corps du serpent
 	deplacementTete(head_tile, map);//On deplace la tete du serpent
 	setAlive(map, false);
-	Tiles cherryEaten = fruit_action(map, head_tile);//On verifie si une cerise a ete mangee
+ 	Tiles cherryEaten = fruit_action(map, head_tile);//On verifie si une cerise a ete mangee
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
 	{
