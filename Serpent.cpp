@@ -233,7 +233,7 @@ Tiles Serpent::run(Map & map, Tiles & head_tile)
 	deplacementSerpent();//On deplace le corps du serpent
 	deplacementTete(head_tile, map);//On deplace la tete du serpent
 	setAlive(map, false);
- 	Tiles cherryEaten = fruit_action(map, head_tile);//On verifie si une cerise a ete mangee
+ 	Tiles tile = fruit_action(map, head_tile);//On verifie si une cerise a ete mangee
 
 	for (int i = 0; i < m_posSerpent.size(); ++i)
 	{
@@ -241,7 +241,7 @@ Tiles Serpent::run(Map & map, Tiles & head_tile)
 	}
 
 	map.decreaseLifetimeFruits();//On decremente la duree de vie restante des fruits mauvais.
-	return cherryEaten;
+	return tile;
 }
 
 /*
