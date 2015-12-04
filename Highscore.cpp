@@ -36,7 +36,7 @@ void Highscore::saveScores()
 	int h = isOneOfTheBest();
 	if (h == -1)
 		return;
-	for (int i = h + 1; i < 3; i++)
+	for (int i = 2; i > h; i--)
 		scores[i] = scores[i - 1];
 
 	scores[h] = currentScore;
@@ -115,7 +115,7 @@ void Highscore::updateScore(Tiles t, bool reverseMode, bool robotOn)
 			currentScore.second++;
 		break;
 	case BANANA:
-		currentScore.second--;
+		currentScore.second=max(0,currentScore.second--);
 		break;
 	case GRAPE:
 		currentScore.second = 0;

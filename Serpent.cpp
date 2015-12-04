@@ -250,6 +250,7 @@ Tiles Serpent::run(Map & map, Tiles & head_tile)
 void Serpent::runBot(Map & map)
 {
 	map.updateGameField(m_posSerpent[m_posSerpent.size() - 1].line, m_posSerpent[m_posSerpent.size() - 1].column, EMPTY);
+	m_lastPosition = m_posSerpent[m_posSerpent.size() - 1];
 	deplacementSerpent();
 	Tiles head_tile = calculateNextHeadMove(map);
 	deplacementTete(head_tile, map);
