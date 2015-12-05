@@ -162,6 +162,7 @@ Tiles Map::getTile(int i, int j)
 		printf("Error 2 : Can't get the tile because the coordinates are outside the field");
 		return UNKNOWN;
 	}
+    return UNKNOWN;
 }
 
 /*

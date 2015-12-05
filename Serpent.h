@@ -27,7 +27,6 @@ public:
 	Tiles run(Map & map, Tiles & head_tile, Serpent & serpentBot, Map copie);
 	Tiles run(Map & map, Tiles & head_tile);
 	void runBot(Map & map);
-	std::vector<ElementSerpent> getSnake();
 	Tiles fruit_action(Map & map, Tiles & head_tile);
 	int getSize();
 
@@ -37,9 +36,9 @@ private:
 	ElementSerpent m_lastPosition; 
 	void deplacementSerpent();
 	void deplacementTete(Tiles head_tile, const Map & map);
-	void setAlive(Map & map, bool bot);
     bool reverse_input;
 	Tiles calculateNextHeadMove(Map & map);
+    void setAlive(Map & map, bool bot);
 };
 
 

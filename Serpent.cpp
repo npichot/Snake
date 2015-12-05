@@ -300,11 +300,6 @@ void Serpent::setAlive(Map & map, bool bot)
 /*
  Cette fonction permet d'obtenir la taille du serpent
  */
-vector<ElementSerpent> Serpent::getSnake()
-{
-    return m_posSerpent;
-}
-
 int Serpent::getSize()
 {
     return m_posSerpent.size();
